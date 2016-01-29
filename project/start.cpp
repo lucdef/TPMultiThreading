@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <deque>
+#include "LogManager.h"
 
 #include "utils.h"
 #include "CException.h"
@@ -79,10 +80,15 @@ void EnqueueDequeue() {
 
 
 int main( int argc, const char *argv[] ) {
+	LogManager logManager;
+	logManager.LogInfo(1, "test1");
+	logManager.LogWarning(1, "test2");
+	logManager.LogError(1, "test1");
+	logManager.~LogManager();
 	std::cout << "** Welcome to this project skeleton." << std::endl;
 	std::cout << "This is where you need to code the hash cracker." << std::endl;
 	std::cout << std::endl;
-
+	
 	//ExtractCommandLine( argc, argv );
 	GeneratePasswords();
 	//EnqueueDequeue();
