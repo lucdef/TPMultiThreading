@@ -17,12 +17,12 @@ void TrueMutex::Init()
 	_mutex = PTHREAD_MUTEX_INITIALIZER;
 }
 
-void TrueMutex::Lock()
+int TrueMutex::Lock()
 {
-	pthread_mutex_lock(&_mutex);
+	return pthread_mutex_lock(&_mutex);
 }
 
-void TrueMutex::Unlock()
+int TrueMutex::Unlock()
 {
-	pthread_mutex_unlock(&_mutex);
+	return pthread_mutex_unlock(&_mutex);
 }
