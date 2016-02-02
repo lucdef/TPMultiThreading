@@ -6,6 +6,10 @@
 #include "CException.h"
 #include "PasswordChunk.h"
 
+#include <pthread.h>
+#include <Windows.h>
+
+#include "TrueMutex.hpp"
 
 void ExtractCommandLine( int argc, const char *argv[] )	{
 	// Command line settings
@@ -76,7 +80,6 @@ void EnqueueDequeue() {
 	}
 	std::cout << "Element count in FIFO: " << fifo.size() << std::endl;
 }
-
 
 int main( int argc, const char *argv[] ) {
 	std::cout << "** Welcome to this project skeleton." << std::endl;
