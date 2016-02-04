@@ -2,12 +2,11 @@
 #include <iostream>
 #include <deque>
 
+
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
-
-#include <pthread.h>
-#include <Windows.h>
+#include "LogManager.h"
 
 #include "TrueMutex.hpp"
 
@@ -82,10 +81,14 @@ void EnqueueDequeue() {
 }
 
 int main( int argc, const char *argv[] ) {
+	LogManager logManager;
+	logManager.LogInfo(1, "test");
+
+	logManager.~LogManager();
 	std::cout << "** Welcome to this project skeleton." << std::endl;
 	std::cout << "This is where you need to code the hash cracker." << std::endl;
 	std::cout << std::endl;
-
+	
 	//ExtractCommandLine( argc, argv );
 	GeneratePasswords();
 	//EnqueueDequeue();

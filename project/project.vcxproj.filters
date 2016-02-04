@@ -140,7 +140,11 @@
     <ClInclude Include="..\libs\hash\include\IHash.h">
       <Filter>Header Files\Libraries\hash</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="TrueMutex.hpp">
+=======
+    <ClInclude Include="LogManager.h">
+>>>>>>> 70dbfff7f7836acb97ecf6e59eee52fada055b1b
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -157,7 +161,11 @@
     <ClCompile Include="PasswordChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="TrueMutex.cpp">
+=======
+    <ClCompile Include="LogManager.cpp">
+>>>>>>> 70dbfff7f7836acb97ecf6e59eee52fada055b1b
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
