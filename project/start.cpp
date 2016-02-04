@@ -81,10 +81,9 @@ void EnqueueDequeue() {
 }
 
 int main( int argc, const char *argv[] ) {
-	LogManager logManager;
-	logManager.LogInfo(1, "test");
-
-	logManager.~LogManager();
+	LogManager *logManager =LogManager::GetInstance();
+	logManager->LogInfo(1, "test");
+	LogManager::Kill();
 	std::cout << "** Welcome to this project skeleton." << std::endl;
 	std::cout << "This is where you need to code the hash cracker." << std::endl;
 	std::cout << std::endl;

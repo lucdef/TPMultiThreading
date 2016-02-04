@@ -1,7 +1,10 @@
 #include "LogManager.h"
 #include <sstream>
 #include "CException.h"
+#include "TrueMutex.hpp"
 
+
+LogManager* LogManager::_instance;
 
 
 LogManager::LogManager()
@@ -19,6 +22,23 @@ LogManager::~LogManager()
 	_logFile->Close();
 	delete _logFile;
 		delete _mutex;
+}
+
+
+
+LogManager* LogManager::GetInstance()
+{
+	if (_instance == nullptr)
+	{
+		LogManager::_instance = new LogManager();
+	}
+	return LogManager::_instance;
+}
+
+void LogManager::Kill()
+{
+	if(_instance!=nullptr)
+	_instance->~LogManager();
 }
 
 bool LogManager::LogWarning(int idThread, std::string message)
