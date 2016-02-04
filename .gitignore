@@ -210,3 +210,9 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+
+intermediate/sandbox*
+intermediate/project*
+intermediate/demo-*
+epsi-i4.VC.opendb
