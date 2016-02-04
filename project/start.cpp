@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <deque>
-
+#include "fifo.hpp"
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
@@ -78,17 +78,22 @@ void EnqueueDequeue() {
 }
 
 
-int main( int argc, const char *argv[] ) {
-	std::cout << "** Welcome to this project skeleton." << std::endl;
-	std::cout << "This is where you need to code the hash cracker." << std::endl;
-	std::cout << std::endl;
+int main(int argc, const char *argv[]) {
+	//std::cout << "** Welcome to this project skeleton." << std::endl;
+	//std::cout << "This is where you need to code the hash cracker." << std::endl;
+	//std::cout << std::endl;
 
-	//ExtractCommandLine( argc, argv );
-	GeneratePasswords();
-	//EnqueueDequeue();
+	////ExtractCommandLine( argc, argv );
+	//GeneratePasswords();
+	////EnqueueDequeue();
 
-	std::cout << std::endl;
-	std::cout << "** Goodbye" << std::endl;
-	std::cin.get();
-	return EXIT_SUCCESS;
+	//std::cout << std::endl;
+	//std::cout << "** Goodbye" << std::endl;
+	//std::cin.get();
+	//return EXIT_SUCCESS;
+	//Fifo haha;
+	//int c = haha.test();
+	//std::cout << c << std::endl;
+	return 0;
+		
 }
