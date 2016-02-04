@@ -11,18 +11,23 @@ class LogManager
 {
 	
 public:
-	~LogManager();
+	static LogManager* GetInstance();
+	static void Kill();
 	bool LogWarning(int idThread, std::string message);
 	bool LogError(int idThread, std::string message);
 	bool LogInfo(int idThread, std::string message);
 
-	LogManager();
 
 private:
+
+	~LogManager();
+	LogManager();
+	static LogManager *_instance;
 	bool log(int idThread, std::string message, std::string criticite);
 	std::string DateToString(CDateTime date);
 	CFileText *_logFile;
 	TrueMutex *_mutex;
+
 	
 	//TODO : Ajouter mutex
 	
