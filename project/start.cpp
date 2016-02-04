@@ -5,9 +5,7 @@
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
-
-#include <pthread.h>
-#include <Windows.h>
+#include "LogManager.h"
 
 #include "ThreadTest.hpp"
 

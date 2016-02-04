@@ -225,6 +225,7 @@
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="LogManager.h" />
     <ClInclude Include="PasswordChunk.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
