@@ -143,7 +143,10 @@
     <ClInclude Include="TrueMutex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Fifo.hpp">
+    <ClInclude Include="OGlobal.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpServer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -160,10 +163,13 @@
     <ClCompile Include="PasswordChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Fifo.cpp">
+    <ClCompile Include="TrueMutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TrueMutex.cpp">
+    <ClCompile Include="OGlobal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
