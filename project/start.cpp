@@ -11,6 +11,7 @@
 
 
 #include "TrueMutex.hpp"
+#include "TcpServer.hpp"
 
 void ExtractCommandLine( int argc, const char *argv[] )	{
 	// Command line settings

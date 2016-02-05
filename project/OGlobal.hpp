@@ -1,4 +1,4 @@
-ragma once
+#pragma once
 #include <queue>
 
 
@@ -9,5 +9,4 @@ public:
 	Fifo<T>();
 	~Fifo<T>();
 };
-
 
