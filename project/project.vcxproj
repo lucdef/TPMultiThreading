@@ -234,7 +234,9 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadTest.hpp" />
+    <ClInclude Include="TcpClient.hpp" />
     <ClInclude Include="TcpServer.hpp" />
+    <ClInclude Include="TcpTest.hpp" />
     <ClInclude Include="TrueMutex.hpp" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
@@ -248,7 +250,9 @@
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
+    <ClCompile Include="TcpTest.cpp" />
     <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
     <ClCompile Include="utils.cpp" />
