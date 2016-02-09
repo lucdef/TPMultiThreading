@@ -98,7 +98,8 @@ int main(int argc, const char *argv[]) {
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-
+	
+	return 	TcpTest::TestMain();
 	std::cout << "Press a <Enter> to continue..." << std::endl;
 	std::cin.get();
 	return EXIT_SUCCESS;

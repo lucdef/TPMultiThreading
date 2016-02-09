@@ -169,6 +169,12 @@
     <ClInclude Include="ThreadTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TcpClient.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpTest.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -195,6 +201,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TcpServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpClient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
