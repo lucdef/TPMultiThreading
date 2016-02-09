@@ -162,7 +162,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TcpServer.hpp">
-      <Filter>Header Files</Filter>
+		<Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TcpClient.hpp">
       <Filter>Header Files</Filter>
@@ -176,7 +176,10 @@
     <ClInclude Include="ThreadTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProtocolParser.hpp">
+    <ClInclude Include="TcpClient.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
