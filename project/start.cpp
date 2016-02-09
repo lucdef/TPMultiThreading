@@ -8,7 +8,7 @@
 #include <pthread.h>
 #include <Windows.h>
 
-#include "TcpServer.hpp"
+#include "TcpTest.hpp"
 
 void ExtractCommandLine( int argc, const char *argv[] )	{
 	// Command line settings
@@ -96,21 +96,5 @@ int main(int argc, const char *argv[]) {
 	//return EXIT_SUCCESS;
 
 	
-
-	try
-	{
-		TcpServer serv = TcpServer();
-		//int ret = serv.StartServer();
-		serv.Run(666);
-	}
-	catch (CException &e) {
-		std::cerr << "** --- EXCEPTION THROWN ---" << std::endl;
-		std::cerr << "** Type: " << e.GetType() << std::endl;
-		std::cerr << "** Message: " << e.GetErrorMessage() << std::endl;
-		std::cerr << "** Error code: " << e.GetErrorCode() << std::endl;
-		std::cerr << "** Fault location: " << e.GetFaultLocation() << std::endl;
-	}
-
-	std::cin.get();
-	return EXIT_SUCCESS;
+	return 	TcpTest::TestMain();
 }
