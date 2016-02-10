@@ -24,7 +24,7 @@ OGlobal::~OGlobal()
 {
 }
 
-std::string OGlobal::generateChunk(std::string begin)
+std::string OGlobal::generateChunk(const std::string begin)
 {
 	static char lastInAlphabet = _alphabet[_alphabet.length() -1];
 
@@ -44,6 +44,9 @@ std::string OGlobal::generateChunk(std::string begin)
 
 	std::cout << "generated : " << begin << " --> " << end << std::endl ;
 	//_nextChunk = 
+
+	_nextChunk.Reset();
+	_nextChunk.SetPasswordRange(begin, end);
 
 	return end;
 }
@@ -91,6 +94,14 @@ int OGlobal::IndexOf(char letter)
 	}
 
 	return -1;
+}
+
+
+
+void OGlobal::replyChunk()
+{
+	std::string trame = "NEW-CHUNK-FOR-YOU=" + _nextChunk.GetPasswordBegin();
+	_server.SendData(trame); // TODO: handle several clients
 }
 
 //void OGlobal::createThreads()

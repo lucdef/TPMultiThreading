@@ -22,9 +22,11 @@ public:
 		~OGlobal();
 
 		// TODO: make private
-		std::string generateChunk(std::string begin);
-		std::string getBeginFromEnd(std::string end);
+		std::string generateChunk(const  std::string begin);
+		std::string getBeginFromEnd(const  std::string end);
 		int IndexOf(char letter);
+
+		void replyChunk();
 
 
 
@@ -44,7 +46,5 @@ public:
 
 		//void createThreads();
 		//void *threadFunction()
-		
-		void replyChunk();
 };
 
