@@ -104,6 +104,8 @@ int main(int argc, const char *argv[]) {
 	//return 	TcpTest::TestMain();
 	int res = OGlobalTest::TestMain();
 
+
+	std::cout << "\nAppuyer sur <Enter> pour continuer";
 	std::cin.get();
 	return EXIT_SUCCESS;
 }

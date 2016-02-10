@@ -24,7 +24,7 @@ public:
 		// TODO: make private
 		std::string generateChunk(std::string begin);
 		std::string getBeginFromEnd(std::string end);
-		int Index(char letter);
+		int IndexOf(char letter);
 
 
 
