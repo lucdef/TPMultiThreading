@@ -6,7 +6,7 @@ TcpServer::TcpServer() :
 	_socket()
 {
 	_remoteClient = nullptr;
-	request = "";
+	_request = "";
 }
 
 TcpServer::~TcpServer()
@@ -38,19 +38,19 @@ void TcpServer::ReceiveResponse()
 	// Receive whole response with 100ms timeout
 	// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
 	std::cout << "- receiving its request..." << std::endl;
-	request = "";
+	_request = "";
 	
 	do {
-		memset(buffer, 0, sizeof(buffer));
+		memset(_buffer, 0, sizeof(_buffer));
 		try {
-			recvCount = _remoteClient->Recv(buffer, sizeof(buffer), NO_TIMEOUT);
-			request += buffer;
+			_recvCount = _remoteClient->Recv(_buffer, sizeof(_buffer), NO_TIMEOUT);
+			_request += _buffer;
 		}
 		catch (CBrokenSocketException) {
 			std::cout << "Connection closed by remote host..." << std::endl;
-			recvCount = 0;
+			_recvCount = 0;
 		}
-	} while (recvCount > 0 && _remoteClient->WaitForRead(100) != SOCKET_TIMEOUT);
+	} while (_recvCount > 0 && _remoteClient->WaitForRead(100) != SOCKET_TIMEOUT);
 }
 
 void TcpServer::SendData(std::string data)
@@ -82,7 +82,7 @@ void TcpServer::SendData(std::string data)
 			"      <li>your client connected from IP address <strong>" + _remoteClient->GetRemoteEndpointIp() + "</strong> and port <strong>" + std::to_string(_remoteClient->GetRemoteEndpointPort()) + "</strong></li>"
 			"    </ul>"
 			"    <h1>Your client sent those headers</h1>"
-			"    <pre>" + request + "</pre>"
+			"    <pre>" + _request + "</pre>"
 			"  </body>"
 			"</html>";
 	}
@@ -112,7 +112,7 @@ void TcpServer::Run(unsigned short port)
 		ReceiveResponse();
 
 		// For pleasure, let's do a quick HTTP parsing
-		ParseHttp(request);
+		ParseHttp(_request);
 
 
 		// Send him the same information everytime

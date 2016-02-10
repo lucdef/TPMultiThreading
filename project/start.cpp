@@ -12,6 +12,8 @@
 
 #include "TrueMutex.hpp"
 #include "TcpServer.hpp"
+#include "TcpTest.hpp"
+#include "OGlobalTest.hpp"
 
 void ExtractCommandLine( int argc, const char *argv[] )	{
 	// Command line settings
@@ -99,8 +101,9 @@ int main(int argc, const char *argv[]) {
 	//return EXIT_SUCCESS;
 
 	
-	return 	TcpTest::TestMain();
-	std::cout << "Press a <Enter> to continue..." << std::endl;
+	//return 	TcpTest::TestMain();
+	int res = OGlobalTest::TestMain();
+
 	std::cin.get();
 	return EXIT_SUCCESS;
 }

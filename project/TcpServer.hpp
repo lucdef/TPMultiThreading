@@ -18,8 +18,8 @@ class TcpServer
 	private:
 		CSocketIp4 _socket;
 		CSocketIp4 *_remoteClient;
-		char buffer[1024];
-		int recvCount;
-		std::string request;
+		char _buffer[1024];
+		int _recvCount;
+		std::string _request;
 };
 
