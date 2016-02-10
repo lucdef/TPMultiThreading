@@ -29,7 +29,13 @@ std::string OGlobal::generateChunk(std::string begin)
 	static char lastInAlphabet = _alphabet[_alphabet.length() -1];
 
 	std::string end = begin;
-	int lastIndex = begin.length() - 1;
+	int lastIndex;
+	int beginLength = begin.length();
+
+	if (beginLength == 0)
+		return "";
+
+	lastIndex = beginLength - 1;
 
 	for (int i = lastIndex; i > lastIndex - _chunkSize; --i)
 	{
@@ -45,25 +51,36 @@ std::string OGlobal::generateChunk(std::string begin)
 std::string OGlobal::getBeginFromEnd(const std::string end)
 {
 	static char lastInAlphabet = _alphabet[_alphabet.length() - 1];
-	int lastIndex = end.length() - 1;
+	int lastIndex;
 	std::string begin = end;
+	int endLength = end.length();
+
+	if (endLength == 0)
+		return "";
+
+	lastIndex = endLength - 1;
+
 
 	int i = lastIndex;
-
 	while (begin[i] == lastInAlphabet)
 	{
 		begin.at(i) = _alphabet[0];
-		--i;
-	}
-	begin.at(i) = _alphabet[Index(begin[i]) + 1];
 
-	//std::cout << "Begin after " << end << " is " << begin << std::endl;
+		if (--i == -1) // attention on decrement avant de tester
+		{
+			std::cout << "Nothing after " << end << std::endl;
+			return "";
+		}
+	}
+	begin.at(i) = _alphabet[IndexOf(begin[i]) + 1];
+
+	std::cout << "Begin after " << end << " is " << begin << std::endl;
 
 
 	return begin;
 }
 
-int OGlobal::Index(char letter)
+int OGlobal::IndexOf(char letter)
 {
 	int length = _alphabet.length();
 	
