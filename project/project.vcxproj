@@ -223,6 +223,7 @@
     <ClInclude Include="..\libs\socket\include\CSocketIp4.h" />
     <ClInclude Include="..\libs\util\include\CUtil.h" />
     <ClInclude Include="OGlobal.hpp" />
+    <ClInclude Include="OGlobalTest.hpp" />
     <ClInclude Include="PasswordChunk.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
@@ -235,6 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OGlobal.cpp" />
+    <ClCompile Include="OGlobalTest.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
