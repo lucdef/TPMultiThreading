@@ -3,11 +3,14 @@
 static class Agent
 {
 public:
-	
-	static void GenerationPassword();
+	//Méthode permettant de générer les password (point d'entrée des threads)
+	static void GenerationPassword(CPasswordChunk chunkToGenerate);
+	//Méthode pour obtenir de getter le chunk de la fifo
 	static CPasswordChunk GetChunk();
-	static bool ComparerPassword();
-	static std::string HashPassword();
+	//Comparaison password à découvrir et celui généré
+	static bool ComparerPassword(std::string passwordToTest, std::string passwordToDiscover);
+	//Hashera le password 
+	static std::string SHA256Hash(std::string passwordToHash);
 	
 };
 
