@@ -7,7 +7,7 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
     <ClCompile Include="utils.cpp" />
-    <ClCompile Include="OrdonnanceurGlobal.cpp" />
+    <ClCompile Include="FIFO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

@@ -223,6 +223,7 @@
     <ClInclude Include="..\libs\socket\include\CSocketIp4.h" />
     <ClInclude Include="..\libs\util\include\CUtil.h" />
     <ClInclude Include="ASingleton.h" />
+    <ClInclude Include="FIFO.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="Agent.h" />
@@ -237,8 +238,8 @@
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FIFO.cpp" />
     <ClCompile Include="LogManager.cpp" />
-    <ClCompile Include="OrdonnanceurGlobal.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
