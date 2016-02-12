@@ -15,7 +15,7 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 		{
 			pthread_t idThread;
 			pthread_attr_t paramThread;	
-			pthread_create(&idThread)
+			//pthread_create(&idThread)
 		}
 	}
 
@@ -49,5 +49,5 @@ OrdonnanceurLocal::~OrdonnanceurLocal()
 
 void OrdonnanceurLocal::setChunk(CPasswordChunk passwordChunk)
 {
-	_fifo.Push(passwordChunk)
+	_fifo.Push(passwordChunk);
 }
