@@ -5,6 +5,9 @@
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
+#include <thread>
+#include <Windows.h>
+#include "OrdonnanceurLocal.h"
 
 #include <pthread.h>
 #include <Windows.h>
@@ -83,7 +86,10 @@ void EnqueueDequeue() {
 
 
 int main(int argc, const char *argv[]) {
+
 	FIFO<CPasswordChunk>fifo;
+	std::cout<<(OrdonnanceurLocal::GetAvailableMemory() / 4)/4 << std::endl;
+	
 	//std::cout << "** Welcome to this project skeleton." << std::endl;
 	//std::cout << "This is where you need to code the hash cracker." << std::endl;
 	//std::cout << std::endl;
@@ -94,7 +100,7 @@ int main(int argc, const char *argv[]) {
 
 	//std::cout << std::endl;
 	//std::cout << "** Goodbye" << std::endl;
-	//std::cin.get();
+	std::cin.get();
 	//return EXIT_SUCCESS;
 	//Fifo haha;
 	//int c = haha.test();
