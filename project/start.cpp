@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <deque>
-#include "fifo.hpp"
+#include "FIFO.h"
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
@@ -83,6 +83,7 @@ void EnqueueDequeue() {
 
 
 int main(int argc, const char *argv[]) {
+	FIFO<CPasswordChunk>fifo;
 	//std::cout << "** Welcome to this project skeleton." << std::endl;
 	//std::cout << "This is where you need to code the hash cracker." << std::endl;
 	//std::cout << std::endl;

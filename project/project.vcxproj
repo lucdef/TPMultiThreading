@@ -222,7 +222,6 @@
     <ClInclude Include="..\libs\socket\include\CSocketIOException.h" />
     <ClInclude Include="..\libs\socket\include\CSocketIp4.h" />
     <ClInclude Include="..\libs\util\include\CUtil.h" />
-    <ClInclude Include="Fifo.hpp" />
     <ClInclude Include="PasswordChunk.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
@@ -231,7 +230,6 @@
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Fifo.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />

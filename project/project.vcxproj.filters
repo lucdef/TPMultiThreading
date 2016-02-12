@@ -143,9 +143,6 @@
     <ClInclude Include="TrueMutex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Fifo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -158,9 +155,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PasswordChunk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Fifo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrueMutex.cpp">
