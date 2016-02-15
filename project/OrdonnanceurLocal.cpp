@@ -14,6 +14,8 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 		for (int i = 0; i < nbThreadLocal; i++)
 		{
 			pthread_t idThread;
+			CPasswordChunk *(GetChunk)();
+			CPasswordChunk *p = (this->GetChunk())();
 			pthread_attr_t paramThread;	
 			//pthread_create(&idThread)
 		}
