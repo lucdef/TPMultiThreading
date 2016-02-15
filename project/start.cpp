@@ -101,9 +101,7 @@ int main( int argc, const char *argv[] ) {
 	std::cout << "** Goodbye" << std::endl;
 	std::cin.get();
 	//return EXIT_SUCCESS;
-	//Fifo haha;
-	//int c = haha.test();
-	//std::cout << c << std::endl;
-	return 0;
+
+	int result = ThreadTest::Start(2);
 
 }
