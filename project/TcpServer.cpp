@@ -31,9 +31,13 @@ void TcpServer::ParseHttp(const std::string data) const
 	}
 	std::cout << "- request is \"" << tmp << "\"" << std::endl;
 
+	if (tmp == "HELLO-HOW-SHOULD-I-WORK")
+	{
+
+	}
 }
 
-void TcpServer::ReceiveResponse()
+void TcpServer::ReceiveData()
 {
 	// Receive whole response with 100ms timeout
 	// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
@@ -61,30 +65,7 @@ void TcpServer::SendData(std::string data)
 
 	if (data.length() == 0)
 	{
-		data = "HTTP/1.1 200 OK\r\n"
-			"Host: hello.it.s.me\r\n"
-			"Server: my-server\r\n"
-			"Content-type: text/html\r\n"
-			"Connection: close\r\n"
-			"\r\n"
-			"<html>"
-			"  <head>"
-			"    <title>Hello from local HTTP server</title>"
-			"    <style type='text/css'>"
-			"    h1 { color: navy; font-variant: small-caps; }"
-			"    pre { background-color: #EEE; border: 1px solid #CCC; }"
-			"    </style>"
-			"  </head>"
-			"  <body>"
-			"    <h1>You should know that ...</h1>"
-			"    <ul>"
-			"      <li>you just created your first HTTP server</li>"
-			"      <li>your client connected from IP address <strong>" + _remoteClient->GetRemoteEndpointIp() + "</strong> and port <strong>" + std::to_string(_remoteClient->GetRemoteEndpointPort()) + "</strong></li>"
-			"    </ul>"
-			"    <h1>Your client sent those headers</h1>"
-			"    <pre>" + _request + "</pre>"
-			"  </body>"
-			"</html>";
+		data = "HELLO";
 	}
 
 	_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
@@ -106,10 +87,10 @@ void TcpServer::Run(unsigned short port)
 		_remoteClient = dynamic_cast<CSocketIp4 *>(_socket.Accept());
 
 		std::cout << "Accepted incoming connection from " << _remoteClient->GetRemoteEndpointIp() << " on port " << _remoteClient->GetRemoteEndpointPort() << std::endl;
-
+		
 		// Receive whole response with 100ms timeout
 		// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
-		ReceiveResponse();
+		ReceiveData();
 
 		// For pleasure, let's do a quick HTTP parsing
 		ParseHttp(_request);

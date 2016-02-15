@@ -18,7 +18,7 @@ class TcpClient
 
 	private:
 		CSocketIp4 _socket;
-		std::string _data;
+		std::string _response;
 		int _recvCount;
 		char _buffer[1024];
 };
