@@ -7,6 +7,9 @@
 #include "PasswordChunk.h"
 
 
+#include "ThreadTest.hpp"
+
+
 void ExtractCommandLine( int argc, const char *argv[] )	{
 	// Command line settings
 	// Tip: good to be stored in a singleton dedicated to configuration	--> see singleton.h
@@ -79,16 +82,23 @@ void EnqueueDequeue() {
 
 
 int main( int argc, const char *argv[] ) {
-	std::cout << "** Welcome to this project skeleton." << std::endl;
-	std::cout << "This is where you need to code the hash cracker." << std::endl;
-	std::cout << std::endl;
+	//std::cout << "** Welcome to this project skeleton." << std::endl;
+	//std::cout << "This is where you need to code the hash cracker." << std::endl;
+	//std::cout << std::endl;
 
-	//ExtractCommandLine( argc, argv );
-	GeneratePasswords();
-	//EnqueueDequeue();
+	////ExtractCommandLine( argc, argv );
+	//GeneratePasswords();
+	////EnqueueDequeue();
 
-	std::cout << std::endl;
-	std::cout << "** Goodbye" << std::endl;
+	//std::cout << std::endl;
+	//std::cout << "** Goodbye" << std::endl;
+	//std::cout << "Press a key to continue..." << std::endl;
+	//std::cin.get();
+	//return EXIT_SUCCESS;
+	
+	int result = ThreadTest::Start();
+
+	std::cout << "Press a <Enter> to continue..." << std::endl;
 	std::cin.get();
 	return EXIT_SUCCESS;
 }

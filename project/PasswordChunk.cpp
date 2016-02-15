@@ -27,7 +27,7 @@ void CPasswordChunk::SetPasswordRange( std::string p_passwordBegin, std::string 
 	this->m_end = p_passwordEnd;
 }
 
-
+	
 std::string CPasswordChunk::GetPasswordBegin() const {
 	return this->m_begin;
 }
