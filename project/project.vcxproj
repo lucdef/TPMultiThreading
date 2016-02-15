@@ -228,6 +228,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TrueMutex.hpp" />
+    <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +237,7 @@
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
+    <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

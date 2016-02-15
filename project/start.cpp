@@ -9,6 +9,9 @@
 #include <pthread.h>
 #include <Windows.h>
 
+#include "ThreadTest.hpp"
+
+
 #include "TrueMutex.hpp"
 
 void ExtractCommandLine( int argc, const char *argv[] )	{
@@ -82,8 +85,7 @@ void EnqueueDequeue() {
 }
 
 
-int main(int argc, const char *argv[]) {
-	FIFO<CPasswordChunk>fifo;
+int main( int argc, const char *argv[] ) {
 	//std::cout << "** Welcome to this project skeleton." << std::endl;
 	//std::cout << "This is where you need to code the hash cracker." << std::endl;
 	//std::cout << std::endl;
@@ -94,11 +96,13 @@ int main(int argc, const char *argv[]) {
 
 	//std::cout << std::endl;
 	//std::cout << "** Goodbye" << std::endl;
+	//std::cout << "Press a key to continue..." << std::endl;
 	//std::cin.get();
 	//return EXIT_SUCCESS;
-	//Fifo haha;
-	//int c = haha.test();
-	//std::cout << c << std::endl;
-	return 0;
 
+	int result = ThreadTest::Start();
+
+	std::cout << "Press a <Enter> to continue..." << std::endl;
+	std::cin.get();
+	return EXIT_SUCCESS;
 }
