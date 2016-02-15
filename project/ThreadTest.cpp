@@ -24,16 +24,16 @@ void* threadFunction(void *p_arg)
 
 int ThreadTest::Start(const int nbThreads)
 {
-	pthread_t[5] id;
+	pthread_t id[5];
 
 	for (int i = 0; i < 5; ++i)
 	{
 		if (pthread_create(&id[i], nullptr, threadFunction, "Ayo") != 0)
-			std::cerr << "** Failed to create thread " + std::to_string(id.x) << std::endl;
+			std::cerr << "** Failed to create thread " + std::to_string(id[i].x) << std::endl;
 		else
 		{
 			void *result = nullptr;
-			pthread_join(id, &result);
+			pthread_join(id[i], &result);
 		}
 	}
 
