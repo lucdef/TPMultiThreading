@@ -9,7 +9,7 @@ class TcpServer
 		~TcpServer();
 		int StartServer();
 		void ParseHttp(const std::string data) const;
-		void ReceiveResponse();
+		void ReceiveData();
 		void SendData(std::string data = "");
 		void Run(unsigned short port);
 		void DisconnetClient(CSocketIp4 *remoteClient);

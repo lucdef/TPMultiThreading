@@ -232,6 +232,7 @@
     <ClInclude Include="OGlobal.hpp" />
     <ClInclude Include="OGlobalTest.hpp" />
     <ClInclude Include="PasswordChunk.h" />
+    <ClInclude Include="Protocol.hpp" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
