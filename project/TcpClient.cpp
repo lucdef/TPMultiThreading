@@ -4,7 +4,7 @@
 
 TcpClient::TcpClient() :
 	_socket(),
-	_data()
+	_response()
 {
 }
 
@@ -38,16 +38,13 @@ void TcpClient::ShowEndpointInfos()
 void TcpClient::SendHttpRequest(const std::string host)
 {
 	// Send HTTP request
-	if (_data.length() == 0)
+	if (_response.length() == 0)
 	{
-		_data = "GET / HTTP/1.1\r\n"
-			"Host: " + host + "\r\n"
-			"Connection: close\r\n"
-			"\r\n";
+		_response = "HELLO-HOW-SHOULD-I-WORK";
 	}
 
 	std::cout << "Sending request..." << std::endl;
-	_socket.Send(_data.c_str(), static_cast<unsigned short>(_data.length()), NO_TIMEOUT);
+	_socket.Send(_response.c_str(), static_cast<unsigned short>(_response.length()), NO_TIMEOUT);
 }
 
 void TcpClient::WaitForResponse()
@@ -60,14 +57,14 @@ void TcpClient::WaitForResponse()
 void TcpClient::ReceiveResponse()
 {
 	// Receive whole response
-	_data = "";
+	_response = "";
 	do {
 		memset(_buffer, 0, sizeof(_buffer));
 		std::cout << "Receiving response part..." << std::endl;
 		// When Google has finished sending me its data, it closes the connection ; thus I'm getting an exception but it's okay
 		try {
 			_recvCount = _socket.Recv(_buffer, sizeof(_buffer), NO_TIMEOUT);
-			_data += _buffer;
+			_response += _buffer;
 		}
 		catch (CBrokenSocketException) {
 			std::cout << "Connection closed by remote host..." << std::endl;
@@ -88,7 +85,7 @@ void TcpClient::DisplayResults() const
 	// Display result
 	std::cout << "And the response is..." << std::endl;
 	std::cout << "----------------------------------------" << std::endl;
-	std::cout << _data << std::endl;
+	std::cout << _response << std::endl;
 	std::cout << "----------------------------------------" << std::endl;
 }
 

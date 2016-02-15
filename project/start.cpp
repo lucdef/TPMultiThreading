@@ -101,8 +101,8 @@ int main(int argc, const char *argv[]) {
 	//return EXIT_SUCCESS;
 
 	
-	//return 	TcpTest::TestMain();
-	int res = OGlobalTest::TestMain();
+	int res = TcpTest::TestMain();
+	//int res = OGlobalTest::TestMain();
 
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
