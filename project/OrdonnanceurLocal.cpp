@@ -14,8 +14,12 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 		for (int i = 0; i < nbThreadLocal; i++)
 		{
 			pthread_t idThread;
-			CPasswordChunk *(GetChunk)();
-			CPasswordChunk *p = (this->GetChunk())();
+			CPasswordChunk (OrdonnanceurLocal::*ptr_GetChunk)()=&OrdonnanceurLocal::GetChunk;
+			std::cout << "";
+			int test;
+			std::cin >> test;
+			
+			//void *p = (this->GetChunk())();
 			pthread_attr_t paramThread;	
 			//pthread_create(&idThread)
 		}

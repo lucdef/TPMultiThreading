@@ -10,7 +10,7 @@ public:
 	static unsigned int GetAvailableMemory();
 	void RequestChunk();
 	void StartChunk();
-	void CreateThread(&int[] lstPassword);
+	void CreateThread();
 	void StopThread();
 	~OrdonnanceurLocal();
 private:
