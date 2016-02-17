@@ -185,6 +185,9 @@
     <ClInclude Include="Protocol.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProtocolParser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -239,6 +242,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OGlobalTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtocolParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

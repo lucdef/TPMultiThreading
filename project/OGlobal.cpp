@@ -4,8 +4,10 @@
 
 
 
-OGlobal::OGlobal(const int nbThread, const int chunkSize, std::string algo, std::string alphabet)
-	: _server(),
+OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
+	: _server(this),
+	_algo(algo),
+	_hash(hash),
 	_alphabet(alphabet),
 	_chunkSize(chunkSize)
 {
@@ -22,6 +24,26 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, std::string algo, std:
 
 OGlobal::~OGlobal()
 {
+}
+
+const std::string OGlobal::GetAlphabet() const
+{
+	return _alphabet;
+}
+
+const std::string OGlobal::GetAlgo() const
+{
+	return _algo;
+}
+
+const std::string OGlobal::GetHash() const
+{
+	return _hash;
+}
+
+const std::string OGlobal::GetNextChunkBegin() const
+{
+	return _nextChunk.GetPasswordBegin();
 }
 
 std::string OGlobal::generateChunk(const std::string begin)
@@ -98,11 +120,11 @@ int OGlobal::IndexOf(char letter)
 
 
 
-void OGlobal::replyChunk()
-{
-	std::string trame = "NEW-CHUNK-FOR-YOU=" + _nextChunk.GetPasswordBegin();
-	_server.SendData(trame); // TODO: handle several clients
-}
+//void OGlobal::replyChunk()
+//{
+//	std::string trame = "NEW-CHUNK-FOR-YOU=" + _nextChunk.GetPasswordBegin();
+//	_server.SendData(trame); // TODO: handle several clients
+//}
 
 //void OGlobal::createThreads()
 //{

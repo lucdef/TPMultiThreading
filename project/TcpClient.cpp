@@ -4,7 +4,8 @@
 
 TcpClient::TcpClient() :
 	_socket(),
-	_response()
+	_response(),
+	_isRunning(false)
 {
 }
 
@@ -35,16 +36,16 @@ void TcpClient::ShowEndpointInfos()
 	std::cout << "- remote socket is bound to IPv4 " << _socket.GetRemoteEndpointIp() << " on port " << _socket.GetRemoteEndpointPort() << std::endl;
 }
 
-void TcpClient::SendHttpRequest(const std::string host)
+void TcpClient::SendHttpRequest(const std::string host, std::string response)
 {
 	// Send HTTP request
-	if (_response.length() == 0)
+	if (response.length() == 0)
 	{
-		_response = "HELLO-HOW-SHOULD-I-WORK";
+		response = "HELLO-HOW-SHOULD-I-WORK";
 	}
 
 	std::cout << "Sending request..." << std::endl;
-	_socket.Send(_response.c_str(), static_cast<unsigned short>(_response.length()), NO_TIMEOUT);
+	_socket.Send(response.c_str(), static_cast<unsigned short>(response.length()), NO_TIMEOUT);
 }
 
 void TcpClient::WaitForResponse()
@@ -96,9 +97,27 @@ void TcpClient::ExampleRun()
 
 	ConnectToHost(host, port);
 	ShowEndpointInfos();
-	SendHttpRequest(host);
-	WaitForResponse();
-	ReceiveResponse();
+	_isRunning = true;
+
+	while (_isRunning)
+	{
+		std::string request = "HELLO-HOW-SHOULD-I-WORK";
+		
+		std::cout << "Enter request: ";
+		getline(std::cin, request);
+		
+		if (request == "END")
+			_isRunning = false;
+
+		SendHttpRequest(host, request);
+
+		WaitForResponse();
+		
+		ReceiveResponse();
+
+		_isRunning = false;
+	}
+	
 	CloseConnection();
 	DisplayResults();
 }

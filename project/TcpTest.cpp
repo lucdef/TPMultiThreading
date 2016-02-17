@@ -3,6 +3,7 @@
 #include "TcpClient.hpp"
 #include "pthread.h"
 #include "utils.h"
+#include "OGlobal.hpp"
 
 TcpTest::TcpTest()
 {
@@ -17,7 +18,7 @@ void *ThreadServerFunc(void *p_arg)
 {
 	try
 	{
-		TcpServer serv = TcpServer();
+		TcpServer serv = TcpServer(new OGlobal(5, 3, "sha256"));
 		//int ret = serv.StartServer();
 		serv.Run(666);
 	}
