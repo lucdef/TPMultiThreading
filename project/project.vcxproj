@@ -227,7 +227,6 @@
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="Agent.h" />
-    <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurGlobal.h" />
     <ClInclude Include="PasswordChunk.h" />
     <ClInclude Include="singleton.h" />

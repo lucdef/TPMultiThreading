@@ -98,7 +98,6 @@ int main( int argc, const char *argv[] ) {
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-	int result = ThreadTest::Start(2);
 
 	std::cout << "Press a <Enter> to continue..." << std::endl;
 	std::cin.get();
