@@ -8,7 +8,7 @@ class OGlobal;
 class TcpServer
 {
 	public:
-		TcpServer(OGlobal *ordonnanceur);
+		TcpServer();
 		~TcpServer();
 		int StartServer();
 		void ParseHttp(const std::string data);
@@ -19,7 +19,6 @@ class TcpServer
 		void StopServer();
 
 	private:
-		OGlobal *_ordonnanceur;
 		CSocketIp4 _socket;
 		CSocketIp4 *_remoteClient;
 		char _buffer[1024];
