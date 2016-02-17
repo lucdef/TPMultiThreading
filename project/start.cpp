@@ -4,6 +4,7 @@
 #include "FIFO.h"
 #include "utils.h"
 #include "CException.h"
+#include "OrdonnanceurLocal.h"
 #include "PasswordChunk.h"
 
 #include <pthread.h>
@@ -86,6 +87,10 @@ void EnqueueDequeue() {
 
 
 int main( int argc, const char *argv[] ) {
+
+	OrdonnanceurLocal ordo = OrdonnanceurLocal();
+	ordo.StartThread();
+	//int test = ordo.nb;
 	//std::cout << "** Welcome to this project skeleton." << std::endl;
 	//std::cout << "This is where you need to code the hash cracker." << std::endl;
 	//std::cout << std::endl;
@@ -100,7 +105,7 @@ int main( int argc, const char *argv[] ) {
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-	int result = ThreadTest::Start(2);
+	//int result = ThreadTest::Start(2);
 
 	std::cout << "Press a <Enter> to continue..." << std::endl;
 	std::cin.get();
