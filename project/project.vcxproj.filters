@@ -182,6 +182,9 @@
     <ClInclude Include="TcpTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProtocolParser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
