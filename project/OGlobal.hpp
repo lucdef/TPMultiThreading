@@ -18,8 +18,9 @@ class OGlobal
 	};
 
 	public:
-		OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash = "XXXXXXXXXX", const std::string alphabet = "0123456789");
-		~OGlobal();
+		static OGlobal* GetInstance(const int nbThread = -1, const int chunkSize = -1, const std::string algo = "", const std::string hash = "", const std::string alphabet = "");
+		static void Kill();
+
 		const std::string GetAlphabet() const;
 		const std::string GetAlgo() const;
 		const std::string GetHash() const;
@@ -35,6 +36,11 @@ class OGlobal
 
 
 	private:
+		static OGlobal *_instance;
+		OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
+		OGlobal& operator= (const OGlobal&) {} // TODO
+		//OGlobal(const OGlobal&) {} //TODO
+
 		TcpServer _server;
 		CPasswordChunk _nextChunk;
 		std::deque<givenChunk_t> _givenChunks;
@@ -44,6 +50,8 @@ class OGlobal
 		const int _chunkSize;
 		const std::string _algo;
 
+
+		~OGlobal();
 
 
 		//int _threadIds[THREAD_COUNT]; // TODO: change max
