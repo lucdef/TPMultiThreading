@@ -10,4 +10,5 @@ namespace HashCrackerUtils {
 
 namespace Utils {
 	void mySleep(int sleepMs);
+	bool StringContains(const std::string & source, const std::string & pattern);
 }
