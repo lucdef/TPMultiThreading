@@ -18,6 +18,14 @@ void Utils::mySleep(int sleepMs)
 	#endif
 }
 
+bool Utils::StringContains(const std::string &source, const std::string &pattern)
+{
+	if (source.find(pattern) != std::string::npos) {
+		return true;
+	}
+
+	return false;
+}
 
 void HashCrackerUtils::ParseCommandLine(const int p_argc, const char *p_argv[], std::string &p_hash, std::string &p_algo, std::string &p_alphabet, unsigned int &p_chunkSize, std::string &p_masterIpAddress, bool &p_slaveMode) {
 	int i = 1;			// Because argv[0] contains the full path to program name --> real parameters start at position 1

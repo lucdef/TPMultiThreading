@@ -9,7 +9,7 @@ class TcpClient
 		~TcpClient();
 		bool ConnectToHost(const std::string host, int port = 80);
 		void ShowEndpointInfos();
-		void SendHttpRequest(const std::string host);
+		void SendHttpRequest(const std::string host, std::string response = "");
 		void WaitForResponse();
 		void ReceiveResponse();
 		void CloseConnection();
@@ -21,5 +21,6 @@ class TcpClient
 		std::string _response;
 		int _recvCount;
 		char _buffer[1024];
+		bool _isRunning;
 };
 

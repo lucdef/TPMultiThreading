@@ -232,6 +232,7 @@
     <ClInclude Include="OGlobalTest.hpp" />
     <ClInclude Include="PasswordChunk.h" />
     <ClInclude Include="Protocol.hpp" />
+    <ClInclude Include="ProtocolParser.hpp" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="OGlobal.cpp" />
     <ClCompile Include="OGlobalTest.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
+    <ClCompile Include="ProtocolParser.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TcpClient.cpp" />
