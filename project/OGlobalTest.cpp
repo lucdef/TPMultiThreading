@@ -13,7 +13,7 @@ OGlobalTest::~OGlobalTest()
 
 int OGlobalTest::TestGetBeginFromEnd(std::string dico, int chunkSize, int passLetters)
 {
-	OGlobal og = OGlobal(1, chunkSize, "", dico);
+	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
 	std::string first = "", last = "";
 
 	// on rempli le pass de fin avec un 9 a la fin
@@ -25,19 +25,20 @@ int OGlobalTest::TestGetBeginFromEnd(std::string dico, int chunkSize, int passLe
 	{
 		// on ajoute un "dernierChar" de plus a chaque fois (ex: pour dico="0123" on ajoute des '3')
 		last.at(i) = dico.at(dico.length() - 1);
-		first = og.getBeginFromEnd(last);
+		first = og->getBeginFromEnd(last);
 
 		//if (first.length() == 0)
 		//	break;
 	}
 
-
+	OGlobal::Kill();
 	return 0;
 }
 
 int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLetters)
 {
-	OGlobal og = OGlobal(1, chunkSize, "", dico);
+	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
+
 	std::string first = "";
 
 	//double maxPass = std::pow(passLetters - chunkSize, dico.length() ) - 50;
@@ -50,7 +51,7 @@ int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLett
 		first += dico[0];
 	}
 
-	std::string last = og.generateChunk(first);
+	std::string last = og->generateChunk(first);
 
 	int i = 0;
 	while (last.length() != 0)
@@ -58,14 +59,15 @@ int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLett
 		if (i == 1000)
 			std::cout << "1000" << std::endl;
 
-		first = og.getBeginFromEnd(last);
-		last = og.generateChunk(first);
+		first = og->getBeginFromEnd(last);
+		last = og->generateChunk(first);
 		//std::cerr << "count: " << i << std::endl;
 
 		++i;
 	}
 	std::cout << "Finished." << std::endl;
 
+	OGlobal::Kill();
 	return 0;
 }
 
