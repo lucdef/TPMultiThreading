@@ -4,8 +4,7 @@
 
 #define MAX_CONNECTION 10
 
-TcpServer::TcpServer(OGlobal *ordonnanceur) :
-	_ordonnanceur(ordonnanceur),
+TcpServer::TcpServer() :
 	_socket()
 {
 	_remoteClient = nullptr;
@@ -28,6 +27,7 @@ int TcpServer::StartServer()
 
 void TcpServer::ParseHttp(const std::string data)
 {
+	OGlobal *_ordonnanceur = OGlobal::GetInstance();
 	// For pleasure, let's do a quick HTTP parsing
 	std::cout << "[TcpServer] - parsing request..." << std::endl;
 	std::string tmp = data;
