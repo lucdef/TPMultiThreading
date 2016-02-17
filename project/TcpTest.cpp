@@ -18,7 +18,8 @@ void *ThreadServerFunc(void *p_arg)
 {
 	try
 	{
-		TcpServer serv = TcpServer(new OGlobal(5, 3, "sha256"));
+		OGlobal *ordonnanceur = OGlobal::GetInstance(5, 3, "sha256", "XXXXXXXXXX", "0123456789");
+		TcpServer serv = TcpServer();
 		//int ret = serv.StartServer();
 		serv.Run(666);
 	}

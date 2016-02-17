@@ -1,11 +1,11 @@
 #include "OGlobal.hpp"
 
-
+OGlobal* OGlobal::_instance = nullptr;
 
 
 
 OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
-	: _server(this),
+	: _server(),
 	_algo(algo),
 	_hash(hash),
 	_alphabet(alphabet),
@@ -24,6 +24,20 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 
 OGlobal::~OGlobal()
 {
+}
+
+OGlobal * OGlobal::GetInstance(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
+{
+	if(_instance == nullptr && nbThread != -1)
+		_instance = new OGlobal(nbThread, chunkSize, algo, hash, alphabet);
+
+	return _instance;
+}
+
+void OGlobal::Kill()
+{
+	delete(_instance);
+	_instance = nullptr;
 }
 
 const std::string OGlobal::GetAlphabet() const
