@@ -5,11 +5,12 @@ class OrdonnanceurLocal
 {
 public:
 	OrdonnanceurLocal();
+	int nbThreadLocal;
 	static unsigned int GetNbThread();
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();
 	void RequestChunk();
-	void StartChunk();
+	void StartThread();
 	void CreateThread();
 	void StopThread();
 	~OrdonnanceurLocal();
