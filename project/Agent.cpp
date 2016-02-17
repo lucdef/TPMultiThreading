@@ -2,6 +2,9 @@
 #include "utils.h"
 #include "PasswordChunk.h"
 #include "OrdonnanceurLocal.h"
+#include <math.h>
+#include <CHashSha256.h>
+#include <CHashMd5.h>
 
 void* Agent::GenerationPassword(void *p_arg)
 {
@@ -16,22 +19,33 @@ void* Agent::GenerationPassword(void *p_arg)
 	OrdonnanceurLocal *instanceol = strucarg->instance;
 	std::string passwordtofind = strucarg->passwordToFind;
 	bool isStop = strucarg->arret;
-	while (!isStop)
+	bool trouve = false;
+	while (!isStop&&trouve==false)
 	{
 
 		std::string lstPassword;
 		
 		CPasswordChunk chunkToGenerate= instanceol->GetChunk();
-		int sizeOFChunk = chunkToGenerate.GetChunkSize();
+		std::string testAlphabet = "abcdefghijklomnpqrstuvwyz";
+		 double sizeOFChunk = pow(chunkToGenerate.GetChunkSize(),sizeof(testAlphabet));
 			char password[64] = "";
 
 		strcpy_s(password, sizeof(password),chunkToGenerate.GetPasswordBegin().c_str());
-		std::string testAlphabet = "abcdefhijklomnpqrstuvwyz";
-		for (int i=0; i < sizeOFChunk; i++)
+		
+		while (password!=chunkToGenerate.GetPasswordEnd()&&trouve==false)
 		{
 			HashCrackerUtils::IncreasePassword(password, sizeof(password), testAlphabet);
-			std::cout << password;
+			if (password == passwordtofind)
+			{
+				trouve = true;
+			}
+			std::cout << password <<std::endl;
 		}
 	}
 	return nullptr;
+}
+
+bool Agent::ComparerPassword(std::string passwordToTest, std::string passwordToDiscover)
+{
+	return passwordToTest == passwordToDiscover;
 }

@@ -57,12 +57,21 @@ void OrdonnanceurLocal::CreateThread()
 		Agent::paramThread *args = new Agent::paramThread;
 		args->instance = this;
 		args->arret = false;
-		args->passwordToFind = "aaaaa";
+		args->passwordToFind = "bbaa";
 		void*(*ptr_GenPassword)(void *) = &Agent::GenerationPassword;
 		pthread_attr_t paramThread;
 		pthread_create(&idThread, nullptr, ptr_GenPassword, args);
 		_aIdThread[i] = idThread;
 	}
+}
+
+void OrdonnanceurLocal::StopThread()
+{
+	for (int i = 0; i < sizeof(_aIdThread);i++)
+	{
+		pthread_join(_aIdThread[i], nullptr);
+	}
+	
 }
 
 
