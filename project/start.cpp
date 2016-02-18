@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
+#include "OrdonnanceurLocal.h"
 
 #include <pthread.h>
 #include <Windows.h>
@@ -84,6 +85,8 @@ void EnqueueDequeue() {
 
 
 int main( int argc, const char *argv[] ) {
+	OrdonnanceurLocal ordolocal;
+	ordolocal.StartThread();
 	//std::cout << "** Welcome to this project skeleton." << std::endl;
 	//std::cout << "This is where you need to code the hash cracker." << std::endl;
 	//std::cout << std::endl;

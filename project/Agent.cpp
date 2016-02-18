@@ -5,9 +5,9 @@
 
 void* Agent::GenerationPassword(void *p_arg)
 {
-	Agent::paramThread *strucarg;
+	OrdonnanceurLocal::paramThread *strucarg;
 	try {
-		strucarg = reinterpret_cast<struct Agent::paramThread*>(p_arg);// (struct Agent::paramThread*)p_arg;
+		strucarg = reinterpret_cast<struct OrdonnanceurLocal::paramThread*>(p_arg);// (struct Agent::paramThread*)p_arg;
 	}
 	catch (std::bad_alloc)
 	{
@@ -15,8 +15,10 @@ void* Agent::GenerationPassword(void *p_arg)
 	}
 	OrdonnanceurLocal *instanceol = strucarg->instance;
 	std::string passwordtofind = strucarg->passwordToFind;
-	bool isStop = strucarg->arret;
-	while (!isStop)
+	void* passwordFind = "";
+	bool trouve = false;
+	
+	while (!strucarg->arret)
 	{
 
 		CPasswordChunk chunkToGenerate= instanceol->GetChunk();
@@ -25,11 +27,23 @@ void* Agent::GenerationPassword(void *p_arg)
 
 		strcpy_s(password, sizeof(password),chunkToGenerate.GetPasswordBegin().c_str());
 		std::string testAlphabet = "abcdefhijklomnpqrstuvwyz";
-		while(password!=chunkToGenerate.GetPasswordEnd)
+		while(password<=chunkToGenerate.GetPasswordEnd()&&trouve==false)
 		{
+			if (passwordtofind == password)
+			{
+
+				trouve = true;
+				strucarg->arret = true;
+				instanceol->StopThread();
+				passwordFind = password;
+
+
+			}
 			HashCrackerUtils::IncreasePassword(password, sizeof(password), testAlphabet);
-			std::cout << password;
+			
+			std::cout << password <<std::endl;
 		}
 	}
-	return nullptr;
+	
+	return passwordFind;
 }

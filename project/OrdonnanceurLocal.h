@@ -13,10 +13,20 @@ public:
 	void StartThread();
 	void CreateThread();
 	void StopThread();
+	int GetNbThreadLocal();
+	void DecrementNBThread();
+	void FreeRessources();
 	~OrdonnanceurLocal();
+	struct paramThread
+	{
+		OrdonnanceurLocal* instance;
+		bool arret;
+		std::string passwordToFind;
+	};
 private:
 	FIFO<CPasswordChunk> _fifo;
-	unsigned int nbThreadLocal;
+	paramThread* _args;
+	unsigned int bThreadLocal;
 	void setChunk(CPasswordChunk passwordChunk);
 	pthread_t* _aIdThread;
 	unsigned int const SIZE_OF_CHUNK = 128;

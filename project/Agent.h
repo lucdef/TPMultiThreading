@@ -11,12 +11,6 @@ public:
 	static bool ComparerPassword(std::string passwordToTest, std::string passwordToDiscover);
 	//Hashera le password 
 	static std::string SHA256Hash(std::string passwordToHash);
-	struct paramThread
-	{
-		OrdonnanceurLocal* instance;
-		std::string passwordToFind;
-		bool* arret;
-	};
 	
 };
 
