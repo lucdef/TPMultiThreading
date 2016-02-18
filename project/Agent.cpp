@@ -18,7 +18,7 @@ void* Agent::GenerationPassword(void *p_arg)
 	bool isStop = strucarg->arret;
 	while (!isStop)
 	{
-		
+
 		CPasswordChunk chunkToGenerate= instanceol->GetChunk();
 		int sizeOFChunk = chunkToGenerate.GetChunkSize();
 			char password[64] = "";
