@@ -1,6 +1,7 @@
 #pragma once
 #include "PasswordChunk.h"
 #include "FIFO.h"
+#include "Agent.h"
 class OrdonnanceurLocal
 {
 public:

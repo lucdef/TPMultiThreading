@@ -10,11 +10,9 @@ public:
 	static CPasswordChunk GetChunk();
 	//Comparaison password à découvrir et celui généré
 	static bool ComparerPassword(std::string passwordToTest, std::string passwordToDiscover);
-	//Hashera le password 
-	static std::string SHA256Hash(std::string passwordToHash);
-	struct paramThread
+	 struct paramThread
 	{
-		OrdonnanceurLocal *instance;
+		OrdonnanceurLocal* instance;
 		std::string passwordToFind;
 		bool arret;
 	};
