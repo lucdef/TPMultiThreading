@@ -10,9 +10,9 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 {
 	this->nbThreadLocal = OrdonnanceurLocal::GetNbThread() / 2;
 	unsigned int sizeOfMemory = OrdonnanceurLocal::GetAvailableMemory();
-	_aIdThread = new pthread_t[nbThreadLocal];
-
-}
+		_aIdThread = new pthread_t[nbThreadLocal];
+			
+		}
 unsigned int OrdonnanceurLocal::GetNbThread()
 {
 
@@ -27,8 +27,8 @@ CPasswordChunk OrdonnanceurLocal::GetChunk()
 	}
 	else
 	{
-		return _fifo.Pop();
-	}
+	return _fifo.Pop();
+}
 }
 
 unsigned int OrdonnanceurLocal::GetAvailableMemory()
@@ -46,7 +46,7 @@ void OrdonnanceurLocal::StartThread()
 }
 void OrdonnanceurLocal::CreateThread()
 {
-	
+
 	for (int i = 0; i < nbThreadLocal; i++)
 	{
 		pthread_t idThread;
@@ -65,7 +65,7 @@ void OrdonnanceurLocal::StopThread()
 	//*args->arret = true;
 	delete _aIdThread;
 	//delete args;
-	
+
 }
 
 
