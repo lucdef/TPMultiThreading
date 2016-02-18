@@ -60,8 +60,13 @@ public:
 	void Today( bool p_gmt = false );
 	void Time( bool p_gmt = false );
 
+	void Reset();
 	void ResetDate();
 	void ResetTime();
+	bool IsNull();
+
+	int GetTimeZoneOffset();
+	std::string ToString();
 };
 
 #pragma pack(pop)

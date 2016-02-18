@@ -36,14 +36,6 @@
     <Filter Include="Header Files\Libraries\util">
       <UniqueIdentifier>{95dd2574-c917-45b9-bcbd-1c6bf893f28b}</UniqueIdentifier>
     </Filter>
-	<!-- <ClCompile Include="LogManager.cpp" />
-    <ClCompile Include="PasswordChunk.cpp" />
-    <ClCompile Include="start.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="TrueMutex.cpp" />
-    <ClCompile Include="utils.cpp" />
-    <ClCompile Include="FIFO.cpp" /> -->
-
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -149,9 +141,9 @@
       <Filter>Header Files\Libraries\hash</Filter>
     </ClInclude>
     <ClInclude Include="TrueMutex.hpp">
-=======
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="LogManager.h">
->>>>>>> 70dbfff7f7836acb97ecf6e59eee52fada055b1b
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrdonnanceurLocal.h">
@@ -164,7 +156,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TcpServer.hpp">
-		<Filter>Header Files</Filter>
+	  <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ThreadTest.hpp">
       <Filter>Header Files</Filter>
@@ -199,11 +191,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrueMutex.cpp">
-
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="LogManager.cpp">
-
-    <ClCompile Include="LogManager.cpp">
-    <ClCompile Include="TrueMutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OGlobal.cpp">
