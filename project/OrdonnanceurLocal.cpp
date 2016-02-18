@@ -10,7 +10,7 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 	unsigned int sizeOfMemory = OrdonnanceurLocal::GetAvailableMemory();
 	if (sizeOfMemory > SIZE_OF_CHUNK)
 	{
-		_aIdThread = new pthread_t[nbThreadLocal];
+	_aIdThread = new pthread_t[nbThreadLocal];
 		for (int i = 0; i < nbThreadLocal; i++)
 		{
 			pthread_t idThread;
@@ -18,7 +18,7 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 			std::cout << "";
 			int test;
 			std::cin >> test;
-			
+	
 			//void *p = (this->GetChunk())();
 			pthread_attr_t paramThread;	
 			//pthread_create(&idThread)
@@ -36,8 +36,8 @@ unsigned int OrdonnanceurLocal::GetNbThread()
 
 CPasswordChunk OrdonnanceurLocal::GetChunk()
 {
-	return _fifo.Pop();
-}
+		return _fifo.Pop();
+	}
 
 unsigned int OrdonnanceurLocal::GetAvailableMemory()
 {
@@ -45,6 +45,29 @@ unsigned int OrdonnanceurLocal::GetAvailableMemory()
 	status.dwLength = sizeof(status);
 	GlobalMemoryStatusEx(&status);
 	return status.ullAvailPhys*0.9;
+}
+
+void OrdonnanceurLocal::StartThread()
+{
+	this->CreateThread();
+	std::cout << "Test";
+}
+
+void OrdonnanceurLocal::CreateThread()
+{
+	
+	for (int i = 0; i < nbThreadLocal; i++)
+	{
+		pthread_t idThread;
+		Agent::paramThread *args = new Agent::paramThread;
+		args->instance = this;
+		args->arret = false;
+		args->passwordToFind = "aaaaa";
+		void*(*ptr_GenPassword)(void *) = &Agent::GenerationPassword;
+		pthread_attr_t paramThread;
+		pthread_create(&idThread, nullptr, ptr_GenPassword, args);
+		_aIdThread[i] = idThread;
+	}
 }
 
 
