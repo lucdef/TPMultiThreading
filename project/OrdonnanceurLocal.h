@@ -10,12 +10,13 @@ public:
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();
 	void RequestChunk();
-	void StartChunk();
+	void StartThread();
 	void CreateThread();
 	void StopThread();
 	~OrdonnanceurLocal();
 private:
 	FIFO<CPasswordChunk> _fifo;
+	unsigned int nbThreadLocal;
 	void setChunk(CPasswordChunk passwordChunk);
 	pthread_t* _aIdThread;
 	unsigned int const SIZE_OF_CHUNK = 128;
