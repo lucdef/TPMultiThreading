@@ -2,6 +2,7 @@
 #include "PasswordChunk.h"
 #include "FIFO.h"
 #include "Agent.h"
+#include "TrueMutex.hpp"
 class OrdonnanceurLocal
 {
 public:
@@ -14,8 +15,8 @@ public:
 	void CreateThread();
 	void StopThread();
 	int GetNbThreadLocal();
-	void DecrementNBThread();
 	void FreeRessources();
+	void SetPasswordFind(std::string password);
 	~OrdonnanceurLocal();
 	struct paramThread
 	{
@@ -24,10 +25,14 @@ public:
 		std::string passwordToFind;
 	};
 private:
+	//FIFO de chunk
 	FIFO<CPasswordChunk> _fifo;
+	//passage d'argument 
 	paramThread* _args;
+	std::string _passwordFind;
 	unsigned int bThreadLocal;
 	void setChunk(CPasswordChunk passwordChunk);
+	TrueMutex _mutex;
 	pthread_t* _aIdThread;
 	unsigned int const SIZE_OF_CHUNK = 128;
 
