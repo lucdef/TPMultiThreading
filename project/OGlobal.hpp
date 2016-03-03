@@ -25,9 +25,6 @@ class OGlobal
 		const std::string GetAlgo() const;
 		const std::string GetHash() const;
 		const std::string GetNextChunkBegin() const;
-		const std::string CraftResponse(const std::string request);
-		void StartServer(int port);
-		void StartKeyboardThread();
 
 		// TODO: make private
 		std::string generateChunk(const  std::string begin);
@@ -42,7 +39,6 @@ class OGlobal
 		static OGlobal *_instance;
 		OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
 		OGlobal& operator= (const OGlobal&) {} // TODO
-		~OGlobal();
 		//OGlobal(const OGlobal&) {} //TODO
 
 		TcpServer _server;
@@ -53,8 +49,11 @@ class OGlobal
 		const std::string _alphabet;
 		const int _chunkSize;
 		const std::string _algo;
-		
-		pthread_t _keyboardThread;
+
+
+		~OGlobal();
+
+
 		//int _threadIds[THREAD_COUNT]; // TODO: change max
 		//pthread_t _threads[THREAD_COUNT];
 

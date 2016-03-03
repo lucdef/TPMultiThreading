@@ -19,7 +19,9 @@ void *ThreadServerFunc(void *p_arg)
 	try
 	{
 		OGlobal *ordonnanceur = OGlobal::GetInstance(5, 3, "sha256", "XXXXXXXXXX", "0123456789");
-		ordonnanceur->StartServer(666);
+		TcpServer serv = TcpServer();
+		//int ret = serv.StartServer();
+		serv.Run(666);
 	}
 	catch (CException &e) {
 		std::cerr << "** --- EXCEPTION THROWN FROM SERVER ---" << std::endl;
