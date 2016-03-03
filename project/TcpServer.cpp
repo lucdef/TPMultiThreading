@@ -2,6 +2,10 @@
 #include "OGlobal.hpp"
 #include "utils.h"
 
+#include <regex>
+
+const std::string TcpServer::PASS_PATTERN = "PASS=([^ ]+) ";
+const std::string TcpServer::FOUNDER_PATTERN = "FOUND-BY=([^ ]+) ";
 
 TcpServer::TcpServer() :
 	_socket(),
@@ -27,7 +31,10 @@ int TcpServer::StartServer()
 
 std::string TcpServer::ParseHttp(const std::string data)
 {
-	OGlobal *_ordonnanceur = OGlobal::GetInstance();
+	if (data == "")
+		return data;
+
+	static OGlobal *ordonnanceur = OGlobal::GetInstance();
 	// For pleasure, let's do a quick HTTP parsing
 	std::cout << "[TcpServer] - parsing request..." << std::endl;
 	std::string tmp = data, response = "";
@@ -39,12 +46,23 @@ std::string TcpServer::ParseHttp(const std::string data)
 	if (tmp == "HELLO-HOW-SHOULD-I-WORK")
 	{
 		// TODO: stack the response in fifo resp
-		response = "WORKING-CONTEXT HASH=" + _ordonnanceur->GetHash() + " ALGO=" + _ordonnanceur->GetAlgo() + " ALPHABET=" + _ordonnanceur->GetAlphabet();
+		response = "WORKING-CONTEXT HASH=" + ordonnanceur->GetHash() + " ALGO=" + ordonnanceur->GetAlgo() + " ALPHABET=" + ordonnanceur->GetAlphabet();
 	}
 	else if ( Utils::StringContains(tmp, "NEW-CHUNK-PLEASE" ))
 	{
+		// TODO: get lastHandled from tmp
+
 		//_ordonnanceur->replyChunk();
-		response = "NEW-CHUNK-FOR-YOU=" + _ordonnanceur->GetNextChunkBegin();
+		response = "NEW-CHUNK-FOR-YOU=" + ordonnanceur->GetNextChunkBegin();
+	}
+	else if (Utils::StringContains(tmp, "FOUND-PLEASE-EXIT"))
+	{
+		// get pass from tmp
+		std::string pass = GetPatternFromData(tmp, PASS_PATTERN);
+		std::string founder = GetPatternFromData(tmp, FOUNDER_PATTERN);
+
+		//_ordonnanceur->replyChunk();
+		response = "GOOD-JOB";
 	}
 	else
 	{
@@ -71,14 +89,18 @@ std::string TcpServer::ReceiveData()
 		catch (CBrokenSocketException) {
 			std::cout << "[TcpServer] Connection closed by remote host..." << std::endl;
 			_recvCount = 0;
+			request = "";
 		}
 	} while (_recvCount > 0 && _remoteClient->WaitForRead(100) != SOCKET_TIMEOUT);
 
 	return request;
 }
 
-void TcpServer::SendData(std::string data)
+bool TcpServer::SendData(std::string data)
 {
+	if (data == "")
+		return false;
+
 	// Send him the same information everytime
 	// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
 	std::cout << "[TcpServer] - sending fake page..." << std::endl;
@@ -88,7 +110,17 @@ void TcpServer::SendData(std::string data)
 		data = _response;
 	}
 
-	_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
+	try
+	{
+		_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
+	}
+	catch (CException e)
+	{
+		std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
+		return false;
+	}
+
+	return true;
 }
 
 void TcpServer::Run(unsigned short port)
@@ -107,18 +139,26 @@ void TcpServer::Run(unsigned short port)
 	while (_isRunning) { // TODO socket IO exceptions /!\
 		int recvCount = 0;
 		char buffer[1024];
-				
-		// Receive whole response with 100ms timeout
-		// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
-		std::string request = ReceiveData();
+		
+		try
+		{
+			// Receive whole response with 100ms timeout
+			// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
+			std::string request = ReceiveData();
 
-		// For pleasure, let's do a quick HTTP parsing
-		std::string response = ParseHttp(request);
+			// For pleasure, let's do a quick HTTP parsing
+			std::string response = ParseHttp(request);
 
 
-		// Send him the same information everytime
-		// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
-		SendData(response);
+			// Send him the same information everytime
+			// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
+			_isRunning = SendData(response); // TODO send to list of client
+		}
+		catch (CSocketIOException e)
+		{
+			std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
+			_isRunning = false;
+		}
 
 		//DisconnectClient(_remoteClient);
 	}
@@ -131,14 +171,6 @@ void TcpServer::Run(unsigned short port)
 void TcpServer::DisconnectClient(CSocketIp4 *rremoteClient)
 {
 	// Disconnect
-	//if (rremoteClient == nullptr)
-	//	return;
-
-	//rremoteClient->Shutdown();
-	//delete(rremoteClient);
-	//rremoteClient = nullptr;
-
-
 	if (_remoteClient == nullptr)
 		return;
 
@@ -157,4 +189,56 @@ void TcpServer::StopServer()
 		_socket.Shutdown();
 		std::cout << "Server stopped" << std::endl;
 	}
+}
+
+std::string TcpServer::GetPatternFromData(const std::string &data, const std::string &pattern)
+{
+	// Simple regular expression matching
+	//std::regex passReg("PASS=([^ ]+) ");
+	std::regex passReg(pattern);
+	std::smatch base_match;
+
+	if (std::regex_match(data, base_match, passReg))
+	{
+		// The first sub_match is the whole string; the next
+		// sub_match is the first parenthesized expression.
+		if (base_match.size() == 2) {
+			std::ssub_match base_sub_match = base_match[1];
+			return base_sub_match.str();
+		}
+	}
+
+	return "";
+}
+
+std::string TcpServer::TestGetPassFromData()
+{
+	std::string value = "";
+	TcpServer server = TcpServer();
+
+
+	// Simple regular expression matching
+	std::string fnames[] = { "PASS=bon ", "PASS=bon vsrverv", "PASS=bonvfsdv rfedgd ", "PASS=bon'!:;vxf47 " };
+
+	for (const auto &fname : fnames) {
+		std::cout << "GOT: '" << server.GetPatternFromData(fname, PASS_PATTERN) << "'" << std::endl;
+	}
+
+	return value;
+}
+
+std::string TcpServer::TestGetFounderFromData()
+{
+	std::string value = "";
+	TcpServer server = TcpServer();
+
+
+	// Simple regular expression matching
+	std::string fnames[] = { "FOUND-BY=bon ", "FOUND-BY=bon vsrverv", "FOUND-BY=bonvfsdv rfedgd ", "FOUND-BY=bon'!:;vxf47 " };
+
+	for (const auto &fname : fnames) {
+		std::cout << "GOT: '" << server.GetPatternFromData(fname, FOUNDER_PATTERN) << "'" << std::endl;
+	}
+
+	return value;
 }

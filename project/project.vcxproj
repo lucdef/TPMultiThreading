@@ -242,6 +242,7 @@
     <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="TrueMutex.hpp" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="WinCSocket.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
@@ -261,6 +262,7 @@
     <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="WinCSocket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

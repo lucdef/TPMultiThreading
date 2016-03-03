@@ -105,7 +105,7 @@ void * OGlobal::ThreadServerFunc(void * p_arg)
 	return nullptr;
 }
 
-void OGlobal::StartKeyboardThread(bool isBlocking)
+void OGlobal::StartKeyboardThread(const bool isBlocking)
 {
 	//_keyboardArgs.appRunning = false;
 

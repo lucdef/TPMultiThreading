@@ -39,7 +39,7 @@ int OGlobalTest::TestKeyboardThread(std::string dico, int chunkSize, int passLet
 {
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
 
-	og->StartKeyboardThread();
+	og->StartKeyboardThread(true);
 
 	return 0;
 }

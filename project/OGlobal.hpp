@@ -17,9 +17,9 @@ class OGlobal
 		int			port;
 	};
 
-	struct keyboardThreadArgs_t {
-		bool *appRunning;
-	};
+	//struct keyboardThreadArgs_t {
+	//	bool *appRunning;
+	//};
 
 public:
 	static OGlobal* GetInstance(const int nbThread = -1, const int chunkSize = -1, const std::string algo = "", const std::string hash = "", const std::string alphabet = "");
@@ -31,7 +31,7 @@ public:
 	const std::string GetNextChunkBegin() const;
 	const std::string CraftResponse(const std::string request);
 	void StartServer(int port);
-	void StartKeyboardThread(bool isBlocking = true);
+	void StartKeyboardThread(const bool isBlocking);
 	void StartServerThread();
 	void Run();
 
@@ -62,7 +62,6 @@ private:
 
 
 	OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
-	OGlobal& operator= (const OGlobal&) {} // TODO
 	~OGlobal();
 	static void *ThreadKeyboardFunc(void *p_arg);
 	static void *ThreadServerFunc(void *p_arg);

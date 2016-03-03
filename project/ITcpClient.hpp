@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "CSocketIp4.h"
 
 class ITcpClient
 {
@@ -11,9 +10,9 @@ public:
 	//void ShowEndpointInfos();
 	virtual void SendHttpRequest(const std::string host, std::string data) = 0;
 	virtual void WaitForResponse() = 0;
-	virtual void ReceiveResponse() = 0;
+	virtual void ReceiveResponse(const bool display) = 0;
 	void CloseConnection();
-	virtual void DisplayResults() const = 0;
+	virtual void DisplayResults(std::string data) const = 0;
 	virtual void ExampleRun() {};
 };
 
