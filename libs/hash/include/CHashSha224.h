@@ -1,8 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include "IHash.h"
 
-class CHashSha224
+class CHashSha224 : public IHash
 {
 private:
 	std::string m_lastKnownHash;
@@ -18,6 +19,7 @@ public:
 	void HashFile( const std::string p_fileName );
 	void HashBuffer( const unsigned char *p_buffer, const int p_bufferLength );
 
+	int GetHashSize();
 	std::string GetHash();
-	void GetRawHash( unsigned char p_rawHash[ 28 ] );
+	void GetRawHash( void *p_targerBuffer28Bytes, const unsigned int p_targetBufferSize );
 };
