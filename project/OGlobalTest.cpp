@@ -35,6 +35,15 @@ int OGlobalTest::TestGetBeginFromEnd(std::string dico, int chunkSize, int passLe
 	return 0;
 }
 
+int OGlobalTest::TestKeyboardThread(std::string dico, int chunkSize, int passLetters)
+{
+	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
+
+	og->StartKeyboardThread();
+
+	return 0;
+}
+
 int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLetters)
 {
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
@@ -79,6 +88,7 @@ int OGlobalTest::TestMain()
 
 	TestGetBeginFromEnd(dico, chunkSize, passLetters);
 	TestGenerateChunk(dico, chunkSize, passLetters);
+	TestKeyboardThread(dico, chunkSize, passLetters);
 
 	return 0;
 }
