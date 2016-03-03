@@ -8,10 +8,7 @@ namespace HashCrackerUtils {
 	void IncreasePassword(char *p_password, const unsigned int p_bufferCapacity, const std::string &p_alphabet);
 }
 
-class Utils
-{
-public:
-	virtual ~Utils() = 0;
-	static void mySleep(int sleepMs);
-	static bool StringContains(const std::string & source, const std::string & pattern);
-};
+namespace Utils {
+	void mySleep(int sleepMs);
+	bool StringContains(const std::string & source, const std::string & pattern);
+}

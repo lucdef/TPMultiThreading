@@ -17,10 +17,6 @@ class OGlobal
 		int			port;
 	};
 
-	struct keyboardThreadArgs_t {
-		bool *appRunning;
-	};
-
 	public:
 		static OGlobal* GetInstance(const int nbThread = -1, const int chunkSize = -1, const std::string algo = "", const std::string hash = "", const std::string alphabet = "");
 		static void Kill();
@@ -33,7 +29,6 @@ class OGlobal
 		void StartServer(int port);
 		void StartKeyboardThread();
 
-
 		// TODO: make private
 		std::string generateChunk(const  std::string begin);
 		std::string getBeginFromEnd(const  std::string end);
@@ -45,30 +40,21 @@ class OGlobal
 
 	private:
 		static OGlobal *_instance;
+		OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
+		OGlobal& operator= (const OGlobal&) {} // TODO
+		~OGlobal();
+		//OGlobal(const OGlobal&) {} //TODO
+
+		TcpServer _server;
+		CPasswordChunk _nextChunk;
+		std::deque<givenChunk_t> _givenChunks;
 
 		const std::string _hash;
 		const std::string _alphabet;
 		const int _chunkSize;
 		const std::string _algo;
-
-		bool _appRunning;
-		TcpServer _server;
-		CPasswordChunk _nextChunk;
-		std::deque<givenChunk_t> _givenChunks;
+		
 		pthread_t _keyboardThread;
-
-
-		OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
-		OGlobal& operator= (const OGlobal&) {} // TODO
-		~OGlobal();
-		static void *ThreadKeyboardFunc(void *p_arg);
-
-		
-		
-		//OGlobal(const OGlobal&) {} //TODO
-
-
-
 		//int _threadIds[THREAD_COUNT]; // TODO: change max
 		//pthread_t _threads[THREAD_COUNT];
 
