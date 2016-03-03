@@ -239,8 +239,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TcpClient.hpp" />
     <ClInclude Include="TcpServer.hpp" />
-    <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="TcpTest.hpp" />
+    <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="TrueMutex.hpp" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
@@ -259,8 +259,8 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
-    <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TcpTest.cpp" />
+    <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
