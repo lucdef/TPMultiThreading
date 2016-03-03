@@ -33,10 +33,6 @@
 #if !defined( PTHREAD_H )
 #define PTHREAD_H
 
-#if (_MSC_VER >= 1900)
-#define _TIMESPEC_DEFINED
-#endif
-
 /*
  * See the README file for an explanation of the pthreads-win32 version
  * numbering scheme and how the DLL is named etc.
@@ -321,10 +317,12 @@ enum {
 #define HAVE_STRUCT_TIMESPEC
 #if !defined(_TIMESPEC_DEFINED)
 #define _TIMESPEC_DEFINED
+#if !defined(_INC_TIME)
 struct timespec {
         time_t tv_sec;
         long tv_nsec;
 };
+#endif
 #endif /* _TIMESPEC_DEFINED */
 #endif /* HAVE_STRUCT_TIMESPEC */
 

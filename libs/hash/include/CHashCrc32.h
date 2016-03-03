@@ -1,9 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include "IHash.h"
 
-class CHashCrc32 : public IHash
+class CHashCrc32
 {
 private:
 	std::string m_lastKnownHash;
@@ -21,7 +20,6 @@ public:
 	void HashFile(const std::string p_fileName);
 	void HashBuffer(const unsigned char *p_buffer, const int p_bufferLength);
 
-	int GetHashSize();
-	void GetRawHash( void *p_targerBuffer4Bytes, const unsigned int p_targetBufferSize );
+	void GetRawHash( unsigned char p_rawHash[ 8 ] );
 	std::string GetHash();
 };

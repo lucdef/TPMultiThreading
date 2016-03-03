@@ -236,7 +236,6 @@
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="TcpClient.hpp" />
     <ClInclude Include="TcpServer.hpp" />
     <ClInclude Include="TcpTest.hpp" />
@@ -255,8 +254,8 @@
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="ProtocolParser.cpp" />
     <ClCompile Include="start.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="TcpClient.cpp" />
+	<ClCompile Include="stdafx.cpp" />
+	<ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="TcpTest.cpp" />
     <ClCompile Include="ThreadTest.cpp" />
