@@ -240,6 +240,7 @@
     <ClInclude Include="TcpClient.hpp" />
     <ClInclude Include="TcpServer.hpp" />
     <ClInclude Include="TcpTest.hpp" />
+    <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="TrueMutex.hpp" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
