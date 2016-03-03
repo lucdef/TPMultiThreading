@@ -36,16 +36,16 @@ void TcpClient::ShowEndpointInfos()
 	std::cout << "- remote socket is bound to IPv4 " << _socket.GetRemoteEndpointIp() << " on port " << _socket.GetRemoteEndpointPort() << std::endl;
 }
 
-void TcpClient::SendHttpRequest(const std::string host, std::string response)
+void TcpClient::SendHttpRequest(const std::string host, std::string data)
 {
 	// Send HTTP request
-	if (response.length() == 0)
+	if (data.length() == 0)
 	{
-		response = "HELLO-HOW-SHOULD-I-WORK";
+		data = "HELLO-HOW-SHOULD-I-WORK";
 	}
 
 	std::cout << "Sending request..." << std::endl;
-	_socket.Send(response.c_str(), static_cast<unsigned short>(response.length()), NO_TIMEOUT);
+	_socket.Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
 }
 
 void TcpClient::WaitForResponse()

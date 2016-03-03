@@ -31,7 +31,9 @@ public:
 	const std::string GetNextChunkBegin() const;
 	const std::string CraftResponse(const std::string request);
 	void StartServer(int port);
-	void StartKeyboardThread();
+	void StartKeyboardThread(bool isBlocking = true);
+	void StartServerThread();
+	void Run();
 
 
 	// TODO: make private
@@ -56,12 +58,15 @@ private:
 	CPasswordChunk _nextChunk;
 	std::deque<givenChunk_t> _givenChunks;
 	pthread_t _keyboardThread;
+	pthread_t _serverThread;
 
 
 	OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
 	OGlobal& operator= (const OGlobal&) {} // TODO
 	~OGlobal();
 	static void *ThreadKeyboardFunc(void *p_arg);
+	static void *ThreadServerFunc(void *p_arg);
+
 
 
 

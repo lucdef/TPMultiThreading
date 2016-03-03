@@ -86,13 +86,26 @@ void* OGlobal::ThreadKeyboardFunc(void *p_arg)
 			break;
 	}
 
-	std::cout << "GOT IT " << std::endl;
+	std::cout << "KeyboardThread ending !" << std::endl;
 	*pAppRunning = false;
 
 	return nullptr;
 }
 
-void OGlobal::StartKeyboardThread()
+void * OGlobal::ThreadServerFunc(void * p_arg)
+{
+	TcpServer *pServer = reinterpret_cast<TcpServer*>(p_arg);
+	int port = 666;
+	
+	
+	pServer->Run(port);
+
+	std::cout << "ServerThread ending !" << std::endl;
+
+	return nullptr;
+}
+
+void OGlobal::StartKeyboardThread(bool isBlocking)
 {
 	//_keyboardArgs.appRunning = false;
 
@@ -105,15 +118,62 @@ void OGlobal::StartKeyboardThread()
 	
 	Utils::mySleep(1000);
 
-
-	/* example */
-	while (this->_appRunning)
+	if (isBlocking)
 	{
-		std::cout << "RUNNING - " << std::endl;
-		Utils::mySleep(500);
+		/* example */
+		//while (this->_appRunning)
+		//{
+		//	std::cout << "RUNNING - ";
+		//	Utils::mySleep(500);
+		//}
+		/* end example */
+
+		/* example1 */
+		void *result;
+		std::cout << "** Waiting..." << std::endl;
+		pthread_join(_keyboardThread, &result);
+		/* end example1 */
 	}
-	std::cout << std::endl << "STOPPED BY KEYBOARD";
+
+
+	//std::cout << std::endl << "KeyboardThread ended." << std::endl;
+}
+
+void OGlobal::StartServerThread()
+{
+	std::cout << "** Creating server thread..." << std::endl;
+	if (pthread_create(&_serverThread, nullptr, ThreadServerFunc, reinterpret_cast<TcpServer*>(&_server)) != 0) {
+		std::cerr << "** FAIL server thread" << std::endl;
+		//return;// 1;
+		exit(1);
+	}
+}
+
+void OGlobal::Run()
+{
+	StartKeyboardThread(false);
+	Utils::mySleep(1000);
+	StartServerThread();
+
+	
+	/* example */
+	//while (this->_appRunning)
+	//{
+	//	std::cout << "RUNNING - ";
+	//	Utils::mySleep(1000);
+	//}
 	/* end example */
+
+	/* example1 */
+	void *result;
+	std::cout << "** Waiting for keyboard escape..." << std::endl;
+	pthread_join(_keyboardThread, &result);
+	/* end example1 */
+
+	_server.StopServer();
+
+
+	std::cout << "Terminated." << std::endl;
 }
 
 std::string OGlobal::generateChunk(const std::string begin)

@@ -44,6 +44,24 @@ int OGlobalTest::TestKeyboardThread(std::string dico, int chunkSize, int passLet
 	return 0;
 }
 
+int OGlobalTest::TestServerThread(std::string dico, int chunkSize, int passLetters)
+{
+	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
+
+	og->StartServerThread();
+
+	return 0;
+}
+
+int OGlobalTest::TestServerAndKeyboard(std::string dico, int chunkSize, int passLetters)
+{
+	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
+
+	og->Run();
+
+	return 0;
+}
+
 int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLetters)
 {
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);

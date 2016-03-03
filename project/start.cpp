@@ -98,7 +98,9 @@ int main(int argc, const char *argv[]) {
 
 	
 	//int res = TcpTest::TestMain();
-	int res = OGlobalTest::TestKeyboardThread();
+	int res = OGlobalTest::TestServerAndKeyboard();
+	//int res = OGlobalTest::TestKeyboardThread();
+	//int res = OGlobalTest::TestServerThread();
 
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
