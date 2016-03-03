@@ -224,6 +224,7 @@
     <ClInclude Include="..\libs\util\include\CUtil.h" />
     <ClInclude Include="ASingleton.h" />
     <ClInclude Include="FIFO.h" />
+    <ClInclude Include="ITcpClient.hpp" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="OrdonnanceurGlobal.h" />

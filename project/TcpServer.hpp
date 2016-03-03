@@ -15,7 +15,7 @@ class TcpServer
 		void ReceiveData();
 		void SendData(std::string data = "");
 		void Run(unsigned short port);
-		void DisconnetClient(CSocketIp4 *remoteClient);
+		void DisconnectClient(CSocketIp4 *remoteClient);
 		void StopServer();
 
 	private:
@@ -25,5 +25,6 @@ class TcpServer
 		int _recvCount;
 		std::string _request;
 		std::string _response;
+		bool _isRunning;
 };
 

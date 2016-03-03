@@ -5,11 +5,12 @@
 #define MAX_CONNECTION 10
 
 TcpServer::TcpServer() :
-	_socket()
+	_socket(),
+	_remoteClient(nullptr),
+	_request(),
+	_response(),
+	_isRunning(false)
 {
-	_remoteClient = nullptr;
-	_request = "";
-	_response = "";
 }
 
 TcpServer::~TcpServer()
@@ -93,8 +94,9 @@ void TcpServer::Run(unsigned short port)
 	std::cout << "[TcpServer] Creating HTTP server on port 666..." << std::endl;
 
 	_socket.InitEngine();
-	_socket.CreateServer(port, 5);
-	for (;;) {
+	_socket.CreateServer(port, MAX_CONNECTION);
+	_isRunning = true;
+	while (_isRunning) {
 		int recvCount = 0;
 		char buffer[1024];
 
@@ -116,21 +118,41 @@ void TcpServer::Run(unsigned short port)
 		// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
 		SendData();
 
-		DisconnetClient(_remoteClient);
+		DisconnectClient(_remoteClient);
 	}
+	DisconnectClient(_remoteClient);
 	StopServer();
 
 	return;
 }
 
-void TcpServer::DisconnetClient(CSocketIp4 *rremoteClient)
+void TcpServer::DisconnectClient(CSocketIp4 *rremoteClient)
 {
 	// Disconnect
-	rremoteClient->Shutdown();
-	delete rremoteClient;
+	//if (rremoteClient == nullptr)
+	//	return;
+
+	//rremoteClient->Shutdown();
+	//delete(rremoteClient);
+	//rremoteClient = nullptr;
+
+
+	if (_remoteClient == nullptr)
+		return;
+
+	_remoteClient->Shutdown();
+	delete(_remoteClient);
+	_remoteClient = nullptr;
 }
 
 void TcpServer::StopServer()
 {
-	_socket.Shutdown();
+	_isRunning = false;
+
+	if (_isRunning)
+	{
+		// here if called by TcpServer::Run(unsigned short)
+		_socket.Shutdown();
+		std::cout << "Server stopped" << std::endl;
+	}
 }
