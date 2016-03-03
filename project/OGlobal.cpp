@@ -1,4 +1,6 @@
 #include "OGlobal.hpp"
+#include "utils.h"
+#include "conio.h"
 
 OGlobal* OGlobal::_instance = nullptr;
 
@@ -7,6 +9,7 @@ OGlobal* OGlobal::_instance = nullptr;
 OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
 	: _server(),
 	_algo(algo),
+	_appRunning(true),
 	_hash(hash),
 	_alphabet(alphabet),
 	_chunkSize(chunkSize)
@@ -58,6 +61,59 @@ const std::string OGlobal::GetHash() const
 const std::string OGlobal::GetNextChunkBegin() const
 {
 	return _nextChunk.GetPasswordBegin();
+}
+
+const std::string OGlobal::CraftResponse(const std::string request)
+{
+	return "";
+}
+
+void OGlobal::StartServer(int port)
+{
+	// start a thread
+	_server.Run(port);
+}
+
+void* OGlobal::ThreadKeyboardFunc(void *p_arg)
+{
+	bool* pAppRunning = reinterpret_cast<bool*>(p_arg);
+
+	while (*pAppRunning)
+	{
+		char letter = _getch();
+		
+		if (letter == 27) // 'ESC'
+			break;
+	}
+
+	std::cout << "GOT IT " << std::endl;
+	*pAppRunning = false;
+
+	return nullptr;
+}
+
+void OGlobal::StartKeyboardThread()
+{
+	//_keyboardArgs.appRunning = false;
+
+	std::cout << "** Creating keyboard thread..." << std::endl;
+	if (pthread_create(&_keyboardThread, nullptr, ThreadKeyboardFunc, reinterpret_cast<void*>(&_appRunning)) != 0) {
+		std::cerr << "** FAIL keyboard thread" << std::endl;
+		//return;// 1;
+		exit(1);
+	}
+	
+	Utils::mySleep(1000);
+
+
+	/* example */
+	while (this->_appRunning)
+	{
+		std::cout << "RUNNING - " << std::endl;
+		Utils::mySleep(500);
+	}
+	std::cout << std::endl << "STOPPED BY KEYBOARD";
+	/* end example */
 }
 
 std::string OGlobal::generateChunk(const std::string begin)

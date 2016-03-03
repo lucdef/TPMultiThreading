@@ -5,14 +5,13 @@
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
-
 #include "ThreadTest.hpp"
-
-
 #include "TrueMutex.hpp"
 #include "TcpServer.hpp"
+#include "TcpTest.hpp"
+#include "OGlobalTest.hpp"
 
-void ExtractCommandLine( int argc, const char *argv[] )	{
+void ExtractCommandLine(int argc, const char *argv[]) {
 	// Command line settings
 	// Tip: good to be stored in a singleton dedicated to configuration	--> see singleton.h
 	std::string hash, algo, alphabet, masterIpAddress;
@@ -23,7 +22,7 @@ void ExtractCommandLine( int argc, const char *argv[] )	{
 	try {
 		HashCrackerUtils::ParseCommandLine(argc, argv, hash, algo, alphabet, chunkSize, masterIpAddress, runningAsSlave);
 	}
-	catch(CException &ex) {
+	catch (CException &ex) {
 		std::cerr << "** Command line extraction failed at \"" << ex.GetFaultLocation() << "\" with error code " << ex.GetErrorCode() << " and message \"" << ex.GetErrorMessage() << "\"" << std::endl;
 		return;
 	}
@@ -31,7 +30,7 @@ void ExtractCommandLine( int argc, const char *argv[] )	{
 	// Show information
 	std::cout << "--- INFORMATION GOT FROM COMMAND LINBE ---" << std::endl;
 	std::cout << "Mode: " << (runningAsSlave ? "slave" : "master") << std::endl;
-	if( runningAsSlave ) {
+	if (runningAsSlave) {
 		std::cout << "-ip " << masterIpAddress << std::endl;
 	}
 	else {
@@ -48,7 +47,7 @@ void GeneratePasswords() {
 	std::string testAlphabet = "0123456789";
 
 	strcpy_s(password, sizeof(password), "");
-	for( int i = 0; i < 2500; i++ ) {
+	for (int i = 0; i < 2500; i++) {
 		HashCrackerUtils::IncreasePassword(password, sizeof(password), testAlphabet);
 		std::cout << "New password: \"" << password << "\"" << std::endl;
 	}
@@ -60,16 +59,16 @@ void EnqueueDequeue() {
 	CPasswordChunk chunk;
 
 	fifo.clear();
-	
+
 	std::cout << "Queuing 00000aa --> 00000**" << std::endl;
 	chunk.Reset();
-	chunk.SetPasswordRange( "00000aa", "00000**" );
-	fifo.push_back( chunk );
+	chunk.SetPasswordRange("00000aa", "00000**");
+	fifo.push_back(chunk);
 
 	std::cout << "Queuing 00001aa --> 00001**" << std::endl;
 	chunk.Reset();
-	chunk.SetPasswordRange( "00001aa", "00001**" );
-	fifo.push_back( chunk );
+	chunk.SetPasswordRange("00001aa", "00001**");
+	fifo.push_back(chunk);
 
 	std::cout << "Element count in FIFO: " << fifo.size() << std::endl;
 	while (fifo.size() > 0)
@@ -83,7 +82,7 @@ void EnqueueDequeue() {
 }
 
 
-int main( int argc, const char *argv[] ) {
+int main(int argc, const char *argv[]) {
 	//std::cout << "** Welcome to this project skeleton." << std::endl;
 	//std::cout << "This is where you need to code the hash cracker." << std::endl;
 	//std::cout << std::endl;
@@ -94,13 +93,15 @@ int main( int argc, const char *argv[] ) {
 
 	//std::cout << std::endl;
 	//std::cout << "** Goodbye" << std::endl;
-	//std::cout << "Press a key to continue..." << std::endl;
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-	int result = ThreadTest::Start(2);
 
-	std::cout << "Press a <Enter> to continue..." << std::endl;
+	//int res = TcpTest::TestMain();
+	int res = OGlobalTest::TestKeyboardThread();
+
+
+	std::cout << "\nAppuyer sur <Enter> pour continuer";
 	std::cin.get();
 	return EXIT_SUCCESS;
 }
