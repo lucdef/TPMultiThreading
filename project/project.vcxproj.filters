@@ -152,16 +152,10 @@
     <ClInclude Include="FIFO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Fifo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OGlobal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TcpServer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LogManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrdonnanceurGlobal.h">
@@ -229,31 +223,13 @@
     <ClCompile Include="TrueMutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Agent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ASingleton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FIFO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LogManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OrdonnanceurGlobal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OrdonnanceurLocal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrueMutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OGlobal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ThreadTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TcpServer.cpp">
@@ -287,6 +263,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OrdonnanceurLocal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ThreadTest.cpp">

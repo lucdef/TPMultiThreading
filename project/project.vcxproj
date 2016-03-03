@@ -224,7 +224,6 @@
     <ClInclude Include="..\libs\util\include\CUtil.h" />
     <ClInclude Include="ASingleton.h" />
     <ClInclude Include="FIFO.h" />
-    <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="OrdonnanceurGlobal.h" />
@@ -245,7 +244,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FIFO.cpp" />
-    <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="OGlobal.cpp" />
     <ClCompile Include="OGlobalTest.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
@@ -255,6 +253,7 @@
     <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
     <ClCompile Include="TcpTest.cpp" />
+    <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
