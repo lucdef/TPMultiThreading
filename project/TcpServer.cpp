@@ -2,7 +2,6 @@
 #include "OGlobal.hpp"
 #include "utils.h"
 
-#define MAX_CONNECTION 10
 
 TcpServer::TcpServer() :
 	_socket(),
@@ -26,12 +25,12 @@ int TcpServer::StartServer()
 	return 0;
 }
 
-void TcpServer::ParseHttp(const std::string data)
+std::string TcpServer::ParseHttp(const std::string data)
 {
 	OGlobal *_ordonnanceur = OGlobal::GetInstance();
 	// For pleasure, let's do a quick HTTP parsing
 	std::cout << "[TcpServer] - parsing request..." << std::endl;
-	std::string tmp = data;
+	std::string tmp = data, response = "";
 	if (tmp.find('\r') > 0) {
 		tmp = tmp.substr(0, tmp.find('\r'));
 	}
@@ -40,38 +39,42 @@ void TcpServer::ParseHttp(const std::string data)
 	if (tmp == "HELLO-HOW-SHOULD-I-WORK")
 	{
 		// TODO: stack the response in fifo resp
-		_response = "WORKING-CONTEXT HASH=" + _ordonnanceur->GetHash() + " ALGO=" + _ordonnanceur->GetAlgo() + " ALPHABET=" + _ordonnanceur->GetAlphabet();
+		response = "WORKING-CONTEXT HASH=" + _ordonnanceur->GetHash() + " ALGO=" + _ordonnanceur->GetAlgo() + " ALPHABET=" + _ordonnanceur->GetAlphabet();
 	}
 	else if ( Utils::StringContains(tmp, "NEW-CHUNK-PLEASE" ))
 	{
 		//_ordonnanceur->replyChunk();
-		_response = "NEW-CHUNK-FOR-YOU=" + _ordonnanceur->GetNextChunkBegin();
+		response = "NEW-CHUNK-FOR-YOU=" + _ordonnanceur->GetNextChunkBegin();
 	}
 	else
 	{
-		_response = "UNKNOWN COMMAND";
+		response = "UNKNOWN COMMAND";
 	}
+
+	return response;
 }
 
 
-void TcpServer::ReceiveData()
+std::string TcpServer::ReceiveData()
 {
 	// Receive whole response with 100ms timeout
 	// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
 	std::cout << "[TcpServer] - receiving its request..." << std::endl;
-	_request = "";
+	std::string request = "";
 	
 	do {
 		memset(_buffer, 0, sizeof(_buffer));
 		try {
 			_recvCount = _remoteClient->Recv(_buffer, sizeof(_buffer), NO_TIMEOUT);
-			_request += _buffer;
+			request += _buffer;
 		}
 		catch (CBrokenSocketException) {
 			std::cout << "[TcpServer] Connection closed by remote host..." << std::endl;
 			_recvCount = 0;
 		}
 	} while (_recvCount > 0 && _remoteClient->WaitForRead(100) != SOCKET_TIMEOUT);
+
+	return request;
 }
 
 void TcpServer::SendData(std::string data)
@@ -95,30 +98,29 @@ void TcpServer::Run(unsigned short port)
 
 	_socket.InitEngine();
 	_socket.CreateServer(port, MAX_CONNECTION);
+
 	_isRunning = true;
-	while (_isRunning) {
+	std::cout << "[TcpServer] Waiting for connections..." << std::endl;
+	_remoteClient = dynamic_cast<CSocketIp4 *>(_socket.Accept());
+	std::cout << "[TcpServer] Accepted incoming connection from " << _remoteClient->GetRemoteEndpointIp() << " on port " << _remoteClient->GetRemoteEndpointPort() << std::endl;
+	
+	while (_isRunning) { // TODO socket IO exceptions /!\
 		int recvCount = 0;
 		char buffer[1024];
-
-
-		std::cout << "[TcpServer] Waiting for connections..." << std::endl;
-		_remoteClient = dynamic_cast<CSocketIp4 *>(_socket.Accept());
-
-		std::cout << "[TcpServer] Accepted incoming connection from " << _remoteClient->GetRemoteEndpointIp() << " on port " << _remoteClient->GetRemoteEndpointPort() << std::endl;
-		
+				
 		// Receive whole response with 100ms timeout
 		// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
-		ReceiveData();
+		std::string request = ReceiveData();
 
 		// For pleasure, let's do a quick HTTP parsing
-		ParseHttp(_request);
+		std::string response = ParseHttp(request);
 
 
 		// Send him the same information everytime
 		// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
-		SendData();
+		SendData(response);
 
-		DisconnectClient(_remoteClient);
+		//DisconnectClient(_remoteClient);
 	}
 	DisconnectClient(_remoteClient);
 	StopServer();
