@@ -1,5 +1,7 @@
 #pragma once
 #include "ITcpClient.hpp"
+#include "CSocketIp4.h"
+#include <deque>
 
 class TcpClient : public ITcpClient
 {
@@ -10,16 +12,16 @@ class TcpClient : public ITcpClient
 		void ShowEndpointInfos();
 		void SendHttpRequest(const std::string host, std::string response = "");
 		void WaitForResponse();
-		void ReceiveResponse();
+		void ReceiveResponse(const bool display);
 		void CloseConnection();
-		void DisplayResults() const;
+		void DisplayResults(std::string data = "") const;
 		void ExampleRun();
 
 	private:
 		CSocketIp4 _socket;
-		std::string _response;
 		int _recvCount;
 		char _buffer[1024];
 		bool _isRunning;
+		std::deque<std::string> _responses;
 };
 

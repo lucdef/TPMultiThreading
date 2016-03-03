@@ -31,9 +31,7 @@ void *ThreadServerFunc(void *p_arg)
 		std::cerr << "** Fault location: " << e.GetFaultLocation() << std::endl;
 	}
 
-	std::cout << "Appuyer sur <Enter> pour continuer";
-	std::cin.get();
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 void *ThreadClientFunc(void *p_arg)
@@ -67,7 +65,7 @@ int TcpTest::TestMain()
 	std::cout << "** Creating thread..." << std::endl;
 	if (pthread_create(&ServerThread, nullptr, ThreadServerFunc, reinterpret_cast<void *>(1)) != 0) {
 		std::cerr << "** FAIL Server1" << std::endl;
-		return 1;
+		return EXIT_FAILURE;
 	}
 	else {
 		std::cout << "** ThreadServer creation OK" << std::endl;
@@ -77,7 +75,7 @@ int TcpTest::TestMain()
 
 	if (pthread_create(&ClientThread, nullptr, ThreadClientFunc, reinterpret_cast<void *>(2)) != 0) {
 		std::cerr << "** FAIL Client" << std::endl;
-		return 1;
+		return EXIT_FAILURE;
 	}
 	else {
 		std::cout << "** ThreadClient creation OK" << std::endl;

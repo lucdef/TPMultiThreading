@@ -97,11 +97,11 @@ int main(int argc, const char *argv[]) {
 	//return EXIT_SUCCESS;
 
 
-	//int res = TcpTest::TestMain();
-	int res = OGlobalTest::TestServerAndKeyboard();
+	int res = TcpTest::TestMain();
+	//int res = OGlobalTest::TestServerAndKeyboard();
 	//int res = OGlobalTest::TestKeyboardThread();
 	//int res = OGlobalTest::TestServerThread();
-
+	//TcpServer::TestGetFounderFromData();
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
 	std::cin.get();

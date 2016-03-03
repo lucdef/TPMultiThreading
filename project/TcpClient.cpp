@@ -3,9 +3,10 @@
 
 
 TcpClient::TcpClient() :
+	ITcpClient(),
 	_socket(),
-	_response(),
-	_isRunning(false)
+	_isRunning(false),
+	_responses()
 {
 }
 
@@ -55,23 +56,34 @@ void TcpClient::WaitForResponse()
 	_socket.WaitForRead(NO_TIMEOUT);
 }
 
-void TcpClient::ReceiveResponse()
+void TcpClient::ReceiveResponse(const bool display)
 {
 	// Receive whole response
-	_response = "";
+	std::string response = "";
+	bool noError = true;
+
+	const int bufferSize = sizeof(_buffer);
 	do {
-		memset(_buffer, 0, sizeof(_buffer));
+		memset(_buffer, 0, bufferSize);
 		std::cout << "Receiving response part..." << std::endl;
-		// When Google has finished sending me its data, it closes the connection ; thus I'm getting an exception but it's okay
 		try {
-			_recvCount = _socket.Recv(_buffer, sizeof(_buffer), NO_TIMEOUT);
-			_response += _buffer;
+			_recvCount = _socket.Recv(_buffer, bufferSize, NO_TIMEOUT);
+			response += _buffer;
+			if (_recvCount < bufferSize)
+				_recvCount = 0;
 		}
 		catch (CBrokenSocketException) {
 			std::cout << "Connection closed by remote host..." << std::endl;
 			_recvCount = 0;
+			noError = false;
 		}
 	} while (_recvCount > 0);
+
+	if (noError)
+	{
+		_responses.push_back(response);
+		DisplayResults(response);
+	}
 }
 
 void TcpClient::CloseConnection()
@@ -81,12 +93,15 @@ void TcpClient::CloseConnection()
 	_socket.Shutdown();
 }
 
-void TcpClient::DisplayResults() const
+void TcpClient::DisplayResults(std::string data) const
 {
+	if (data == "")
+		data = _responses.back();
+
 	// Display result
 	std::cout << "And the response is..." << std::endl;
 	std::cout << "----------------------------------------" << std::endl;
-	std::cout << _response << std::endl;
+	std::cout << data << std::endl;
 	std::cout << "----------------------------------------" << std::endl;
 }
 
@@ -101,23 +116,25 @@ void TcpClient::ExampleRun()
 
 	while (_isRunning)
 	{
-		std::string request = "HELLO-HOW-SHOULD-I-WORK";
+		std::string request;
 		
 		std::cout << "Enter request: ";
 		getline(std::cin, request);
 		
 		if (request == "END")
 			_isRunning = false;
+		else if (request == "")
+			request = "HELLO-HOW-SHOULD-I-WORK";
 
 		SendHttpRequest(host, request);
 
 		WaitForResponse();
 		
-		ReceiveResponse();
+		ReceiveResponse(true);
 
-		_isRunning = false;
+		//DisplayResults();
+		//_isRunning = false;
 	}
 	
 	CloseConnection();
-	DisplayResults();
 }
