@@ -11,20 +11,19 @@ class TcpServer
 		TcpServer();
 		~TcpServer();
 		int StartServer();
-		const std::string ParseHttp(const std::string &data);
-		const std::string ReceiveData();
+		void ParseHttp(const std::string data);
+		void ReceiveData();
 		void SendData(std::string data = "");
 		void Run(unsigned short port);
-		void DisconnectClient(CSocketIp4 *remoteClient);
+		void DisconnetClient(CSocketIp4 *remoteClient);
 		void StopServer();
 
 	private:
-		static const short MAX_CONNECTION = 5;
-		CSocketIp4 _serverSocket;
-		CSocketIp4* _remoteClient; // TODO client count
+		CSocketIp4 _socket;
+		CSocketIp4 *_remoteClient;
 		char _buffer[1024];
 		int _recvCount;
-		//std::string _request;
-		//std::string _response;
+		std::string _request;
+		std::string _response;
 };
 

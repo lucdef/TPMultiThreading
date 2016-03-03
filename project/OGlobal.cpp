@@ -60,42 +60,6 @@ const std::string OGlobal::GetNextChunkBegin() const
 	return _nextChunk.GetPasswordBegin();
 }
 
-const std::string OGlobal::CraftResponse(const std::string request)
-{
-	return "";
-}
-
-void OGlobal::StartServer(int port)
-{
-	// start a thread
-	_server.Run(port);
-}
-
-void *ThreadKeyboardFunc(void *p_arg)
-{
-	bool run = true;
-
-	while (run)
-	{
-		char letter = std::cin.get();
-		if (letter == 'e')
-		{
-			std::cout << "GOT IT" << std::endl;
-		}
-	}
-
-	return nullptr;
-}
-
-void OGlobal::StartKeyboardThread()
-{
-	std::cout << "** Creating keyboard thread..." << std::endl;
-	if (pthread_create(&_keyboardThread, nullptr, ThreadKeyboardFunc, reinterpret_cast<void *>(1)) != 0) {
-		std::cerr << "** FAIL Server1" << std::endl;
-		return;// 1;
-	}
-}
-
 std::string OGlobal::generateChunk(const std::string begin)
 {
 	static char lastInAlphabet = _alphabet[_alphabet.length() -1];
