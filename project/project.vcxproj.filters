@@ -38,7 +38,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-	<ClInclude Include="..\libs\core\include\CDateTime.h">
+    <ClInclude Include="..\libs\core\include\CDateTime.h">
       <Filter>Header Files\Libraries\core</Filter>
     </ClInclude>
     <ClInclude Include="..\libs\core\include\CException.h">
@@ -194,5 +194,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  
 </Project>
