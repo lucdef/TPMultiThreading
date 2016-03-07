@@ -235,7 +235,7 @@ std::string OGlobal::getBeginFromEnd(const std::string end)
 	return begin;
 }
 
-int OGlobal::IndexOf(char letter)
+int OGlobal::IndexOf(const char letter) const
 {
 	int length = _alphabet.length();
 	
