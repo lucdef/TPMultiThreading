@@ -224,21 +224,23 @@
     <ClInclude Include="..\libs\util\include\CUtil.h" />
     <ClInclude Include="ASingleton.h" />
     <ClInclude Include="FIFO.h" />
+    <ClInclude Include="Fifo.hpp" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="Agent.h" />
-    <ClInclude Include="OrdonnanceurGlobal.h" />
     <ClInclude Include="PasswordChunk.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TrueMutex.hpp" />
-    <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="ASingleton.cpp" />
     <ClCompile Include="FIFO.cpp" />
     <ClCompile Include="LogManager.cpp" />
+    <ClCompile Include="OrdonnanceurLocal.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
