@@ -39,7 +39,7 @@ public:
 	// TODO: make private
 	std::string generateChunk(const  std::string begin);
 	std::string getBeginFromEnd(const  std::string end);
-	int IndexOf(char letter);
+	int IndexOf(const char letter) const;
 
 	//void replyChunk();
 

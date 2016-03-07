@@ -10,23 +10,11 @@ const std::string TcpServer::FOUNDER_PATTERN = "FOUND-BY=([^ ]+) ";
 TcpServer::TcpServer() :
 	_socket(),
 	_remoteClient(nullptr),
+	_recvCount(0),
 	_request(),
 	_response(),
 	_isRunning(false)
 {
-}
-
-TcpServer::~TcpServer()
-{
-}
-
-int TcpServer::StartServer()
-{
-	//_socket.InitEngine();
-	//_socket.CreateServer(666, MAX_CONNECTION);
-
-	// TODO
-	return 0;
 }
 
 std::string TcpServer::ParseHttp(const std::string data)
@@ -151,8 +139,10 @@ void TcpServer::Run(unsigned short port)
 
 
 			// Send him the same information everytime
-			// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
 			_isRunning = SendData(response); // TODO send to list of client
+
+			if (response == "GOOD JOB")
+				break;
 		}
 		catch (CSocketIOException e)
 		{
@@ -191,14 +181,14 @@ void TcpServer::StopServer()
 	}
 }
 
-std::string TcpServer::GetPatternFromData(const std::string &data, const std::string &pattern)
+std::string TcpServer::GetPatternFromData(const std::string &haystack, const std::string &needle) const
 {
 	// Simple regular expression matching
 	//std::regex passReg("PASS=([^ ]+) ");
-	std::regex passReg(pattern);
+	std::regex passReg(needle);
 	std::smatch base_match;
 
-	if (std::regex_match(data, base_match, passReg))
+	if (std::regex_match(haystack, base_match, passReg))
 	{
 		// The first sub_match is the whole string; the next
 		// sub_match is the first parenthesized expression.
