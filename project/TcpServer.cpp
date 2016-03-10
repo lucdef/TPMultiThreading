@@ -117,17 +117,19 @@ bool TcpServer::SendData(std::string data) const
 	try
 	{
 		_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
-		_logger->LogInfo(1, "Server sent '<data>' to '<to>'");
+		_logger->LogInfo(1, "Server sent '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");
 	}
 	catch (CException e)
 	{
 		std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
-		_logger->LogError(1, "ERREUR: " + e.GetErrorMessage());
+		_logger->LogError(1, "Server error while sending '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");;
 		return false;
 	}
 
 	return true;
 }
+
+
 
 void TcpServer::Run(unsigned short port)
 {
@@ -169,7 +171,7 @@ void TcpServer::Run(unsigned short port)
 		catch (CSocketIOException e)
 		{
 			std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
-			_logger->LogError(1, e.GetErrorMessage());
+			_logger->LogError(1, "Communication error while handling client " + Utils::GetClientStr(_remoteClient) + " - " + e.GetErrorMessage());
 			_isRunning = false;
 		}
 
