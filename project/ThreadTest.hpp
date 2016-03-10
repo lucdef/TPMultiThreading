@@ -1,10 +1,10 @@
 #pragma once
+
 class ThreadTest
 {
-	public:
-		ThreadTest();
-		~ThreadTest();
+public:
+	ThreadTest();
+	~ThreadTest();
+	int Start(const int nbThreads);
 
-		static int Start(const int nbThreads);
 };
-

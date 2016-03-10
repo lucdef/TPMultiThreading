@@ -38,12 +38,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\libs\core\include\CDateTime.h">
       <Filter>Header Files\Libraries\core</Filter>
     </ClInclude>
@@ -107,6 +101,9 @@
     <ClInclude Include="..\libs\socket\include\CSocketIOException.h">
       <Filter>Header Files\Libraries\socket\exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="..\libs\hash\include\IHash.h">
+      <Filter>Header Files\Libraries\hash</Filter>
+    </ClInclude>
     <ClInclude Include="..\libs\hash\include\CHashCrc32.h">
       <Filter>Header Files\Libraries\hash</Filter>
     </ClInclude>
@@ -128,22 +125,16 @@
     <ClInclude Include="..\libs\util\include\CUtil.h">
       <Filter>Header Files\Libraries\util</Filter>
     </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PasswordChunk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libs\hash\include\IHash.h">
-      <Filter>Header Files\Libraries\hash</Filter>
-    </ClInclude>
     <ClInclude Include="TrueMutex.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Agent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ASingleton.h">
@@ -152,16 +143,34 @@
     <ClInclude Include="FIFO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LogManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrdonnanceurLocal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PasswordChunk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="OGlobal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TcpServer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OrdonnanceurGlobal.h">
+    <ClInclude Include="TcpClient.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OrdonnanceurLocal.h">
+    <ClInclude Include="TcpTest.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OGlobalTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ThreadTest.hpp">
@@ -173,7 +182,7 @@
     <ClInclude Include="TcpTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OGlobalTest.hpp">
+    <ClInclude Include="ProtocolParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Protocol.hpp">
@@ -191,39 +200,48 @@
     <ClInclude Include="FIFO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OrdonnanceurGlobal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OrdonnanceurLocal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadTest.hpp">
+    <ClInclude Include="Fifo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ITcpClient.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WinCSocket.hpp">
+    <ClInclude Include="TcpTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TtcpTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="start.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utils.cpp">
+    <ClCompile Include="LogManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PasswordChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="start.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TrueMutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="FIFO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ASingleton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrueMutex.cpp">
@@ -233,6 +251,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TcpServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TcpClient.cpp">
@@ -250,13 +271,7 @@
     <ClCompile Include="FIFO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ThreadTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ThreadTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WinCSocket.cpp">
+    <ClCompile Include="OrdonnanceurLocal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

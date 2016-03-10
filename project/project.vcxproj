@@ -222,12 +222,13 @@
     <ClInclude Include="..\libs\socket\include\CSocketIOException.h" />
     <ClInclude Include="..\libs\socket\include\CSocketIp4.h" />
     <ClInclude Include="..\libs\util\include\CUtil.h" />
+    <ClInclude Include="Agent.h" />
     <ClInclude Include="ASingleton.h" />
     <ClInclude Include="FIFO.h" />
+    <ClInclude Include="Fifo.hpp" />
     <ClInclude Include="ITcpClient.hpp" />
+    <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
-    <ClInclude Include="Agent.h" />
-    <ClInclude Include="OrdonnanceurGlobal.h" />
     <ClInclude Include="OGlobal.hpp" />
     <ClInclude Include="OGlobalTest.hpp" />
     <ClInclude Include="PasswordChunk.h" />
@@ -238,14 +239,19 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TcpClient.hpp" />
     <ClInclude Include="TcpServer.hpp" />
+    <ClInclude Include="TcpTest.h" />
     <ClInclude Include="TcpTest.hpp" />
-    <ClInclude Include="TrueMutex.hpp" />
     <ClInclude Include="ThreadTest.hpp" />
+    <ClInclude Include="TrueMutex.hpp" />
+    <ClInclude Include="TtcpTest.hpp" />
     <ClInclude Include="utils.h" />
-    <ClInclude Include="WinCSocket.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="ASingleton.cpp" />
     <ClCompile Include="FIFO.cpp" />
+    <ClCompile Include="LogManager.cpp" />
+    <ClCompile Include="OrdonnanceurLocal.cpp" />
     <ClCompile Include="OGlobal.cpp" />
     <ClCompile Include="OGlobalTest.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
@@ -258,7 +264,6 @@
     <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
     <ClCompile Include="utils.cpp" />
-    <ClCompile Include="WinCSocket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
