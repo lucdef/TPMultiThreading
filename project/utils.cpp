@@ -1,6 +1,31 @@
 #include "utils.h"
 #include "CException.h"
 
+#ifdef LINUX
+#include <unistd.h>
+#endif
+#ifdef WINDOWS
+#include <windows.h>
+#endif
+
+void Utils::mySleep(int sleepMs)
+{
+	#ifdef LINUX
+		usleep(sleepMs * 1000);   // usleep takes sleep time in us (1 millionth of a second)
+	#endif
+	#ifdef WINDOWS
+		Sleep(sleepMs);
+	#endif
+}
+
+bool Utils::StringContains(const std::string &source, const std::string &pattern)
+{
+	if (source.find(pattern) != std::string::npos) {
+		return true;
+	}
+
+	return false;
+}
 
 void HashCrackerUtils::ParseCommandLine(const int p_argc, const char *p_argv[], std::string &p_hash, std::string &p_algo, std::string &p_alphabet, unsigned int &p_chunkSize, std::string &p_masterIpAddress, bool &p_slaveMode) {
 	int i = 1;			// Because argv[0] contains the full path to program name --> real parameters start at position 1

@@ -1,10 +1,14 @@
 #include "stdafx.h"
 #include <iostream>
 #include <pthread.h>
-
+//#include "TcpClient.hpp"
 
 void sandbox() {
 	// Add here all your tests
+
+	//TcpClient client = TcpClient();
+
+
 	return;
 }
 

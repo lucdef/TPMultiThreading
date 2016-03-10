@@ -105,7 +105,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;HAS_PTHREAD;PTW32_STATIC_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\util\include;$(SolutionDir)libs\socket\include;$(SolutionDir)libs\files\include;$(SolutionDir)libs\hash\include;$(SolutionDir)libs\core\include;$(SolutionDir)libs\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Git\TPMultiThreading\project;$(SolutionDir)libs\util\include;$(SolutionDir)libs\socket\include;$(SolutionDir)libs\files\include;$(SolutionDir)libs\hash\include;$(SolutionDir)libs\core\include;$(SolutionDir)libs\pthreads\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -228,6 +228,11 @@
   <ItemGroup>
     <ClCompile Include="sandbox.cpp" />
     <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\project\project.vcxproj">
+      <Project>{88b24c70-3ca9-4000-87c1-09cbc118fa9f}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

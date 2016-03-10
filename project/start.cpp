@@ -1,16 +1,15 @@
 #include "stdafx.h"
 #include <iostream>
 #include <deque>
-#include "FIFO.h"
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
-#include "LogManager.h"
 
-#include "ThreadTest.hpp"
+#include <pthread.h>
+#include <Windows.h>
 
-
-#include "TrueMutex.hpp"
+#include "TcpTest.hpp"
+#include "OGlobalTest.hpp"
 
 void ExtractCommandLine( int argc, const char *argv[] )	{
 	// Command line settings
@@ -83,7 +82,7 @@ void EnqueueDequeue() {
 }
 
 
-int main( int argc, const char *argv[] ) {
+int main(int argc, const char *argv[]) {
 	//std::cout << "** Welcome to this project skeleton." << std::endl;
 	//std::cout << "This is where you need to code the hash cracker." << std::endl;
 	//std::cout << std::endl;
@@ -94,13 +93,17 @@ int main( int argc, const char *argv[] ) {
 
 	//std::cout << std::endl;
 	//std::cout << "** Goodbye" << std::endl;
-	//std::cout << "Press a key to continue..." << std::endl;
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-	int result = ThreadTest::Start(2);
+	
+	//int res = TcpTest::TestMain();
+	int res = OGlobalTest::TestServerAndKeyboard();
+	//int res = OGlobalTest::TestKeyboardThread();
+	//int res = OGlobalTest::TestServerThread();
 
-	std::cout << "Press a <Enter> to continue..." << std::endl;
+
+	std::cout << "\nAppuyer sur <Enter> pour continuer";
 	std::cin.get();
 	return EXIT_SUCCESS;
 }

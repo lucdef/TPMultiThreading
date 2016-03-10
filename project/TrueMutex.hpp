@@ -1,8 +1,5 @@
 #pragma once
 
-#if (_MSC_VER >= 1900)
-#define _TIMESPEC_DEFINED
-#endif
 #include <pthread.h>
 
 
