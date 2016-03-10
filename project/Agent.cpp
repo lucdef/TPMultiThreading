@@ -18,8 +18,6 @@ void* Agent::GenerationPassword(void *p_arg)
 	bool isStop = strucarg->arret;
 	while (!isStop)
 	{
-
-		std::string lstPassword;
 		
 		CPasswordChunk chunkToGenerate= instanceol->GetChunk();
 		int sizeOFChunk = chunkToGenerate.GetChunkSize();
@@ -27,7 +25,7 @@ void* Agent::GenerationPassword(void *p_arg)
 
 		strcpy_s(password, sizeof(password),chunkToGenerate.GetPasswordBegin().c_str());
 		std::string testAlphabet = "abcdefhijklomnpqrstuvwyz";
-		for (int i=0; i < sizeOFChunk; i++)
+		while(password!=chunkToGenerate.GetPasswordEnd())
 		{
 			HashCrackerUtils::IncreasePassword(password, sizeof(password), testAlphabet);
 			std::cout << password;
