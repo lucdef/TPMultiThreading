@@ -24,7 +24,7 @@ private:
 	LogManager();
 	static LogManager *_instance;
 	bool log(int idThread, std::string message, std::string criticite);
-	std::string DateToString(CDateTime date);
+	static std::string DateToString(CDateTime date);
 	CFileText *_logFile;
 	TrueMutex *_mutex;
 

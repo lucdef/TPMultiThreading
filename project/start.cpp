@@ -5,9 +5,11 @@
 #include "utils.h"
 #include "CException.h"
 #include "PasswordChunk.h"
-#include "ThreadTest.hpp"
-#include "TrueMutex.hpp"
-#include "TcpServer.hpp"
+#include "OrdonnanceurLocal.h"
+
+#include <pthread.h>
+#include <Windows.h>
+
 #include "TcpTest.hpp"
 #include "OGlobalTest.hpp"
 
@@ -17,91 +19,71 @@ void ExtractCommandLine(int argc, const char *argv[]) {
 	std::string hash, algo, alphabet, masterIpAddress;
 	unsigned int chunkSize = 0;
 	bool runningAsSlave = false;
+}
 
+void ExtractCommandLine( int argc, 
+						const char *argv[] , 
+						OrdonnanceurLocal::strCommandLine* stCommand)
+{
 	// Extract command line
 	try {
-		HashCrackerUtils::ParseCommandLine(argc, argv, hash, algo, alphabet, chunkSize, masterIpAddress, runningAsSlave);
+		HashCrackerUtils::ParseCommandLine(argc, 
+											argv, 
+											stCommand->hash, 
+											stCommand->algo,
+											stCommand->alphabet,
+											stCommand->chunkSize,
+											stCommand->masterIPAddress,
+											stCommand->OrdoLocal,
+											stCommand->OrdoGlobal);
 	}
-	catch (CException &ex) {
+	catch(CException &ex) {
 		std::cerr << "** Command line extraction failed at \"" << ex.GetFaultLocation() << "\" with error code " << ex.GetErrorCode() << " and message \"" << ex.GetErrorMessage() << "\"" << std::endl;
 		return;
 	}
 
 	// Show information
-	std::cout << "--- INFORMATION GOT FROM COMMAND LINBE ---" << std::endl;
-	std::cout << "Mode: " << (runningAsSlave ? "slave" : "master") << std::endl;
-	if (runningAsSlave) {
-		std::cout << "-ip " << masterIpAddress << std::endl;
-	}
-	else {
-		std::cout << "-hash " << hash << std::endl;
-		std::cout << "-algo " << algo << std::endl;
-		std::cout << "-alphabet " << alphabet << std::endl;
-		std::cout << "-chunksize " << chunkSize << std::endl;
-	}
+	std::cout << "--- INFORMATION GOT FROM COMMAND LINE ---" << std::endl;
+
+	if (stCommand->OrdoLocal == "NO" && stCommand->OrdoGlobal == "YES")
+		std::cout << "ordoGlobal only" << std::endl;
+	else if (stCommand->OrdoLocal == "YES" && stCommand->OrdoGlobal == "YES")
+		std::cout << "both ordoLocal and ordoGlobal" << std::endl;
+	else if (stCommand->OrdoLocal == "YES" && stCommand->OrdoGlobal == "NO")
+		std::cout << "ordoLocal only" << std::endl;
+
+	std::cout << "-ip " << stCommand->masterIPAddress << std::endl;
+	std::cout << "-hash " << stCommand->hash << std::endl;
+	std::cout << "-algo " << stCommand->algo << std::endl;
+	std::cout << "-alphabet " << stCommand->alphabet << std::endl;
+	std::cout << "-chunksize " << stCommand->chunkSize << std::endl;
+	std::cout << "-OrdoLocal " << stCommand->OrdoLocal << std::endl;
+	std::cout << "-OrdoGlobal " << stCommand->OrdoGlobal << std::endl;
 }
 
 
-void GeneratePasswords() {
-	char password[64] = "";
-	std::string testAlphabet = "0123456789";
 
-	strcpy_s(password, sizeof(password), "");
-	for (int i = 0; i < 2500; i++) {
-		HashCrackerUtils::IncreasePassword(password, sizeof(password), testAlphabet);
-		std::cout << "New password: \"" << password << "\"" << std::endl;
-	}
-}
+int main( int argc, const char *argv[] ) {
+	char dir[FILENAME_MAX];
+	GetCurrentDirectory(FILENAME_MAX, dir);
+	std::cout << "Dir: " << dir << std::endl;
+	//OrdonnanceurLocal ordolocal;
 
+	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
 
-void EnqueueDequeue() {
-	std::deque<CPasswordChunk> fifo;
-	CPasswordChunk chunk;
-
-	fifo.clear();
-
-	std::cout << "Queuing 00000aa --> 00000**" << std::endl;
-	chunk.Reset();
-	chunk.SetPasswordRange("00000aa", "00000**");
-	fifo.push_back(chunk);
-
-	std::cout << "Queuing 00001aa --> 00001**" << std::endl;
-	chunk.Reset();
-	chunk.SetPasswordRange("00001aa", "00001**");
-	fifo.push_back(chunk);
-
-	std::cout << "Element count in FIFO: " << fifo.size() << std::endl;
-	while (fifo.size() > 0)
-	{
-		chunk.Reset();
-		chunk = fifo.front();
-		fifo.pop_front();
-		std::cout << "Poped element: password range [" << chunk.GetPasswordBegin() << ", " << chunk.GetPasswordEnd() << "]" << std::endl;
-	}
-	std::cout << "Element count in FIFO: " << fifo.size() << std::endl;
-}
-
-
-int main(int argc, const char *argv[]) {
-	//std::cout << "** Welcome to this project skeleton." << std::endl;
-	//std::cout << "This is where you need to code the hash cracker." << std::endl;
-	//std::cout << std::endl;
-
-	////ExtractCommandLine( argc, argv );
-	//GeneratePasswords();
-	////EnqueueDequeue();
+	//ordolocal.StartThread();
 
 	//std::cout << std::endl;
 	//std::cout << "** Goodbye" << std::endl;
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-
-	int res = TcpTest::TestMain();
+	
+	//int res = TcpTest::TestMain();
 	//int res = OGlobalTest::TestServerAndKeyboard();
 	//int res = OGlobalTest::TestKeyboardThread();
-	//int res = OGlobalTest::TestServerThread();
-	//TcpServer::TestGetFounderFromData();
+	int res = OGlobalTest::TestServerThread();
+
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
 	std::cin.get();
