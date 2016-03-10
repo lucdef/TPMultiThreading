@@ -8,20 +8,17 @@
 
 OrdonnanceurLocal::OrdonnanceurLocal()
 {
-	 this->nbThreadLocal = OrdonnanceurLocal::GetNbThread() / 2;
+	this->nbThreadLocal = OrdonnanceurLocal::GetNbThread() / 2;
 	unsigned int sizeOfMemory = OrdonnanceurLocal::GetAvailableMemory();
 	_aIdThread = new pthread_t[nbThreadLocal];
-	
 
 }
-
 unsigned int OrdonnanceurLocal::GetNbThread()
 {
 
 	unsigned int nbThead = std::thread::hardware_concurrency();
 	return nbThead;
 }
-
 CPasswordChunk OrdonnanceurLocal::GetChunk()
 {
 	if (_fifo.Count() < this->nbThreadLocal + 1)
@@ -47,7 +44,6 @@ void OrdonnanceurLocal::StartThread()
 	this->CreateThread();
 	std::cout << "Test";
 }
-
 void OrdonnanceurLocal::CreateThread()
 {
 	
@@ -64,20 +60,21 @@ void OrdonnanceurLocal::CreateThread()
 		_aIdThread[i] = idThread;
 	}
 }
-
 void OrdonnanceurLocal::StopThread()
 {
-	for (int i = 0; i < sizeof(_aIdThread);i++)
-	{
-		pthread_join(_aIdThread[i], nullptr);
-	}
+	//*args->arret = true;
+	delete _aIdThread;
+	//delete args;
 	
 }
 
 
 OrdonnanceurLocal::~OrdonnanceurLocal()
 {
-	delete _aIdThread;
+	if (_aIdThread != nullptr)
+	{
+		StopThread();
+	}
 }
 
 void OrdonnanceurLocal::setChunk(CPasswordChunk passwordChunk)

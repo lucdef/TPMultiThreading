@@ -4,11 +4,14 @@
 #include "FIFO.h"
 #include "utils.h"
 #include "CException.h"
+#include "Agent.h"
 #include "OrdonnanceurLocal.h"
 #include "PasswordChunk.h"
+#include "Agent.h"
+#include <pthread.h>
+#include <Windows.h>
 #include "LogManager.h"
 
-#include "ThreadTest.hpp"
 
 
 #include "TrueMutex.hpp"
