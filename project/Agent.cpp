@@ -1,3 +1,6 @@
+#include "stdlib.h"
+#include <chrono>
+#include <thread>
 #include "Agent.h"
 #include "utils.h"
 #include "PasswordChunk.h"
@@ -21,7 +24,7 @@ void* Agent::GenerationPassword(void *p_arg)
 			char password[64] = "";
 
 			strcpy_s(password, sizeof(password), chunkToGenerate.GetPasswordBegin().c_str());
-			std::string testAlphabet = "abcdefhijklomnpqrstuvwyz";
+			std::string testAlphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
 			while (password <= chunkToGenerate.GetPasswordEnd() && trouve == false)
 			{
 				//Si on trouve le password on quitte les autres threads
@@ -30,8 +33,8 @@ void* Agent::GenerationPassword(void *p_arg)
 					strucarg->instance->SetPasswordFind(password);
 					trouve = true;
 					instanceol->StopThread();
-					
 				}
+				std::this_thread::sleep_for(std::chrono::milliseconds(80));
 				HashCrackerUtils::IncreasePassword(password, sizeof(password), testAlphabet);
 				std::cout << password << std::endl;
 			}

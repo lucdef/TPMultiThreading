@@ -7,7 +7,9 @@
 
 OrdonnanceurLocal::OrdonnanceurLocal()
 {
+	_CommandLine = new strCommandLine;
 	bThreadLocal = OrdonnanceurLocal::GetNbThread() / 2;
+	bThreadLocal = 1;
 	unsigned int sizeOfMemory = OrdonnanceurLocal::GetAvailableMemory();
 	_mutex.Init();
 	//Sécurité
@@ -48,15 +50,8 @@ unsigned int OrdonnanceurLocal::GetAvailableMemory()
 
 void OrdonnanceurLocal::RequestChunk()
 {
-	CPasswordChunk* test = new CPasswordChunk("aa", "cc");
-	CPasswordChunk* test1 = new CPasswordChunk("cc", "ee");
-	CPasswordChunk* test2 = new CPasswordChunk("dd", "ff");
-	CPasswordChunk* test3 = new CPasswordChunk("gg", "ii");
+	CPasswordChunk* test = new CPasswordChunk("00", "zz");
 	_fifo.Push(*test);
-	_fifo.Push(*test1);
-	_fifo.Push(*test2);
-	_fifo.Push(*test3);
-
 }
 
 void OrdonnanceurLocal::StartThread()
@@ -70,13 +65,13 @@ void OrdonnanceurLocal::CreateThread()
 	_args = new paramThread;
 	_args->instance = this;
 	_args->arret = false;
-	_args->passwordToFind = "ce";
+	_args->passwordToFind = "afi";
 	for (int i = 0; i < bThreadLocal; i++)
 	{
 		pthread_t idThread;
 
 		void*(*ptr_GenPassword)(void *) = &Agent::GenerationPassword;
-		pthread_attr_t paramThread;
+		//pthread_attr_t paramThread;
 		pthread_create(&idThread, nullptr, ptr_GenPassword, _args);
 		_aIdThread[i] = idThread;
 	}
@@ -112,6 +107,7 @@ void OrdonnanceurLocal::FreeRessources()
 {
 	delete _aIdThread;
 	delete _args;
+	delete _CommandLine;
 }
 
 void OrdonnanceurLocal::SetPasswordFind(std::string password)
@@ -124,6 +120,11 @@ void OrdonnanceurLocal::SetPasswordFind(std::string password)
 OrdonnanceurLocal::~OrdonnanceurLocal()
 {
 	
+}
+
+OrdonnanceurLocal::strCommandLine* OrdonnanceurLocal::getCommandLine(void)
+{
+	return _CommandLine;
 }
 
 void OrdonnanceurLocal::setChunk(CPasswordChunk passwordChunk)

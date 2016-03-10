@@ -3,13 +3,29 @@
 #include "FIFO.h"
 #include "Agent.h"
 #include "TrueMutex.hpp"
+
 class OrdonnanceurLocal
 {
 public:
+
+	struct strCommandLine
+	{
+		std::string hash;
+		std::string algo;
+		std::string alphabet;
+		std::string masterIPAddress;
+		unsigned int chunkSize;
+		std::string OrdoLocal;
+		std::string OrdoGlobal;
+	};
+
 	OrdonnanceurLocal();
+	~OrdonnanceurLocal();
+	
 	static unsigned int GetNbThread();
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();
+	strCommandLine* getCommandLine(void);
 	void RequestChunk();
 	void StartThread();
 	void CreateThread();
@@ -17,18 +33,21 @@ public:
 	int GetNbThreadLocal();
 	void FreeRessources();
 	void SetPasswordFind(std::string password);
-	~OrdonnanceurLocal();
+	
+	
 	struct paramThread
 	{
 		OrdonnanceurLocal* instance;
 		bool arret;
 		std::string passwordToFind;
 	};
+
 private:
 	//FIFO de chunk
 	FIFO<CPasswordChunk> _fifo;
 	//passage d'argument 
 	paramThread* _args;
+	strCommandLine* _CommandLine;
 	std::string _passwordFind;
 	unsigned int bThreadLocal;
 	void setChunk(CPasswordChunk passwordChunk);
