@@ -63,7 +63,7 @@ void TestHashes() {
 	const std::string p_fileName = "C:\\Windows\\WindowsUpdate.log";
 	const std::string p_text = "I'm a string ready to be hashed";
 
-
+	/*
 	hasher = new CHashCrc32();
 	test_hash( hasher, p_fileName, p_text );
 	delete hasher;
@@ -82,5 +82,5 @@ void TestHashes() {
 
 	hasher = new CHashSha256();
 	test_hash( hasher, p_fileName, p_text );
-	delete hasher;
+	delete hasher;*/
 }
