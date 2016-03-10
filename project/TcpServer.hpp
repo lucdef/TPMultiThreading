@@ -4,6 +4,7 @@
 
 
 class OGlobal;
+class LogManager;
 
 class TcpServer
 {
@@ -43,6 +44,8 @@ class TcpServer
 		static const std::string PASS_PATTERN;
 		static const std::string FOUNDER_PATTERN;
 
+		LogManager* const _logger;
+
 		CSocketIp4 _socket;
 		CSocketIp4 *_remoteClient;
 		char _buffer[1024];
@@ -56,7 +59,7 @@ class TcpServer
 		* \param data la string de donnees recue
 		* \return La reponse fabriquee
 		*/
-		std::string ParseHttp(const std::string data);
+		std::string ParseHttp(const std::string data) const;
 
 		/**
 		* \brief Ecoute le reseau en attente d'une query du client.
@@ -69,11 +72,11 @@ class TcpServer
 		* \param data les datas a envoyer
 		* \return true si ok, false sinon
 		*/
-		bool SendData(std::string data = "");
+		bool SendData(std::string data = "") const;
 
 		/**
 		* \brief Deconnecte un client.
 		*/
-		void DisconnectClient(CSocketIp4 *remoteClient);
+		void DisconnectClient();
 };
 

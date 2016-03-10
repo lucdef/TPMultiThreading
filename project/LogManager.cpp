@@ -9,7 +9,7 @@ LogManager* LogManager::_instance;
 
 LogManager::LogManager()
 {
-	_logFile = new CFileText("C:\\Users\\lucdef\\Desktop\\TPMultiThreadingLog.txt", EFileOpenMode::append);
+	_logFile = new CFileText("..\\logs\\TPMultiThreading.log", EFileOpenMode::append);
 	_logFile->Open(EFileOpenMode::append);
 	_mutex = new TrueMutex();
 	_mutex->Init();
