@@ -1,7 +1,6 @@
 #pragma once
 #include "PasswordChunk.h"
 #include "FIFO.h"
-#include "Agent.h"
 #include "TrueMutex.hpp"
 
 class OrdonnanceurLocal
