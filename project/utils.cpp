@@ -27,15 +27,26 @@ bool Utils::StringContains(const std::string &source, const std::string &pattern
 	return false;
 }
 
-void HashCrackerUtils::ParseCommandLine(const int p_argc, const char *p_argv[], std::string &p_hash, std::string &p_algo, std::string &p_alphabet, unsigned int &p_chunkSize, std::string &p_masterIpAddress, bool &p_slaveMode) {
+void HashCrackerUtils::ParseCommandLine(const int p_argc, 
+										const char *p_argv[], 
+										std::string &p_hash, 
+										std::string &p_algo, 
+										std::string &p_alphabet, 
+										unsigned int &p_chunkSize, 
+										std::string &p_masterIpAddress, 
+										std::string &ordolocal,
+										std::string &ordoGlobal)
+{
 	int i = 1;			// Because argv[0] contains the full path to program name --> real parameters start at position 1
 
 	// Default values
-	p_slaveMode = false;
+	ordolocal = "NO";
+	ordoGlobal = "NO";
 	p_hash = "";
 	p_algo = "";
-	p_alphabet = "";
+	p_alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
 	p_chunkSize = 0;
+	p_masterIpAddress = "";
 
 	// Extract parameters using C style
 	while( i < p_argc ) {
@@ -62,25 +73,29 @@ void HashCrackerUtils::ParseCommandLine(const int p_argc, const char *p_argv[], 
 				p_masterIpAddress = p_argv[i + 1];
 				i++;												// skip associated value for next iteration
 			}
+			else if (_strcmpi("-ordolocal", p_argv[i]) == 0) {
+				ordolocal = p_argv[i + 1];
+				i++;            									// skip associated value for next iteration
+			}
+			else if (_strcmpi("-ordoglobal", p_argv[i]) == 0) {
+				ordoGlobal = "YES";
+				p_masterIpAddress = "127.0.0.1";
+				i++;												// skip associated value for next iteration
+			}
 		}
 		i++;
 	}
 
-	// Check for all mandatory parameters
-	if ( p_masterIpAddress.length() > 0 ) {
-		// Assume slave mode
-		p_slaveMode = true;
-		if (p_hash.length() > 0 || p_algo.length() > 0 || p_alphabet.length() > 0 || p_chunkSize > 0)
-			throw _CException ( "Invaid command line.", 0 );
-	}
-	else {
-		// Assume master mode
-		p_slaveMode = false;
-		if (p_hash.length() == 0 || p_algo.length() == 0 || p_alphabet.length() == 0 || p_chunkSize == 0)
-			throw _CException ( "Invaid command line.", 0 );
-	}
-}
+	// Ordo local selected but no address written in the command line
+	if ( p_masterIpAddress.empty() && ordolocal == "YES")
+		throw _CException ( "No IP Address with OrdoLocal Enabled !! Exit !!!", 0 );
 
+	if (p_hash.empty())
+		throw _CException("No Hash type specified in the command line !!! Exit !!!", 0);
+
+	if(p_chunkSize == 0)
+		throw _CException("ChunkSize == 0 !!! Exit !!!", 0);
+}
 
 /// @brief compute next character according to aplhabet
 /// @return next character or '\0' if the end of alphabet has been reached
