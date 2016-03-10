@@ -21,45 +21,45 @@ void ExtractCommandLine(int argc, const char *argv[]) {
 	bool runningAsSlave = false;
 }
 
-void ExtractCommandLine( int argc, 
-						const char *argv[] , 
-						OrdonnanceurLocal::strCommandLine* stCommand)
-{
-	// Extract command line
-	try {
-		HashCrackerUtils::ParseCommandLine(argc, 
-											argv, 
-											stCommand->hash, 
-											stCommand->algo,
-											stCommand->alphabet,
-											stCommand->chunkSize,
-											stCommand->masterIPAddress,
-											stCommand->OrdoLocal,
-											stCommand->OrdoGlobal);
-	}
-	catch(CException &ex) {
-		std::cerr << "** Command line extraction failed at \"" << ex.GetFaultLocation() << "\" with error code " << ex.GetErrorCode() << " and message \"" << ex.GetErrorMessage() << "\"" << std::endl;
-		return;
-	}
-
-	// Show information
-	std::cout << "--- INFORMATION GOT FROM COMMAND LINE ---" << std::endl;
-
-	if (stCommand->OrdoLocal == "NO" && stCommand->OrdoGlobal == "YES")
-		std::cout << "ordoGlobal only" << std::endl;
-	else if (stCommand->OrdoLocal == "YES" && stCommand->OrdoGlobal == "YES")
-		std::cout << "both ordoLocal and ordoGlobal" << std::endl;
-	else if (stCommand->OrdoLocal == "YES" && stCommand->OrdoGlobal == "NO")
-		std::cout << "ordoLocal only" << std::endl;
-
-	std::cout << "-ip " << stCommand->masterIPAddress << std::endl;
-	std::cout << "-hash " << stCommand->hash << std::endl;
-	std::cout << "-algo " << stCommand->algo << std::endl;
-	std::cout << "-alphabet " << stCommand->alphabet << std::endl;
-	std::cout << "-chunksize " << stCommand->chunkSize << std::endl;
-	std::cout << "-OrdoLocal " << stCommand->OrdoLocal << std::endl;
-	std::cout << "-OrdoGlobal " << stCommand->OrdoGlobal << std::endl;
-}
+//void ExtractCommandLine( int argc, 
+//						const char *argv[] , 
+//						OrdonnanceurLocal::strCommandLine* stCommand)
+//{
+//	// Extract command line
+//	try {
+//		HashCrackerUtils::ParseCommandLine(argc, 
+//											argv, 
+//											stCommand->hash, 
+//											stCommand->algo,
+//											stCommand->alphabet,
+//											stCommand->chunkSize,
+//											stCommand->masterIPAddress,
+//											stCommand->OrdoLocal,
+//											stCommand->OrdoGlobal);
+//	}
+//	catch(CException &ex) {
+//		std::cerr << "** Command line extraction failed at \"" << ex.GetFaultLocation() << "\" with error code " << ex.GetErrorCode() << " and message \"" << ex.GetErrorMessage() << "\"" << std::endl;
+//		return;
+//	}
+//
+//	// Show information
+//	std::cout << "--- INFORMATION GOT FROM COMMAND LINE ---" << std::endl;
+//
+//	if (stCommand->OrdoLocal == "NO" && stCommand->OrdoGlobal == "YES")
+//		std::cout << "ordoGlobal only" << std::endl;
+//	else if (stCommand->OrdoLocal == "YES" && stCommand->OrdoGlobal == "YES")
+//		std::cout << "both ordoLocal and ordoGlobal" << std::endl;
+//	else if (stCommand->OrdoLocal == "YES" && stCommand->OrdoGlobal == "NO")
+//		std::cout << "ordoLocal only" << std::endl;
+//
+//	std::cout << "-ip " << stCommand->masterIPAddress << std::endl;
+//	std::cout << "-hash " << stCommand->hash << std::endl;
+//	std::cout << "-algo " << stCommand->algo << std::endl;
+//	std::cout << "-alphabet " << stCommand->alphabet << std::endl;
+//	std::cout << "-chunksize " << stCommand->chunkSize << std::endl;
+//	std::cout << "-OrdoLocal " << stCommand->OrdoLocal << std::endl;
+//	std::cout << "-OrdoGlobal " << stCommand->OrdoGlobal << std::endl;
+//}
 
 
 

@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "CException.h"
+#include <CSocket.h>
 
 #ifdef LINUX
 #include <unistd.h>
@@ -25,6 +26,11 @@ bool Utils::StringContains(const std::string &source, const std::string &pattern
 	}
 
 	return false;
+}
+
+std::string Utils::GetClientStr(CSocket* const client)
+{
+	return client == nullptr ? "" : client->GetRemoteEndpointIp() + ":" + std::to_string(client->GetRemoteEndpointPort());
 }
 
 void HashCrackerUtils::ParseCommandLine(const int p_argc, const char *p_argv[], std::string &p_hash, std::string &p_algo, std::string &p_alphabet, unsigned int &p_chunkSize, std::string &p_masterIpAddress, bool &p_slaveMode) {
