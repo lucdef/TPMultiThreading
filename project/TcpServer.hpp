@@ -59,7 +59,7 @@ class TcpServer
 		* \param data la string de donnees recue
 		* \return La reponse fabriquee
 		*/
-		std::string ParseHttp(const std::string data) const;
+		std::string ParseHttp(const std::string &data) const;
 
 		/**
 		* \brief Ecoute le reseau en attente d'une query du client.
@@ -72,7 +72,7 @@ class TcpServer
 		* \param data les datas a envoyer
 		* \return true si ok, false sinon
 		*/
-		bool SendData(std::string data = "") const;
+		bool SendData(const std::string &data) const;
 
 		/**
 		* \brief Deconnecte un client.

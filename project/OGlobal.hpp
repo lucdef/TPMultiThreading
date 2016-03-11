@@ -7,7 +7,7 @@
 
 #define THREAD_COUNT 5
 
-
+class CSocket;
 
 class OGlobal
 {
@@ -33,6 +33,7 @@ public:
 	void StartServer(int port);
 	void StartKeyboardThread(const bool isBlocking);
 	void StartServerThread();
+	void AddGivenChunk(std::string startPass, CSocket *client);
 	void Run();
 
 

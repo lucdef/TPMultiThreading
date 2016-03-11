@@ -1,6 +1,7 @@
 #include "OGlobal.hpp"
 #include "utils.h"
 #include "conio.h"
+#include "CSocket.h"
 
 OGlobal* OGlobal::_instance = nullptr;
 
@@ -41,6 +42,17 @@ void OGlobal::Kill()
 {
 	delete(_instance);
 	_instance = nullptr;
+}
+
+
+void OGlobal::AddGivenChunk(std::string startPass, CSocket *client)
+{
+	givenChunk_t given;
+	given.startPass = startPass;
+	given.port = client->GetRemoteEndpointPort();
+	given.agentIp = client->GetRemoteEndpointIp();
+
+	_givenChunks.push_back(given);
 }
 
 const std::string OGlobal::GetAlphabet() const
