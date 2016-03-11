@@ -19,7 +19,7 @@ TcpServer::TcpServer() :
 {
 }
 
-std::string TcpServer::ParseHttp(const std::string data) const
+std::string TcpServer::ParseHttp(const std::string &data) const
 {
 	if (data == "")
 		return data;
@@ -41,9 +41,12 @@ std::string TcpServer::ParseHttp(const std::string data) const
 	else if ( Utils::StringContains(tmp, "NEW-CHUNK-PLEASE" ))
 	{
 		// TODO: get lastHandled from tmp
+		std::string startPass = ordonnanceur->GetNextChunkBegin();
 
-		//_ordonnanceur->replyChunk();
-		response = "NEW-CHUNK-FOR-YOU=" + ordonnanceur->GetNextChunkBegin();
+
+		response = "NEW-CHUNK-FOR-YOU=" + startPass;
+		
+		ordonnanceur->AddGivenChunk(startPass, _remoteClient);
 	}
 	else if (Utils::StringContains(tmp, "FOUND-PLEASE-EXIT"))
 	{
@@ -100,7 +103,7 @@ std::string TcpServer::ReceiveData()
 	return request;
 }
 
-bool TcpServer::SendData(std::string data) const
+bool TcpServer::SendData(const std::string& data) const
 {
 	if (data == "")
 		return false;
@@ -111,7 +114,7 @@ bool TcpServer::SendData(std::string data) const
 
 	if (data.length() == 0)
 	{
-		data = _response;
+		return false;
 	}
 
 	try
@@ -134,7 +137,7 @@ bool TcpServer::SendData(std::string data) const
 void TcpServer::Run(unsigned short port)
 {
 	std::cout << std::endl;
-	std::cout << "[TcpServer] Creating HTTP server on port 666..." << std::endl;
+	std::cout << "[TcpServer] Creating HTTP server on port" << port << "..." << std::endl;
 
 	_socket.InitEngine();
 	_socket.CreateServer(port, MAX_CONNECTION);
