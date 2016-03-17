@@ -26,4 +26,5 @@ public:
 	virtual ~Utils() = 0;
 	static void mySleep(int sleepMs);
 	static bool StringContains(const std::string & source, const std::string & pattern);
+	static std::string GetClientStr(CSocket* const client);
 };
