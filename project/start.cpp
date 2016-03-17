@@ -13,13 +13,13 @@
 #include "TcpTest.hpp"
 #include "OGlobalTest.hpp"
 
-void ExtractCommandLine(int argc, const char *argv[]) {
-	// Command line settings
-	// Tip: good to be stored in a singleton dedicated to configuration	--> see singleton.h
-	std::string hash, algo, alphabet, masterIpAddress;
-	unsigned int chunkSize = 0;
-	bool runningAsSlave = false;
-}
+//void ExtractCommandLine(int argc, const char *argv[]) {
+//	// Command line settings
+//	// Tip: good to be stored in a singleton dedicated to configuration	--> see singleton.h
+//	std::string hash, algo, alphabet, masterIpAddress;
+//	unsigned int chunkSize = 0;
+//	bool runningAsSlave = false;
+//}
 
 //void ExtractCommandLine( int argc, 
 //						const char *argv[] , 

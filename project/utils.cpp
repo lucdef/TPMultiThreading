@@ -38,15 +38,11 @@ void HashCrackerUtils::ParseCommandLine(const int p_argc,
 										std::string &p_algo, 
 										std::string &p_alphabet, 
 										unsigned int &p_chunkSize, 
-										std::string &p_masterIpAddress, 
-										std::string &ordolocal,
-										std::string &ordoGlobal)
+										std::string &p_masterIpAddress)
 {
 	int i = 1;			// Because argv[0] contains the full path to program name --> real parameters start at position 1
 
 	// Default values
-	ordolocal = "NO";
-	ordoGlobal = "NO";
 	p_hash = "";
 	p_algo = "";
 	p_alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -78,27 +74,28 @@ void HashCrackerUtils::ParseCommandLine(const int p_argc,
 				p_masterIpAddress = p_argv[i + 1];
 				i++;												// skip associated value for next iteration
 			}
-			else if (_strcmpi("-ordolocal", p_argv[i]) == 0) {
-				ordolocal = p_argv[i + 1];
-				i++;            									// skip associated value for next iteration
-			}
-			else if (_strcmpi("-ordoglobal", p_argv[i]) == 0) {
-				ordoGlobal = "YES";
-				p_masterIpAddress = "127.0.0.1";
-				i++;												// skip associated value for next iteration
-			}
+			//else if (_strcmpi("-ordolocal", p_argv[i]) == 0) {
+			//	ordolocal = p_argv[i + 1];
+			//	i++;            									// skip associated value for next iteration
+			//}
+			//else if (_strcmpi("-ordoglobal", p_argv[i]) == 0) {
+			//	ordoGlobal = "YES";
+			//	p_masterIpAddress = "127.0.0.1";
+			//	i++;												// skip associated value for next iteration
+			//}
 		}
 		i++;
 	}
 
 	// Ordo local selected but no address written in the command line
-	if ( p_masterIpAddress.empty() && ordolocal == "YES")
+	//if ( p_masterIpAddress.empty() && ordolocal == "YES")
+	if ( p_masterIpAddress.empty() && p_argc == 2)
 		throw _CException ( "No IP Address with OrdoLocal Enabled !! Exit !!!", 0 );
 
-	if (p_hash.empty())
+	if (p_hash.empty() && p_argc > 2)
 		throw _CException("No Hash type specified in the command line !!! Exit !!!", 0);
 
-	if(p_chunkSize == 0)
+	if(p_chunkSize == 0 && p_argc > 2)
 		throw _CException("ChunkSize == 0 !!! Exit !!!", 0);
 }
 

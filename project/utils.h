@@ -11,11 +11,9 @@ namespace HashCrackerUtils
 							std::string &p_algo,
 							std::string &p_alphabet,
 							unsigned int &p_chunkSize,
-							std::string &p_masterIpAddress,
-							std::string &ordolocal,
-							std::string &ordoGlobal);
+							std::string &p_masterIpAddress);
 	
-	void IncreasePassword(char *p_password, 
+	void IncreasePassword(char *p_password,
 							const unsigned int p_bufferCapacity, 
 							const std::string &p_alphabet);
 }
