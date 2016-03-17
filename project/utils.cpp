@@ -27,6 +27,11 @@ bool Utils::StringContains(const std::string &source, const std::string &pattern
 	return false;
 }
 
+std::string Utils::GetClientStr(CSocket* const client)
+{
+	return client->GetRemoteEndpointIp() + ":" + std::to_string(client->GetRemoteEndpointPort());
+}
+
 void HashCrackerUtils::ParseCommandLine(const int p_argc, 
 										const char *p_argv[], 
 										std::string &p_hash, 

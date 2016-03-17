@@ -103,34 +103,34 @@ std::string TcpServer::ReceiveData()
 	return request;
 }
 
-bool TcpServer::SendData(const std::string& data) const
-{
-	if (data == "")
-		return false;
-
-	// Send him the same information everytime
-	// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
-	std::cout << "[TcpServer] - sending fake page..." << std::endl;
-
-	if (data.length() == 0)
-	{
-		return false;
-	}
-
-	try
-	{
-		_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
-		_logger->LogInfo(1, "Server sent '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");
-	}
-	catch (CException e)
-	{
-		std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
-		_logger->LogError(1, "Server error while sending '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");;
-		return false;
-	}
-
-	return true;
-}
+//bool TcpServer::SendData(const std::string& data) const
+//{
+//	if (data == "")
+//		return false;
+//
+//	// Send him the same information everytime
+//	// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
+//	std::cout << "[TcpServer] - sending fake page..." << std::endl;
+//
+//	if (data.length() == 0)
+//	{
+//		return false;
+//	}
+//
+//	try
+//	{
+//		_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
+//		_logger->LogInfo(1, "Server sent '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");
+//	}
+//	catch (CException e)
+//	{
+//		std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
+//		_logger->LogError(1, "Server error while sending '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");;
+//		return false;
+//	}
+//
+//	return true;
+//}
 
 
 
@@ -166,7 +166,7 @@ void TcpServer::Run(unsigned short port)
 
 
 			// Send him the same information everytime
-			_isRunning = SendData(response); // TODO send to list of client
+			//_isRunning = SendData(response); // TODO send to list of client
 
 			if (response == "GOOD JOB")
 				break;

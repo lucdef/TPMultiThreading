@@ -42,7 +42,7 @@ void *ThreadClientFunc(void *p_arg)
 		//int ret = serv.StartServer();
 		client.ExampleRun();
 		client.DisplayResults();
-		this.response;
+		//this.response;
 	}
 	catch (CException &e) {
 		std::cerr << "** --- EXCEPTION THROWN FROM CLIENT ---" << std::endl;
