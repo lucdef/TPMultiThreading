@@ -32,6 +32,7 @@ public:
 	int GetNbThreadLocal();
 	void FreeRessources();
 	void SetPasswordFind(std::string password);
+	std::string getHost();
 	
 	
 	struct paramThread
@@ -43,6 +44,7 @@ public:
 
 private:
 	//FIFO de chunk
+	std::string _host;
 	FIFO<CPasswordChunk> _fifo;
 	//passage d'argument 
 	paramThread* _args;

@@ -53,10 +53,10 @@ unsigned int OrdonnanceurLocal::GetAvailableMemory()
 void OrdonnanceurLocal::RequestChunk()
 {
 	CPasswordChunk* test = new CPasswordChunk("00", "zz");
-	TcpClient tcpClient = new TcpClient();
-	tcpClient.ConnectToHost(this.host);
+	TcpClient tcpClient =  TcpClient();
+	tcpClient.ConnectToHost(this->getHost());
 	std::string needChunk = "000000000";
-	tcpClient.SendHttpRequest(this.host, needChunk);
+	tcpClient.SendHttpRequest(this->getHost(), needChunk);
 	tcpClient.WaitForResponse();
 	tcpClient.CloseConnection();
 	_fifo.Push(*test);
@@ -123,6 +123,11 @@ void OrdonnanceurLocal::SetPasswordFind(std::string password)
 	_mutex.Lock();
 	_passwordFind = password;
 	_mutex.Unlock();
+}
+
+std::string OrdonnanceurLocal::getHost()
+{
+	return this->_host;
 }
 
 OrdonnanceurLocal::~OrdonnanceurLocal()
