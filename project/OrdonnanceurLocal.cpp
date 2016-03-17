@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "TrueMutex.hpp"
 #include "Agent.h"
+#include "TcpClient.hpp"
 
 
 OrdonnanceurLocal::OrdonnanceurLocal()
@@ -18,7 +19,8 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 		_aIdThread = new pthread_t[bThreadLocal];
 		
 	}
-
+	TcpClient clientTcp;
+	
 }
 
 unsigned int OrdonnanceurLocal::GetNbThread()
@@ -51,6 +53,12 @@ unsigned int OrdonnanceurLocal::GetAvailableMemory()
 void OrdonnanceurLocal::RequestChunk()
 {
 	CPasswordChunk* test = new CPasswordChunk("00", "zz");
+	TcpClient tcpClient = new TcpClient();
+	tcpClient.ConnectToHost(this.host);
+	std::string needChunk = "000000000";
+	tcpClient.SendHttpRequest(this.host, needChunk);
+	tcpClient.WaitForResponse();
+	tcpClient.CloseConnection();
 	_fifo.Push(*test);
 }
 

@@ -138,3 +138,10 @@ void TcpClient::ExampleRun()
 	
 	CloseConnection();
 }
+
+std::string TcpClient::GetResponse()
+{
+	std::string response = this->_responses.at(0);
+	this->_responses.pop_front();
+	return response;
+}

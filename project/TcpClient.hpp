@@ -16,6 +16,7 @@ class TcpClient : public ITcpClient
 		void CloseConnection();
 		void DisplayResults(std::string data = "") const;
 		void ExampleRun();
+		std::string GetResponse();
 
 	private:
 		CSocketIp4 _socket;
