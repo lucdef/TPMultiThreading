@@ -62,11 +62,11 @@ void ExtractCommandLine( int argc,
 }
 
 int main( int argc, const char *argv[] ) {
-	OrdonnanceurLocal ordolocal;
+	//OrdonnanceurLocal ordolocal;
 
-	ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
+	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
 
-	ordolocal.StartThread();
+	//ordolocal.StartThread();
 
 	//std::cout << std::endl;
 	//std::cout << "** Goodbye" << std::endl;
