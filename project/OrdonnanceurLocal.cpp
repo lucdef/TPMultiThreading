@@ -4,9 +4,10 @@
 #include "TrueMutex.hpp"
 #include "Agent.h"
 #include "TcpClient.hpp"
+#include "TcpServer.hpp";
+#include "utils.h"
 
-
-OrdonnanceurLocal::OrdonnanceurLocal()
+OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 {
 	_CommandLine = new strCommandLine;
 	bThreadLocal = OrdonnanceurLocal::GetNbThread() / 2;
@@ -19,7 +20,16 @@ OrdonnanceurLocal::OrdonnanceurLocal()
 		_aIdThread = new pthread_t[bThreadLocal];
 		
 	}
+	this->_host = host;
 	TcpClient clientTcp;
+	clientTcp.ConnectToHost(this->getHost());
+	clientTcp.SendHttpRequest(this->getHost(), this->_PROTOSTART);
+	clientTcp.WaitForResponse();
+	std::string tmp = clientTcp.GetResponse();
+	clientTcp.CloseConnection();
+	this->_algo = Utils::GetPatternFromData(tmp,this->_patternAlgo);
+	this->_alphabet = Utils::GetPatternFromData(tmp, this->_patternAlphabet);
+	this->_passwordATrouver = Utils::GetPatternFromData(tmp, this->_patternHash);
 	
 }
 
@@ -58,6 +68,7 @@ void OrdonnanceurLocal::RequestChunk()
 	std::string needChunk = "000000000";
 	tcpClient.SendHttpRequest(this->getHost(), needChunk);
 	tcpClient.WaitForResponse();
+	tcpClient.GetResponse();
 	tcpClient.CloseConnection();
 	_fifo.Push(*test);
 }

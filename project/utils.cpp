@@ -1,6 +1,6 @@
 #include "utils.h"
 #include "CException.h"
-
+#include <regex>
 #ifdef LINUX
 #include <unistd.h>
 #endif
@@ -149,4 +149,28 @@ void HashCrackerUtils::IncreasePassword(char *p_password, const unsigned int p_b
 	else {
 		throw _CException( "Buffer too small to store next password. 2 characters are required after the last password character.", 0 );
 	}
+}
+/**
+* \brief Retourne la premiere occurence de needle dans haystack.
+* \param data la string de donnees recue
+* \return La reponse fabriquee
+*/
+std::string Utils::GetPatternFromData(const std::string &haystack, const std::string &needle)
+{
+	// Simple regular expression matching
+	//std::regex passReg("PASS=([^ ]+) ");
+	std::regex passReg(needle);
+	std::smatch base_match;
+
+	if (std::regex_match(haystack, base_match, passReg))
+	{
+		// The first sub_match is the whole string; the next
+		// sub_match is the first parenthesized expression.
+		if (base_match.size() == 2) {
+			std::ssub_match base_sub_match = base_match[1];
+			return base_sub_match.str();
+		}
+	}
+
+	return "";
 }

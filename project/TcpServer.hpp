@@ -28,12 +28,7 @@ class TcpServer
 
 		void StopServer();
 
-		/**
-		 * \brief Retourne la premiere occurence de needle dans haystack.
-		 * \param data la string de donnees recue
-		 * \return La reponse fabriquee
-		 */
-		std::string GetPatternFromData(const std::string &haystack, const std::string &needle) const;
+		
 
 		/* TESTS */
 		static std::string TestGetPassFromData();
@@ -66,6 +61,8 @@ class TcpServer
 		* \return La data recue
 		*/
 		std::string ReceiveData();
+
+		bool SendData(const std::string & data) const;
 
 		/**
 		* \brief Envoi les data au client.

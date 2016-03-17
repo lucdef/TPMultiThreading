@@ -44,7 +44,18 @@ public:
 
 private:
 	//FIFO de chunk
+	const std::string _PROTOSTART = "HELLO-HOW-SHOULD-I-WORK";
+	const std::string _NEEDCHUNK = "NEW-CHUNK-PLEASE LAST-HANDLED-CHUNK=";
+	const std::string _FOUNDANDEXIT = "FOUND-PLEASE-EXIT PASSWORD=x FOUND-BY=y";
+	
 	std::string _host;
+	std::string _passwordATrouver;
+	std::string _algo;
+	std::string _alphabet;
+	const std::string _patternAlgo = "ALGO=([^ ]+)";
+	const std::string _patternHash = "HASH=([^ ]+)";
+	const std::string _patternAlphabet = "ALPHABET=([^ ]+)";
+	const std::string _patternChunk = "YOU=([^ ]+)";
 	FIFO<CPasswordChunk> _fifo;
 	//passage d'argument 
 	paramThread* _args;

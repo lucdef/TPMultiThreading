@@ -51,8 +51,8 @@ std::string TcpServer::ParseHttp(const std::string &data) const
 	else if (Utils::StringContains(tmp, "FOUND-PLEASE-EXIT"))
 	{
 		// get pass from tmp
-		std::string pass = GetPatternFromData(tmp, PASS_PATTERN);
-		std::string founder = GetPatternFromData(tmp, FOUNDER_PATTERN);
+		std::string pass = Utils::GetPatternFromData(tmp, PASS_PATTERN);
+		std::string founder = Utils::GetPatternFromData(tmp, FOUNDER_PATTERN);
 
 		//_ordonnanceur->replyChunk();
 		response = "GOOD-JOB";
@@ -103,34 +103,34 @@ std::string TcpServer::ReceiveData()
 	return request;
 }
 
-//bool TcpServer::SendData(const std::string& data) const
-//{
-//	if (data == "")
-//		return false;
-//
-//	// Send him the same information everytime
-//	// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
-//	std::cout << "[TcpServer] - sending fake page..." << std::endl;
-//
-//	if (data.length() == 0)
-//	{
-//		return false;
-//	}
-//
-//	try
-//	{
-//		_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
-//		_logger->LogInfo(1, "Server sent '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");
-//	}
-//	catch (CException e)
-//	{
-//		std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
-//		_logger->LogError(1, "Server error while sending '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");;
-//		return false;
-//	}
-//
-//	return true;
-//}
+bool TcpServer::SendData(const std::string& data) const
+{
+	if (data == "")
+		return false;
+
+	// Send him the same information everytime
+	// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
+	std::cout << "[TcpServer] - sending fake page..." << std::endl;
+
+	if (data.length() == 0)
+	{
+		return false;
+	}
+
+	try
+	{
+		_remoteClient->Send(data.c_str(), static_cast<unsigned short>(data.length()), NO_TIMEOUT);
+		_logger->LogInfo(1, "Server sent '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");
+	}
+	catch (CException e)
+	{
+		std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
+		_logger->LogError(1, "Server error while sending '" + data + "' to '" + Utils::GetClientStr(_remoteClient) + "'");;
+		return false;
+	}
+
+	return true;
+}
 
 
 
@@ -166,7 +166,7 @@ void TcpServer::Run(unsigned short port)
 
 
 			// Send him the same information everytime
-			//_isRunning = SendData(response); // TODO send to list of client
+			_isRunning = SendData(response); // TODO send to list of client
 
 			if (response == "GOOD JOB")
 				break;
@@ -211,25 +211,6 @@ void TcpServer::StopServer()
 	}
 }
 
-std::string TcpServer::GetPatternFromData(const std::string &haystack, const std::string &needle) const
-{
-	// Simple regular expression matching
-	//std::regex passReg("PASS=([^ ]+) ");
-	std::regex passReg(needle);
-	std::smatch base_match;
-
-	if (std::regex_match(haystack, base_match, passReg))
-	{
-		// The first sub_match is the whole string; the next
-		// sub_match is the first parenthesized expression.
-		if (base_match.size() == 2) {
-			std::ssub_match base_sub_match = base_match[1];
-			return base_sub_match.str();
-		}
-	}
-
-	return "";
-}
 
 std::string TcpServer::TestGetPassFromData()
 {
@@ -241,7 +222,7 @@ std::string TcpServer::TestGetPassFromData()
 	std::string fnames[] = { "PASS=bon ", "PASS=bon vsrverv", "PASS=bonvfsdv rfedgd ", "PASS=bon'!:;vxf47 " };
 
 	for (const auto &fname : fnames) {
-		std::cout << "GOT: '" << server.GetPatternFromData(fname, PASS_PATTERN) << "'" << std::endl;
+		std::cout << "GOT: '" << Utils::GetPatternFromData(fname, PASS_PATTERN) << "'" << std::endl;
 	}
 
 	return value;
@@ -257,7 +238,7 @@ std::string TcpServer::TestGetFounderFromData()
 	std::string fnames[] = { "FOUND-BY=bon ", "FOUND-BY=bon vsrverv", "FOUND-BY=bonvfsdv rfedgd ", "FOUND-BY=bon'!:;vxf47 " };
 
 	for (const auto &fname : fnames) {
-		std::cout << "GOT: '" << server.GetPatternFromData(fname, FOUNDER_PATTERN) << "'" << std::endl;
+		std::cout << "GOT: '" << Utils::GetPatternFromData(fname, FOUNDER_PATTERN) << "'" << std::endl;
 	}
 
 	return value;

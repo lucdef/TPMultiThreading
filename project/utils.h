@@ -27,4 +27,5 @@ public:
 	static void mySleep(int sleepMs);
 	static bool StringContains(const std::string & source, const std::string & pattern);
 	static std::string GetClientStr(CSocket* const client);
+	static std::string GetPatternFromData(const std::string & haystack, const std::string & needle);
 };
