@@ -61,7 +61,7 @@
 //	std::cout << "-OrdoGlobal " << stCommand->OrdoGlobal << std::endl;
 //}
 
-int main( int argc, const char *argv[] ) {
+int main(int argc, const char *argv[]) {
 	//OrdonnanceurLocal ordolocal;
 
 	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
@@ -73,7 +73,15 @@ int main( int argc, const char *argv[] ) {
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
+	// Default values
+	std::string p_hash = "",
+		p_algo = "",
+		p_alphabet = "",
+		p_masterIpAddress = "";
+	short p_chunkSize = 0;
+
 	
+
 	//int res = TcpTest::TestMain();
 	int res = OGlobalTest::TestServerAndKeyboard();
 	//int res = OGlobalTest::TestKeyboardThread();
