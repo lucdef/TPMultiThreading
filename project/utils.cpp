@@ -45,9 +45,12 @@ void HashCrackerUtils::ParseCommandLine(const int p_argc,
 	// Default values
 	p_hash = "";
 	p_algo = "";
-	p_alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+	//p_alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+	p_alphabet = "";
 	p_chunkSize = 0;
 	p_masterIpAddress = "";
+
+	// TODO return if too few argz and print usage
 
 	// Extract parameters using C style
 	while( i < p_argc ) {
@@ -89,13 +92,13 @@ void HashCrackerUtils::ParseCommandLine(const int p_argc,
 
 	// Ordo local selected but no address written in the command line
 	//if ( p_masterIpAddress.empty() && ordolocal == "YES")
-	if ( p_masterIpAddress.empty() && p_argc == 2)
+	if ( p_masterIpAddress.empty() && p_argc == 3)
 		throw _CException ( "No IP Address with OrdoLocal Enabled !! Exit !!!", 0 );
 
-	if (p_hash.empty() && p_argc > 2)
+	if (p_hash.empty() && p_argc > 3)
 		throw _CException("No Hash type specified in the command line !!! Exit !!!", 0);
 
-	if(p_chunkSize == 0 && p_argc > 2)
+	if(p_chunkSize == 0 && p_argc > 3)
 		throw _CException("ChunkSize == 0 !!! Exit !!!", 0);
 }
 

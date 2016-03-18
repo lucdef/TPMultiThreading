@@ -73,19 +73,45 @@ int main(int argc, const char *argv[]) {
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-	// Default values
-	std::string p_hash = "",
-		p_algo = "",
-		p_alphabet = "",
-		p_masterIpAddress = "";
-	short p_chunkSize = 0;
+	unsigned int chunkSize, passLetter = 5; // TODO passLetter??
+	std::string hash,
+		algo,
+		alphabet,
+		masterIpAddress;
 
-	
+	try
+	{
+		HashCrackerUtils::ParseCommandLine(argc,
+			argv,
+			hash,
+			algo,
+			alphabet,
+			chunkSize,
+			masterIpAddress);
+	}
+	catch(CException& cex)
+	{
+		std::cout << "\nErreur d'arguments...\nAppuyer sur <Enter> pour continuer";
+		std::cin.get();
+		return EXIT_FAILURE;
+	}
 
-	//int res = TcpTest::TestMain();
-	int res = OGlobalTest::TestServerAndKeyboard();
-	//int res = OGlobalTest::TestKeyboardThread();
-	//int res = OGlobalTest::TestServerThread();
+
+	if (masterIpAddress.length() != 0)
+	{
+		/* GO LOCAL HERE */
+	}
+	else
+	{
+		/* GO GLOBAL HERE */
+
+		//int res = TcpTest::TestMain();
+
+		int res = OGlobalTest::TestServerAndKeyboard(alphabet, chunkSize, passLetter);
+
+		//int res = OGlobalTest::TestKeyboardThread();
+		//int res = OGlobalTest::TestServerThread();
+	}
 
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
