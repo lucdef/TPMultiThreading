@@ -23,14 +23,15 @@ OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 	}
 	this->_host = host;
 	TcpClient clientTcp;
-	clientTcp.ConnectToHost(this->getHost());
+	clientTcp.ConnectToHost(this->getHost(),666);
 	clientTcp.SendHttpRequest(this->getHost(), this->_PROTOSTART);
 	clientTcp.WaitForResponse();
+	clientTcp.ReceiveResponse(true);
 	std::string tmp = clientTcp.GetResponse();
 	clientTcp.CloseConnection();
-	this->_algo = Utils::GetPatternFromData(tmp,this->_patternAlgo);
-	this->_alphabet = Utils::GetPatternFromData(tmp, this->_patternAlphabet);
-	this->_passwordATrouver = Utils::GetPatternFromData(tmp, this->_patternHash);
+	this->_algo = Utils::GetPatternFromData(tmp, Utils::_patternAlgo);
+	this->_alphabet = Utils::GetPatternFromData(tmp, Utils::_patternAlphabet);
+	this->_passwordATrouver = Utils::GetPatternFromData(tmp, Utils::_patternHash);
 	
 }
 
@@ -43,7 +44,9 @@ unsigned int OrdonnanceurLocal::GetNbThread()
 
 CPasswordChunk OrdonnanceurLocal::GetChunk()
 {
-	if (_fifo.Count()<(bThreadLocal*2))
+	std::cout << "Je veut des chunk";
+	int nbChunkInFifo = _fifo.Count();
+	if (nbChunkInFifo<(bThreadLocal*2))
 	{
 		RequestChunk();
 
@@ -65,9 +68,10 @@ void OrdonnanceurLocal::RequestChunk()
 {
 	CPasswordChunk* test = new CPasswordChunk("00", "zz");
 	TcpClient tcpClient =  TcpClient();
-	tcpClient.ConnectToHost(this->getHost());
-	tcpClient.SendHttpRequest(this->getHost(), this->_patternChunk);
+	tcpClient.ConnectToHost(this->getHost(),666);
+	tcpClient.SendHttpRequest(this->getHost(), Utils::_patternChunk);
 	tcpClient.WaitForResponse();
+	tcpClient.ReceiveResponse(true);
 	std::string chunktmp =  tcpClient.GetResponse();
 	tcpClient.CloseConnection();
 	_fifo.Push(*test);

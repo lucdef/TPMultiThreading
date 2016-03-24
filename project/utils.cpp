@@ -8,6 +8,11 @@
 #include <windows.h>
 #endif
 
+
+ const std::string Utils::_patternAlgo = ".*ALGO=([^ ]+).*";
+ const std::string Utils::_patternHash = ".*HASH=([^ ]+).*";
+ const std::string Utils::_patternAlphabet = ".*ALPHABET=([^ ]+).*";
+ const std::string Utils::_patternChunk = ".*YOU=([^ ]+).*";
 void Utils::mySleep(int sleepMs)
 {
 	#ifdef LINUX

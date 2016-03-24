@@ -27,4 +27,9 @@ public:
 		std::string &p_alphabet,
 		unsigned int &p_chunkSize,
 		std::string &p_masterIpAddress);
+	static const std::string _patternAlgo;
+	static const std::string _patternHash;
+	static const std::string _patternAlphabet;
+	static const std::string _patternChunk;
+
 };

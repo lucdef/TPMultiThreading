@@ -63,6 +63,7 @@
 //}
 
 int main( int argc, const char *argv[] ) {
+	
 	//OrdonnanceurLocal ordolocal;
 
 	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
@@ -100,7 +101,8 @@ int main( int argc, const char *argv[] ) {
 	
 	if (masterIpAddress.length() != 0)
 	{
-		/* GO LOCAL HERE */
+		OrdonnanceurLocal ordo(masterIpAddress);
+		ordo.StartThread();
 	}
 	else
 	{

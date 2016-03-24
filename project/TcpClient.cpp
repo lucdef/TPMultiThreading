@@ -141,6 +141,10 @@ void TcpClient::ExampleRun()
 
 std::string TcpClient::GetResponse()
 {
+	if (this->_responses.size() == 0)
+	{
+		throw _CException("No Hash type specified in the command line !!! Exit !!!", 0);
+	}
 	std::string response = this->_responses.at(0);
 	this->_responses.pop_front();
 	return response;
