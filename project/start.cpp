@@ -13,6 +13,7 @@
 
 #include "TcpTest.hpp"
 #include "OGlobalTest.hpp"
+#include "TrueMutexTest.hpp"
 
 //void ExtractCommandLine(int argc, const char *argv[]) {
 //	// Command line settings
@@ -62,19 +63,8 @@
 //	std::cout << "-OrdoGlobal " << stCommand->OrdoGlobal << std::endl;
 //}
 
-int main( int argc, const char *argv[] ) {
-	
-	//OrdonnanceurLocal ordolocal;
-
-	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
-
-	//ordolocal.StartThread();
-
-	//std::cout << std::endl;
-	//std::cout << "** Goodbye" << std::endl;
-	//std::cin.get();
-	//return EXIT_SUCCESS;
-
+int main( int argc, const char *argv[] )
+{
 	unsigned int chunkSize, passLetter = 5; // TODO passLetter??
 	std::string hash,
 		algo,
@@ -91,7 +81,7 @@ int main( int argc, const char *argv[] ) {
 			chunkSize,
 			masterIpAddress);
 	}
-	catch(CException& cex)
+	catch(CException&)
 	{
 		std::cout << "\nErreur d'arguments...\nAppuyer sur <Enter> pour continuer";
 		std::cin.get();
@@ -108,10 +98,12 @@ int main( int argc, const char *argv[] ) {
 	{
 		/* GO GLOBAL HERE */
 
-	//int res = TcpTest::TestMain();
-	int res = OGlobalTest::TestServerAndKeyboard();
-	//int res = OGlobalTest::TestKeyboardThread();
-	//int res = OGlobalTest::TestServerThread();
+		//int res = TcpTest::TestMain();
+		//int res = OGlobalTest::TestServerAndKeyboard();
+		//int res = OGlobalTest::TestKeyboardThread();
+		//int res = OGlobalTest::TestServerThread();
+
+		int res = TrueMutexTest::TestMutex();
 	}
 
 

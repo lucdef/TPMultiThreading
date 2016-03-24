@@ -2,7 +2,8 @@
 
 
 
-TrueMutex::TrueMutex()
+TrueMutex::TrueMutex() :
+	_mutex(nullptr)
 {
 }
 

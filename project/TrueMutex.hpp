@@ -11,8 +11,7 @@ class TrueMutex
 		void Init();
 		int Lock();
 		int Unlock();
-
-	private:
+private:
 		pthread_mutex_t _mutex;
 };
 
