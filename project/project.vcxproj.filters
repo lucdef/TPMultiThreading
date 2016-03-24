@@ -215,6 +215,9 @@
     <ClInclude Include="TtcpTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HashUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
@@ -272,6 +275,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OrdonnanceurLocal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HashUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

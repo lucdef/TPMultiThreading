@@ -226,6 +226,7 @@
     <ClInclude Include="ASingleton.h" />
     <ClInclude Include="FIFO.h" />
     <ClInclude Include="Fifo.hpp" />
+    <ClInclude Include="HashUtils.h" />
     <ClInclude Include="ITcpClient.hpp" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="ASingleton.cpp" />
     <ClCompile Include="FIFO.cpp" />
+    <ClCompile Include="HashUtils.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="OrdonnanceurLocal.cpp" />
     <ClCompile Include="OGlobal.cpp" />

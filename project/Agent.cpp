@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "PasswordChunk.h"
 #include "OrdonnanceurLocal.h"
+#include "HashUtils.h"
 
 
 void* Agent::GenerationPassword(void *p_arg)
@@ -24,11 +25,11 @@ void* Agent::GenerationPassword(void *p_arg)
 			char password[64] = "";
 
 			strcpy_s(password, sizeof(password), chunkToGenerate.GetPasswordBegin().c_str());
-			std::string testAlphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+			std::string testAlphabet = instanceol->getAlphabet();
 			while (password <= chunkToGenerate.GetPasswordEnd() && trouve == false)
 			{
 				//Si on trouve le password on quitte les autres threads
-				if (passwordtofind == password)
+				if (passwordtofind == instanceol->HashPassword(password))
 				{
 					strucarg->instance->SetPasswordFind(password);
 					trouve = true;

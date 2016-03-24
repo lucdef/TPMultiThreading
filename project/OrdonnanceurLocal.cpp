@@ -6,6 +6,7 @@
 #include "TcpClient.hpp"
 #include "TcpServer.hpp";
 #include "utils.h"
+#include "HashUtils.h"
 
 OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 {
@@ -84,7 +85,7 @@ void OrdonnanceurLocal::CreateThread()
 	_args = new paramThread;
 	_args->instance = this;
 	_args->arret = false;
-	_args->passwordToFind = "afi";
+	_args->passwordToFind = this->_passwordATrouver;
 	for (int i = 0; i < bThreadLocal; i++)
 	{
 		pthread_t idThread;
@@ -95,7 +96,33 @@ void OrdonnanceurLocal::CreateThread()
 		_aIdThread[i] = idThread;
 	}
 }
-
+std::string OrdonnanceurLocal::HashPassword(std::string passwordToHash)
+{
+	std::string passwordHasher = passwordToHash;
+	std::string algo = this->_algo;
+	if (algo == "sha256") {
+		passwordHasher = HashUtils::GetInstance()->HashSha256(passwordToHash);
+	}
+	else if (algo == "sha1")
+	{
+		passwordHasher = HashUtils::GetInstance()->HashSha1(passwordToHash);
+	}
+	else if (algo == "sha224")
+	{
+		passwordHasher = HashUtils::GetInstance()->HashSha224(passwordToHash);
+	}
+	else if (algo == "md5")
+	{
+		passwordHasher = HashUtils::GetInstance()->hashMd5(passwordToHash);
+	}
+	else if (algo == "sha224")
+	{
+		passwordHasher = HashUtils::GetInstance()->HashCrc32(passwordToHash);
+	}
+	return passwordHasher;
+		
+	
+}
 void OrdonnanceurLocal::StopThread()
 {
 	if (_aIdThread != nullptr)

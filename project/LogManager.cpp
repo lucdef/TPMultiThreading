@@ -9,7 +9,9 @@ LogManager* LogManager::_instance;
 
 LogManager::LogManager()
 {
-	_logFile = new CFileText("..\\logs\\TPMultiThreading.log", EFileOpenMode::append);
+	
+		_logFile = new CFileText("..\\TPMultiThreading.log", EFileOpenMode::append);
+	
 	_logFile->Open(EFileOpenMode::append);
 	_mutex = new TrueMutex();
 	_mutex->Init();
@@ -74,6 +76,7 @@ bool LogManager::log(int idThread, std::string message, std::string criticite)
 	stream << criticite << " " << dateString << " Thread:" << idThread << " " << message << std::endl;
 	try{
 	_logFile->AppendLine(stream.str(), EFileEOL::Windows);
+	_logFile->Flush();
 	_mutex->Unlock();
 	return true;
 }

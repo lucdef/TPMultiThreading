@@ -9,6 +9,7 @@
 
 #include <pthread.h>
 #include <Windows.h>
+#include "LogManager.h"
 
 #include "TcpTest.hpp"
 #include "OGlobalTest.hpp"
@@ -62,6 +63,32 @@ void ExtractCommandLine(int argc, const char *argv[]) {
 //}
 
 int main( int argc, const char *argv[] ) {
+
+	LogManager::GetInstance()->LogError(1, "ta mère en slip");
+
+		std::string  p_hash;
+		std::string  p_algo;
+		std::string  p_alphabet;
+		unsigned int  p_chunkSize;
+		std::string  p_masterIpAddress;
+		std::string  ordolocal;
+		std::string  ordoGlobal;
+
+	Utils::ParseCommandLine( argc,
+			argv,
+			p_hash,
+			p_algo,
+			p_alphabet,
+			p_chunkSize,
+			p_masterIpAddress,
+			ordolocal,
+			ordoGlobal);
+	if (ordolocal == "YES")
+	{
+		OrdonnanceurLocal *ordo = new OrdonnanceurLocal("127.0.0.1");
+		std::cout << "nop";
+		delete ordo;
+	}
 	//OrdonnanceurLocal ordolocal;
 
 	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
@@ -75,7 +102,7 @@ int main( int argc, const char *argv[] ) {
 
 	
 	//int res = TcpTest::TestMain();
-	int res = OGlobalTest::TestServerAndKeyboard();
+	/*int res = OGlobalTest::TestServerAndKeyboard();*/
 	//int res = OGlobalTest::TestKeyboardThread();
 	//int res = OGlobalTest::TestServerThread();
 

@@ -18,9 +18,10 @@ public:
 		std::string OrdoGlobal;
 	};
 
-	OrdonnanceurLocal();
 	~OrdonnanceurLocal();
 	
+	OrdonnanceurLocal(std::string host);
+
 	static unsigned int GetNbThread();
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();
@@ -28,6 +29,7 @@ public:
 	void RequestChunk();
 	void StartThread();
 	void CreateThread();
+	std::string HashPassword(std::string passwordToHash);
 	void StopThread();
 	int GetNbThreadLocal();
 	void FreeRessources();
