@@ -25,7 +25,7 @@ void* Agent::GenerationPassword(void *p_arg)
 			char password[64] = "";
 
 			strcpy_s(password, sizeof(password), chunkToGenerate.GetPasswordBegin().c_str());
-			std::string testAlphabet = instanceol->getAlphabet();
+			std::string alphabet = instanceol->getAlphabet();
 			while (password <= chunkToGenerate.GetPasswordEnd() && trouve == false)
 			{
 				//Si on trouve le password on quitte les autres threads
@@ -36,7 +36,7 @@ void* Agent::GenerationPassword(void *p_arg)
 					instanceol->StopThread();
 				}
 				std::this_thread::sleep_for(std::chrono::milliseconds(80));
-				HashCrackerUtils::IncreasePassword(password, sizeof(password), testAlphabet);
+				HashCrackerUtils::IncreasePassword(password, sizeof(password), alphabet);
 				std::cout << password << std::endl;
 			}
 		}
