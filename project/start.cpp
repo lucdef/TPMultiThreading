@@ -9,6 +9,7 @@
 
 #include <pthread.h>
 #include <Windows.h>
+#include "LogManager.h"
 
 #include "TcpTest.hpp"
 #include "OGlobalTest.hpp"
@@ -61,7 +62,7 @@
 //	std::cout << "-OrdoGlobal " << stCommand->OrdoGlobal << std::endl;
 //}
 
-int main(int argc, const char *argv[]) {
+int main( int argc, const char *argv[] ) {
 	//OrdonnanceurLocal ordolocal;
 
 	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
@@ -81,7 +82,7 @@ int main(int argc, const char *argv[]) {
 
 	try
 	{
-		HashCrackerUtils::ParseCommandLine(argc,
+		Utils::ParseCommandLine(argc,
 			argv,
 			hash,
 			algo,
@@ -96,7 +97,7 @@ int main(int argc, const char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-
+	
 	if (masterIpAddress.length() != 0)
 	{
 		/* GO LOCAL HERE */
@@ -105,12 +106,10 @@ int main(int argc, const char *argv[]) {
 	{
 		/* GO GLOBAL HERE */
 
-		//int res = TcpTest::TestMain();
-
-		int res = OGlobalTest::TestServerAndKeyboard(alphabet, chunkSize, passLetter);
-
-		//int res = OGlobalTest::TestKeyboardThread();
-		//int res = OGlobalTest::TestServerThread();
+	//int res = TcpTest::TestMain();
+	int res = OGlobalTest::TestServerAndKeyboard();
+	//int res = OGlobalTest::TestKeyboardThread();
+	//int res = OGlobalTest::TestServerThread();
 	}
 
 

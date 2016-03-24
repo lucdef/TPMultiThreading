@@ -22,6 +22,7 @@ public:
 	
 	OrdonnanceurLocal(std::string host);
 
+	std::string GetAlphabet();
 	static unsigned int GetNbThread();
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();

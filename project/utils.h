@@ -26,7 +26,5 @@ public:
 		std::string &p_algo,
 		std::string &p_alphabet,
 		unsigned int &p_chunkSize,
-		std::string &p_masterIpAddress,
-		std::string &ordolocal,
-		std::string &ordoGlobal);
+		std::string &p_masterIpAddress);
 };

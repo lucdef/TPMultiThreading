@@ -25,7 +25,7 @@ void* Agent::GenerationPassword(void *p_arg)
 			char password[64] = "";
 
 			strcpy_s(password, sizeof(password), chunkToGenerate.GetPasswordBegin().c_str());
-			std::string alphabet = instanceol->getAlphabet();
+			std::string alphabet = instanceol->GetAlphabet();
 			while (password <= chunkToGenerate.GetPasswordEnd() && trouve == false)
 			{
 				//Si on trouve le password on quitte les autres threads
