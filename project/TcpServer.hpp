@@ -69,7 +69,7 @@ class TcpServer
 		* \param data les datas a envoyer
 		* \return true si ok, false sinon
 		*/
-		//bool SendData(const std::string &data) const;
+		bool SendData(const std::string &data) const;
 
 		/**
 		* \brief Deconnecte un client.

@@ -9,18 +9,17 @@
 
 #include <pthread.h>
 #include <Windows.h>
-#include "LogManager.h"
 
 #include "TcpTest.hpp"
 #include "OGlobalTest.hpp"
 
-void ExtractCommandLine(int argc, const char *argv[]) {
-	// Command line settings
-	// Tip: good to be stored in a singleton dedicated to configuration	--> see singleton.h
-	std::string hash, algo, alphabet, masterIpAddress;
-	unsigned int chunkSize = 0;
-	bool runningAsSlave = false;
-}
+//void ExtractCommandLine(int argc, const char *argv[]) {
+//	// Command line settings
+//	// Tip: good to be stored in a singleton dedicated to configuration	--> see singleton.h
+//	std::string hash, algo, alphabet, masterIpAddress;
+//	unsigned int chunkSize = 0;
+//	bool runningAsSlave = false;
+//}
 
 //void ExtractCommandLine( int argc, 
 //						const char *argv[] , 
@@ -62,33 +61,7 @@ void ExtractCommandLine(int argc, const char *argv[]) {
 //	std::cout << "-OrdoGlobal " << stCommand->OrdoGlobal << std::endl;
 //}
 
-int main( int argc, const char *argv[] ) {
-
-	LogManager::GetInstance()->LogError(1, "ta mère en slip");
-
-		std::string  p_hash;
-		std::string  p_algo;
-		std::string  p_alphabet;
-		unsigned int  p_chunkSize;
-		std::string  p_masterIpAddress;
-		std::string  ordolocal;
-		std::string  ordoGlobal;
-
-	Utils::ParseCommandLine( argc,
-			argv,
-			p_hash,
-			p_algo,
-			p_alphabet,
-			p_chunkSize,
-			p_masterIpAddress,
-			ordolocal,
-			ordoGlobal);
-	if (ordolocal == "YES")
-	{
-		OrdonnanceurLocal *ordo = new OrdonnanceurLocal("127.0.0.1");
-		std::cout << "nop";
-		delete ordo;
-	}
+int main(int argc, const char *argv[]) {
 	//OrdonnanceurLocal ordolocal;
 
 	//ExtractCommandLine( argc, argv, ordolocal.getCommandLine());
@@ -100,11 +73,45 @@ int main( int argc, const char *argv[] ) {
 	//std::cin.get();
 	//return EXIT_SUCCESS;
 
-	
-	//int res = TcpTest::TestMain();
-	/*int res = OGlobalTest::TestServerAndKeyboard();*/
-	//int res = OGlobalTest::TestKeyboardThread();
-	//int res = OGlobalTest::TestServerThread();
+	unsigned int chunkSize, passLetter = 5; // TODO passLetter??
+	std::string hash,
+		algo,
+		alphabet,
+		masterIpAddress;
+
+	try
+	{
+		HashCrackerUtils::ParseCommandLine(argc,
+			argv,
+			hash,
+			algo,
+			alphabet,
+			chunkSize,
+			masterIpAddress);
+	}
+	catch(CException& cex)
+	{
+		std::cout << "\nErreur d'arguments...\nAppuyer sur <Enter> pour continuer";
+		std::cin.get();
+		return EXIT_FAILURE;
+	}
+
+
+	if (masterIpAddress.length() != 0)
+	{
+		/* GO LOCAL HERE */
+	}
+	else
+	{
+		/* GO GLOBAL HERE */
+
+		//int res = TcpTest::TestMain();
+
+		int res = OGlobalTest::TestServerAndKeyboard(alphabet, chunkSize, passLetter);
+
+		//int res = OGlobalTest::TestKeyboardThread();
+		//int res = OGlobalTest::TestServerThread();
+	}
 
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
