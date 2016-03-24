@@ -13,9 +13,9 @@ class LogManager
 public:
 	static LogManager* GetInstance();
 	static void Kill();
-	bool LogWarning(int idThread, std::string message);
-	bool LogError(int idThread, std::string message);
-	bool LogInfo(int idThread, std::string message);
+	bool LogWarning(int idThread, const std::string& message) const;
+	bool LogError(int idThread, const std::string& message) const;
+	bool LogInfo(int idThread, const std::string& message) const;
 
 
 private:
@@ -23,8 +23,8 @@ private:
 	~LogManager();
 	LogManager();
 	static LogManager *_instance;
-	bool log(int idThread, std::string message, std::string criticite);
-	static std::string DateToString(CDateTime date);
+	bool log(int idThread, const std::string &message, const std::string &criticite) const;
+	static std::string DateToString(const CDateTime &date);
 	CFileText *_logFile;
 	TrueMutex *_mutex;
 
