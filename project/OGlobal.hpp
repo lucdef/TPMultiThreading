@@ -29,7 +29,7 @@ public:
 	const std::string GetAlphabet() const;
 	const std::string GetAlgo() const;
 	const std::string GetHash() const;
-	const std::string GetNextChunkBegin(); 
+	const CPasswordChunk& GetNextChunk();
 	const std::string CraftResponse(const std::string request);
 	void StartServer(int port);
 	void StartKeyboardThread(const bool isBlocking);

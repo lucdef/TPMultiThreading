@@ -45,10 +45,12 @@ std::string TcpServer::ParseHttp(const std::string &data) const
 		std::string lastHandled = Utils::GetPatternFromData(tmp, TcpServer::LASTHANDLE_PATTERN);
 
 		
-		std::string startPass = ordonnanceur->GetNextChunkBegin();
+		CPasswordChunk chunk = ordonnanceur->GetNextChunk();
+		std::string startPass = chunk.GetPasswordBegin(),
+			endPass = chunk.GetPasswordEnd();
 
 
-		response = "NEW-CHUNK-FOR-YOU=" + startPass;
+		response = "NEW-CHUNK-FOR-YOU=" + startPass + '|' + endPass;
 		
 		ordonnanceur->AddGivenChunk(startPass, _remoteClient);
 	}

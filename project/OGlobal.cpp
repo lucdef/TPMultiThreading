@@ -71,17 +71,21 @@ const std::string OGlobal::GetHash() const
 	return _hash;
 }
 
-const std::string OGlobal::GetNextChunkBegin()
+const CPasswordChunk& OGlobal::GetNextChunk()
 {
-	std::string ret = _nextChunk.GetPasswordBegin(),
+	// celui stocké et le bon...
+	CPasswordChunk chunk = CPasswordChunk(_nextChunk);
+
+	std::string ret = chunk.GetPasswordBegin(),
 		currentEnd = _nextChunk.GetPasswordEnd(),
 		newBegin = getBeginFromEnd(currentEnd);
 
-	
+	// ... puis on en genere un autre pour le suivant
 	generateChunk(newBegin);
 
-	return ret;
+	return chunk;
 }
+
 
 const std::string OGlobal::CraftResponse(const std::string request)
 {
