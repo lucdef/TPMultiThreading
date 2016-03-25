@@ -69,7 +69,7 @@ void OrdonnanceurLocal::RequestChunk()
 	CPasswordChunk* test = new CPasswordChunk("00", "zz");
 	TcpClient tcpClient =  TcpClient();
 	tcpClient.ConnectToHost(this->getHost(),666);
-	tcpClient.SendHttpRequest(this->getHost(), Utils::_patternChunk);
+	tcpClient.SendHttpRequest(this->getHost(), "NEW-CHUNK-PLEASE");
 	tcpClient.WaitForResponse();
 	tcpClient.ReceiveResponse(true);
 	std::string chunktmp =  tcpClient.GetResponse();
@@ -173,7 +173,7 @@ std::string OrdonnanceurLocal::getHost()
 
 OrdonnanceurLocal::~OrdonnanceurLocal()
 {
-	
+	std::cout << "je me detrui" << std::endl;
 }
 
 OrdonnanceurLocal::strCommandLine* OrdonnanceurLocal::getCommandLine(void)

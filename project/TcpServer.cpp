@@ -45,6 +45,7 @@ std::string TcpServer::ParseHttp(const std::string &data) const
 
 
 		response = "NEW-CHUNK-FOR-YOU=" + startPass;
+		std::cout << response<<startPass << std::endl;
 		
 		ordonnanceur->AddGivenChunk(startPass, _remoteClient);
 	}

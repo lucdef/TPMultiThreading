@@ -18,7 +18,6 @@ public:
 		std::string OrdoGlobal;
 	};
 
-	~OrdonnanceurLocal();
 	
 	OrdonnanceurLocal(std::string host);
 
@@ -36,6 +35,8 @@ public:
 	void FreeRessources();
 	void SetPasswordFind(std::string password);
 	std::string getHost();
+
+	~OrdonnanceurLocal();
 	
 	
 	struct paramThread

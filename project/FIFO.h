@@ -5,40 +5,40 @@
 #include<queue>
 #include<deque>
 #include "TrueMutex.hpp"
+#include <pthread.h>
 template <typename T> class FIFO
 {
 public:
 	FIFO()
 	{
-		_mutex = new TrueMutex();
-		_mutex->Init();
+		_mutex  = PTHREAD_MUTEX_INITIALIZER;
 	}
 	T Pop()
 	{
-		_mutex->Lock();
+		//_mutex->Lock();
 		T firstElement = _list.at(0);
 		_list.pop_front();
-		_mutex->Unlock();
+		//_mutex->UnLock();
 		return firstElement;
 	}
 	
 	void Push(T endElement)
 	{
-		_mutex->Lock();
+		//_mutex->Lock();
 		_list.push_back(endElement);
-		_mutex->Unlock();
+		//_mutex->UnLock();
 	}
 	void Clear()
 	{
 		_mutex->Lock();
 		_list.clear();
-		_mutex->Unlock();
+		//_mutex->UnLock();
 	}
 	int Count()
 	{
-		_mutex->Lock();
+		pthread_mutex_lock(&_mutex);
 		int sizeOfFifo = _list.size();
-		_mutex->Unlock();
+		pthread_mutex_unlock(&_mutex);
 		return sizeOfFifo;
 	}
 
@@ -48,7 +48,7 @@ public:
 	}
 private:
 	std::deque<T> _list;
-	TrueMutex* _mutex;
+	pthread_mutex_t _mutex;
 
 };
 
