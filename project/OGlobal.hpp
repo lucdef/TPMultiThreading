@@ -4,6 +4,7 @@
 #include "pthread.h"
 #include "TcpServer.hpp"
 #include "PasswordChunk.h"
+#include "LogManager.h"
 
 #define THREAD_COUNT 5
 
@@ -28,7 +29,7 @@ public:
 	const std::string GetAlphabet() const;
 	const std::string GetAlgo() const;
 	const std::string GetHash() const;
-	const std::string GetNextChunkBegin() const;
+	const std::string GetNextChunkBegin(); 
 	const std::string CraftResponse(const std::string request);
 	void StartServer(int port);
 	void StartKeyboardThread(const bool isBlocking);
@@ -60,6 +61,7 @@ private:
 	std::deque<givenChunk_t> _givenChunks;
 	pthread_t _keyboardThread;
 	pthread_t _serverThread;
+	LogManager *_logger;
 
 
 	OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);

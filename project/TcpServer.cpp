@@ -5,8 +5,9 @@
 
 #include <regex>
 
-const std::string TcpServer::PASS_PATTERN = "PASS=([^ ]+) ";
-const std::string TcpServer::FOUNDER_PATTERN = "FOUND-BY=([^ ]+) ";
+const std::string TcpServer::PASS_PATTERN = ".*PASS=([^ ]+).*";
+const std::string TcpServer::LASTHANDLE_PATTERN = ".*LAST-HANDLED-CHUNK=([^ ]+).*";
+const std::string TcpServer::FOUNDER_PATTERN = ".*FOUND-BY=([^ ]+).*";
 
 TcpServer::TcpServer() :
 	_logger(LogManager::GetInstance()),
@@ -40,7 +41,10 @@ std::string TcpServer::ParseHttp(const std::string &data) const
 	}
 	else if ( Utils::StringContains(tmp, "NEW-CHUNK-PLEASE" ))
 	{
-		// TODO: get lastHandled from tmp
+		// TODO: store and log lastHandled 
+		std::string lastHandled = Utils::GetPatternFromData(tmp, TcpServer::LASTHANDLE_PATTERN);
+
+		
 		std::string startPass = ordonnanceur->GetNextChunkBegin();
 
 
@@ -92,7 +96,7 @@ std::string TcpServer::ReceiveData()
 
 	if(logMsg.length() == 0)
 	{
-		_logger->LogInfo(2, "Server received '<data>' from <from>");
+		_logger->LogInfo(2, "Server received '" + request + "' from <from>");
 	}
 	else
 	{
