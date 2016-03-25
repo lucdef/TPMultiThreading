@@ -15,6 +15,7 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 	_alphabet(alphabet),
 	_chunkSize(chunkSize)
 {
+	_logger = LogManager::GetInstance();
 	// init threadId and thread array
 	//for (int i = 0; i < 5; ++i)
 	//{
@@ -70,9 +71,16 @@ const std::string OGlobal::GetHash() const
 	return _hash;
 }
 
-const std::string OGlobal::GetNextChunkBegin() const
+const std::string OGlobal::GetNextChunkBegin()
 {
-	return _nextChunk.GetPasswordBegin();
+	std::string ret = _nextChunk.GetPasswordBegin(),
+		currentEnd = _nextChunk.GetPasswordEnd(),
+		newBegin = getBeginFromEnd(currentEnd);
+
+	
+	generateChunk(newBegin);
+
+	return ret;
 }
 
 const std::string OGlobal::CraftResponse(const std::string request)
@@ -206,7 +214,9 @@ std::string OGlobal::generateChunk(const std::string begin)
 		end[i] = lastInAlphabet;
 	}
 
-	std::cout << "generated : " << begin << " --> " << end << std::endl ;
+	std::string logMsg = "[OGlobal] Generated : " + begin + " --> " + end;
+	std::cout << logMsg << std::endl;
+	_logger->LogInfo(0, logMsg);
 	//_nextChunk = 
 
 	_nextChunk.Reset();

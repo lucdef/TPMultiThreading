@@ -38,6 +38,7 @@ class TcpServer
 		static const short MAX_CONNECTION = 10;
 		static const std::string PASS_PATTERN;
 		static const std::string FOUNDER_PATTERN;
+		static const std::string LASTHANDLE_PATTERN;
 
 		LogManager* const _logger;
 
