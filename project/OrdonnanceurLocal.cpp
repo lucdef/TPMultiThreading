@@ -72,7 +72,11 @@ void OrdonnanceurLocal::RequestChunk()
 	tcpClient.WaitForResponse();
 	tcpClient.ReceiveResponse(true);
 	std::string reponse =  tcpClient.GetResponse();
-	std::string startPass =Utils::GetPatternFromData(reponse, Utils::_patternChunk);
+	std::string delimiter = "|";
+	std::string chunk = Utils::GetPatternFromData(reponse, Utils::_patternChunk);
+	std::string startpass = chunk.substr(0, chunk.find(delimiter));
+
+	std::string endpass = chunk.substr(1, chunk.find(delimiter));
 	CPasswordChunk giveMeSomeChunk;
 	
 	tcpClient.CloseConnection();
