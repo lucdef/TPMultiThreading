@@ -22,7 +22,7 @@ bool TcpClient::ConnectToHost(const std::string host, int port)
 	// Connect to remote host
 	std::cout << std::endl;
 	std::cout << "Connecting to " << host << std::endl;
-	_socket.Connect(host.c_str(), port, 2500);
+	_socket.Connect(host.c_str(), port, 10000);
 
 	// TODO: handle errors
 
