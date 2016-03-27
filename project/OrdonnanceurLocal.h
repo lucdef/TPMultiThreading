@@ -22,11 +22,12 @@ public:
 	OrdonnanceurLocal(std::string host);
 
 	std::string GetAlphabet();
+	void FoundPassword(std::string passwordFound);
 	static unsigned int GetNbThread();
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();
 	strCommandLine* getCommandLine(void);
-	void RequestChunk();
+	void RequestChunk(int nbRequest,std::string lastHandle);
 	void StartThread();
 	void CreateThread();
 	std::string HashPassword(std::string passwordToHash);
@@ -47,10 +48,10 @@ public:
 	};
 
 private:
-	//FIFO de chunk
+	std::string lastHandle;
 	const std::string _PROTOSTART = "HELLO-HOW-SHOULD-I-WORK";
 	const std::string _NEEDCHUNK = "NEW-CHUNK-PLEASE LAST-HANDLED-CHUNK=";
-	const std::string _FOUNDANDEXIT = "FOUND-PLEASE-EXIT PASSWORD=x FOUND-BY=y";
+	const std::string _FOUNDANDEXIT = "FOUND-PLEASE-EXIT PASSWORD=x FOUND-BY={0}";
 	
 	std::string _host;
 	std::string _passwordATrouver;

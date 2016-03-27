@@ -3,9 +3,11 @@
 #include <thread>
 #include "Agent.h"
 #include "utils.h"
+#include "LogManager.h"
 #include "PasswordChunk.h"
 #include "OrdonnanceurLocal.h"
 #include "HashUtils.h"
+#include <sstream>
 
 
 void* Agent::GenerationPassword(void *p_arg)
@@ -33,11 +35,13 @@ void* Agent::GenerationPassword(void *p_arg)
 				{
 					strucarg->instance->SetPasswordFind(password);
 					trouve = true;
-					instanceol->StopThread();
+					instanceol->FoundPassword(password);
+					std::ostringstream message;
+					message << "Password found :" << password << " hashed password:" << passwordtofind;
+					LogManager::GetInstance()->LogInfo(0, message.str());
 				}
-				std::this_thread::sleep_for(std::chrono::milliseconds(80));
+				//std::this_thread::sleep_for(std::chrono::milliseconds(80));
 				HashCrackerUtils::IncreasePassword(password, sizeof(password), alphabet);
-				std::cout << password << std::endl;
 			}
 		}
 	}

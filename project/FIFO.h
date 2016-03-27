@@ -15,24 +15,29 @@ public:
 	}
 	T Pop()
 	{
-		//_mutex->Lock();
+
+		pthread_mutex_lock(&_mutex);
 		T firstElement = _list.at(0);
 		_list.pop_front();
-		//_mutex->UnLock();
+
+		pthread_mutex_unlock(&_mutex);
 		return firstElement;
 	}
 	
 	void Push(T endElement)
 	{
-		//_mutex->Lock();
+		pthread_mutex_lock(&_mutex);
 		_list.push_back(endElement);
-		//_mutex->UnLock();
+
+		pthread_mutex_unlock(&_mutex);
 	}
 	void Clear()
 	{
-		_mutex->Lock();
+
+		pthread_mutex_lock(&_mutex);
 		_list.clear();
-		//_mutex->UnLock();
+
+		pthread_mutex_unlock(&_mutex);
 	}
 	int Count()
 	{
@@ -40,6 +45,14 @@ public:
 		int sizeOfFifo = _list.size();
 		pthread_mutex_unlock(&_mutex);
 		return sizeOfFifo;
+	}
+	T GetLastChunk()
+	{
+		
+		pthread_mutex_lock(&_mutex);
+		T element =  _list.at(_list.size() - 1);
+		pthread_mutex_unlock(&_mutex);
+		return element;
 	}
 
 	~FIFO()
