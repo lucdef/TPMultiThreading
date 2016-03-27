@@ -25,6 +25,7 @@ OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 	TcpClient clientTcp;
 	clientTcp.ConnectToHost(this->getHost(),666);
 	clientTcp.SendHttpRequest(this->getHost(), this->_PROTOSTART);
+	//clientTcp.SendHttpRequest(this->getHost(), this->_NEEDCHUNK);
 	clientTcp.WaitForResponse();
 	clientTcp.ReceiveResponse(true);
 	std::string tmp = clientTcp.GetResponse();
@@ -68,6 +69,11 @@ void OrdonnanceurLocal::RequestChunk()
 	CPasswordChunk* test = new CPasswordChunk("00", "zz");
 	TcpClient tcpClient =  TcpClient();
 	tcpClient.ConnectToHost(this->getHost(),666);
+
+	// this->_NEEDCHUNK semble etre vide des fois....
+	// ... du coup fix temporaire:
+	const std::string needChunk = "NEW-CHUNK-PLEASE LAST-HANDLED-CHUNK=";
+
 	tcpClient.SendHttpRequest(this->getHost(), this->_NEEDCHUNK);
 	tcpClient.WaitForResponse();
 	tcpClient.ReceiveResponse(true);

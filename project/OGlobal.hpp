@@ -29,7 +29,7 @@ public:
 	const std::string GetAlphabet() const;
 	const std::string GetAlgo() const;
 	const std::string GetHash() const;
-	const CPasswordChunk& GetNextChunk();
+	const CPasswordChunk GetNextChunk();
 	const std::string CraftResponse(const std::string request);
 	void StartServer(int port);
 	void StartKeyboardThread(const bool isBlocking);
@@ -66,6 +66,7 @@ private:
 
 	OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
 	~OGlobal();
+	void initNextChunk();
 	static void *ThreadKeyboardFunc(void *p_arg);
 	static void *ThreadServerFunc(void *p_arg);
 
