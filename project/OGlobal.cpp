@@ -13,9 +13,16 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 	_appRunning(true),
 	_hash(hash),
 	_alphabet(alphabet),
-	_chunkSize(chunkSize)
+	_chunkSize(chunkSize),
+	_nextChunk()
 {
 	_logger = LogManager::GetInstance();
+
+	// init next chunk
+	initNextChunk();
+	
+	
+	
 	// init threadId and thread array
 	//for (int i = 0; i < 5; ++i)
 	//{
@@ -71,7 +78,7 @@ const std::string OGlobal::GetHash() const
 	return _hash;
 }
 
-const CPasswordChunk& OGlobal::GetNextChunk()
+const CPasswordChunk OGlobal::GetNextChunk()
 {
 	// celui stocké et le bon...
 	CPasswordChunk chunk = CPasswordChunk(_nextChunk);
@@ -274,15 +281,13 @@ int OGlobal::IndexOf(const char letter) const
 	return -1;
 }
 
+void OGlobal::initNextChunk()
+{
+	const int nbPassLetters = _hash.length();
+	std::string first = "";
 
+	for (int i = 0; i < nbPassLetters; ++i)
+		first += _alphabet[0];
 
-//void OGlobal::replyChunk()
-//{
-//	std::string trame = "NEW-CHUNK-FOR-YOU=" + _nextChunk.GetPasswordBegin();
-//	_server.SendData(trame); // TODO: handle several clients
-//}
-
-//void OGlobal::createThreads()
-//{
-//
-//}
+	generateChunk(first);
+}

@@ -103,6 +103,9 @@ int main( int argc, const char *argv[] ) {
 	{
 		OrdonnanceurLocal ordo(masterIpAddress);
 		ordo.StartThread();
+		// ici ca se detruit parce que StartThread n'est pas une boucle infini,
+		// donc des que ca retourne, on sort du if (ici) et du coup on détruit l'ordo
+		// fix: faire une methode run en boucle 'infinie' (sur un bool par exemple)
 	}
 	else
 	{
@@ -110,6 +113,7 @@ int main( int argc, const char *argv[] ) {
 
 	//int res = TcpTest::TestMain();
 	int res = OGlobalTest::TestServerAndKeyboard();
+	//int res = OGlobalTest::TestGenerateChunk();
 	//int res = OGlobalTest::TestKeyboardThread();
 	//int res = OGlobalTest::TestServerThread();
 	}

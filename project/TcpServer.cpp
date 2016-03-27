@@ -45,7 +45,7 @@ std::string TcpServer::ParseHttp(const std::string &data) const
 		std::string lastHandled = Utils::GetPatternFromData(tmp, TcpServer::LASTHANDLE_PATTERN);
 
 		
-		CPasswordChunk chunk = ordonnanceur->GetNextChunk();
+		const CPasswordChunk chunk = ordonnanceur->GetNextChunk();
 		std::string startPass = chunk.GetPasswordBegin(),
 			endPass = chunk.GetPasswordEnd();
 
@@ -166,6 +166,7 @@ void TcpServer::Run(unsigned short port)
 			// Receive whole response with 100ms timeout
 			// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
 			std::string request = ReceiveData();
+
 
 			// For pleasure, let's do a quick HTTP parsing
 			std::string response = ParseHttp(request);
