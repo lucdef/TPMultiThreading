@@ -75,12 +75,10 @@ void OrdonnanceurLocal::RequestChunk()
 	std::string delimiter = "|";
 	std::string chunk = Utils::GetPatternFromData(reponse, Utils::_patternChunk);
 	std::string startpass = chunk.substr(0, chunk.find(delimiter));
-
 	std::string endpass = chunk.substr(1, chunk.find(delimiter));
-	CPasswordChunk giveMeSomeChunk;
-	
+	CPasswordChunk giveMeSomeChunk(startpass,endpass);
 	tcpClient.CloseConnection();
-	_fifo.Push(*test);
+	_fifo.Push(giveMeSomeChunk);
 }
 
 void OrdonnanceurLocal::StartThread()
