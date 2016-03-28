@@ -35,7 +35,6 @@ OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 	clientTcp.CloseConnection();
 	this->_algo = Utils::GetPatternFromData(tmp, Utils::_patternAlgo);
 	this->_alphabet = Utils::GetPatternFromData(tmp, Utils::_patternAlphabet);	this->_passwordATrouver = Utils::GetPatternFromData(tmp, Utils::_patternHash);
-	
 }
 
 unsigned int OrdonnanceurLocal::GetNbThread()
@@ -77,9 +76,10 @@ unsigned int OrdonnanceurLocal::GetAvailableMemory()
 	return status.ullAvailPhys*0.9;
 }
 
-void OrdonnanceurLocal::RequestChunk(int nbRequest,std::string lastHandle)
+void OrdonnanceurLocal::RequestChunk(int nbRequest, std::string lastHandle)
 {
 	LogManager::GetInstance()->LogInfo(1, "Need Some Chunk over here");
+
 	for (int i=0; i < nbRequest; i++) {
 		TcpClient tcpClient = TcpClient();
 		tcpClient.ConnectToHost(this->getHost(), 666);
@@ -104,7 +104,18 @@ void OrdonnanceurLocal::RequestChunk(int nbRequest,std::string lastHandle)
 void OrdonnanceurLocal::StartThread()
 {
 	this->CreateThread();
-	std::cout << "Test";
+	std::cout << "Threads created, now waiting for them...";
+
+	void *result;
+
+	// pas test mais normalement c'est ok
+	for (int i = 0; i < 0; ++i)
+	{
+		std::cout << "** Waiting..." << std::endl;
+		pthread_join(_aIdThread[i], &result);
+	}
+
+	// maintenant on retourne que quand les threads ont fini (pas test)
 }
 
 void OrdonnanceurLocal::CreateThread()

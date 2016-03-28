@@ -68,6 +68,7 @@ private:
 	TrueMutex _mutex;
 	pthread_t* _aIdThread;
 	unsigned int const SIZE_OF_CHUNK = 128;
-
+	
+	pthread_t *_threads;
 };
 
