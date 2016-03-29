@@ -23,6 +23,7 @@ public:
 
 	std::string GetAlphabet();
 	void FoundPassword(std::string passwordFound);
+	void WaitThreads();
 	static unsigned int GetNbThread();
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();

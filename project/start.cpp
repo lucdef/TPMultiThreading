@@ -103,6 +103,7 @@ int main( int argc, const char *argv[] ) {
 	{
 		OrdonnanceurLocal ordo(masterIpAddress);
 		ordo.StartThread();
+		ordo.WaitThreads();
 		// ici ca se detruit parce que StartThread n'est pas une boucle infini,
 		// donc des que ca retourne, on sort du if (ici) et du coup on détruit l'ordo
 		// fix: faire une methode run en boucle 'infinie' (sur un bool par exemple)
