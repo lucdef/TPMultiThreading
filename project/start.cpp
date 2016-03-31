@@ -113,10 +113,13 @@ int main( int argc, const char *argv[] ) {
 		/* GO GLOBAL HERE */
 
 	//int res = TcpTest::TestMain();
-	//int res = OGlobalTest::TestServerAndKeyboard();
-	int res = OGlobalTest::TestGenerateChunk();
+	int res = OGlobalTest::TestServerAndKeyboard();
+	//int res = OGlobalTest::TestGenerateChunk();
 	//int res = OGlobalTest::TestKeyboardThread();
 	//int res = OGlobalTest::TestServerThread();
+
+	/*	std::string lol = "0", lol1="*";
+		std::cout << lol.compare(lol1) << std::endl ;*/
 	}
 
 

@@ -217,6 +217,7 @@ std::string OGlobal::generateChunk(const std::string begin)
 	_nextChunk.Reset();
 	_nextChunk.SetPasswordRange(begin, end);
 
+
 	return end;
 }
 
