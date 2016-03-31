@@ -59,8 +59,7 @@ int OGlobalTest::TestServerAndKeyboard(std::string dico, int chunkSize, int pass
 
 int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLetters)
 {
-	//TestGetBeginFromEnd(dico, chunkSize, passLetters);
-	chunkSize = 2;
+	TestGetBeginFromEnd(dico, chunkSize, passLetters);
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
 	std::string first = "";
 
@@ -69,14 +68,9 @@ int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLett
 		first += dico[0];
 	}
 
-	//std::string last = og->generateChunk(first);
+	std::string last = og->generateChunk(first);
 
-	//std::cout << "last : " << last << std::endl;
-
-
-
-
-	/*int i = 0;
+	int i = 0;
 	while (last.length() != 0)
 	{
 		if (i == 1000)
@@ -89,8 +83,7 @@ int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLett
 		++i;
 	}
 	std::cout << "Finished." << std::endl;
-	OGlobal::Kill();*/
-
+	OGlobal::Kill();
 
 	return 0;
 }
