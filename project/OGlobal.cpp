@@ -31,6 +31,7 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 
 OGlobal::~OGlobal()
 {
+	pthread_cancel(_serverThread);
 }
 
 OGlobal * OGlobal::GetInstance(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)

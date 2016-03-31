@@ -154,15 +154,16 @@ void TcpServer::Run(unsigned short port)
 		int recvCount = 0;
 		char buffer[1024];
 		
-		// Wait for connection
-		std::cout << "[TcpServer] Waiting for connections..." << std::endl;
-		_remoteClient = dynamic_cast<CSocketIp4 *>(_socket.Accept());
-		std::cout << "[TcpServer] Accepted incoming connection from " << _remoteClient->GetRemoteEndpointIp() << " on port " << _remoteClient->GetRemoteEndpointPort() << std::endl;
-
-		_logger->LogInfo(1, "[TcpServer] Accepted incoming connection from " + _remoteClient->GetRemoteEndpointIp() + " on port " + std::to_string(_remoteClient->GetRemoteEndpointPort()));
-
 		try
 		{
+			// Wait for connection
+			std::cout << "[TcpServer] Waiting for connections..." << std::endl;
+			_remoteClient = dynamic_cast<CSocketIp4 *>(_socket.Accept());
+			std::cout << "[TcpServer] Accepted incoming connection from " << _remoteClient->GetRemoteEndpointIp() << " on port " << _remoteClient->GetRemoteEndpointPort() << std::endl;
+
+			_logger->LogInfo(1, "[TcpServer] Accepted incoming connection from " + _remoteClient->GetRemoteEndpointIp() + " on port " + std::to_string(_remoteClient->GetRemoteEndpointPort()));
+
+		
 			// Receive whole response with 100ms timeout
 			// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
 			std::string request = ReceiveData();
@@ -178,12 +179,13 @@ void TcpServer::Run(unsigned short port)
 			if (response == "GOOD JOB")
 				break;
 		}
-		catch (CSocketIOException e)
+		catch (CException& e)
 		{
 			std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
 			_logger->LogError(1, "Communication error while handling client " + Utils::GetClientStr(_remoteClient) + " - " + e.GetErrorMessage());
 			_isRunning = false;
 		}
+
 
 		DisconnectClient();
 	}

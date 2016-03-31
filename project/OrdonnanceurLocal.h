@@ -36,6 +36,7 @@ public:
 	void FreeRessources();
 	void SetPasswordFind(std::string password);
 	std::string getHost();
+	void Run();
 
 	struct paramThread
 	{

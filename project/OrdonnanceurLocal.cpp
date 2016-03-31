@@ -230,3 +230,9 @@ void OrdonnanceurLocal::WaitThreads()
 	}
 	FreeRessources();
 }
+
+void OrdonnanceurLocal::Run()
+{
+	StartThread();
+	WaitThreads();
+}

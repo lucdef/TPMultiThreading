@@ -14,6 +14,7 @@
 
 #include "TcpTest.hpp"
 #include "OGlobalTest.hpp"
+#include "OGlobal.hpp"
 
 //void ExtractCommandLine(int argc, const char *argv[]) {
 //	// Command line settings
@@ -102,32 +103,24 @@ int main( int argc, const char *argv[] ) {
 	
 	if (masterIpAddress.length() != 0)
 	{
-
 		OrdonnanceurLocal ordo(masterIpAddress);
-		ordo.StartThread();
-		ordo.WaitThreads();
-		//// ici ca se detruit parce que StartThread n'est pas une boucle infini,
-		// donc des que ca retourne, on sort du if (ici) et du coup on détruit l'ordo
-		// fix: faire une methode run en boucle 'infinie' (sur un bool par exemple)
+		ordo.Run();
 	}
 	else
 	{
-		/* GO GLOBAL HERE */
+		OGlobal *og = OGlobal::GetInstance(1, chunkSize, algo, "f284bdc3c1c9e24a494e285cb387c69510f28de51c15bb93179d9c7f28705398", alphabet);
+		//OGlobal *og = OGlobal::GetInstance(1, chunkSize, algo, hash, alphabet);
+		og->Run();
 
-	//int res = TcpTest::TestMain();
-	int res = OGlobalTest::TestServerAndKeyboard();
-	//int res = OGlobalTest::TestGenerateChunk();
-	//int res = OGlobalTest::TestKeyboardThread();
-	//int res = OGlobalTest::TestServerThread();
-
-	/*	std::string lol = "0", lol1="*";
-		std::cout << lol.compare(lol1) << std::endl ;*/
+		// TODO: kill og...
+		//og->Kill();
 	}
+
+	LogManager::GetInstance()->Kill();
+	HashUtils::GetInstance()->Kill();
 
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
 	std::cin.get();
-	LogManager::GetInstance()->Kill();
-	HashUtils::GetInstance()->Kill();
 	return EXIT_SUCCESS;
 }
