@@ -14,8 +14,8 @@
 OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 {
 	_CommandLine = new strCommandLine;
-	bThreadLocal = OrdonnanceurLocal::GetNbThread() / 2;
-	bThreadLocal = 1;
+	bThreadLocal = OrdonnanceurLocal::GetNbThread();
+	
 	unsigned int sizeOfMemory = OrdonnanceurLocal::GetAvailableMemory();
 	_mutex.Init();
 
@@ -62,6 +62,7 @@ CPasswordChunk OrdonnanceurLocal::GetChunk()
 		}
 		RequestChunk((bThreadLocal*2-nbChunkInFifo),chunkstringifier.str());
 	}
+	
 	return _fifo.Pop();	
 }
 
@@ -90,7 +91,7 @@ void OrdonnanceurLocal::RequestChunk(int nbRequest,std::string lastHandle)
 		std::string delimiter = "|";
 		std::string chunk = Utils::GetPatternFromData(reponse, Utils::_patternChunk);
 		std::string startpass = chunk.substr(0, chunk.find(delimiter));
-		std::string endpass = chunk.substr(1, chunk.find(delimiter));
+		std::string endpass = chunk.substr(chunk.find(delimiter) + 1, std::string::npos);
 		CPasswordChunk giveMeSomeChunk(startpass, endpass);
 		tcpClient.CloseConnection();
 		_fifo.Push(giveMeSomeChunk);
@@ -154,7 +155,7 @@ void OrdonnanceurLocal::StopThread()
 		_args->arret = true;
 		std::cout << "Arrêt en cours, merci de patienter" << std::endl;
 		
-		FreeRessources();
+		
 	}
 }
 
@@ -218,10 +219,14 @@ void OrdonnanceurLocal::FoundPassword(std::string passwordFound)
 void OrdonnanceurLocal::WaitThreads()
 {
 	for (int i = 0; i < bThreadLocal; i++) {
+		if(_aIdThread!=nullptr){
 		std::cout << "Arret en cours du thread" << i << std::endl;
 		pthread_join(_aIdThread[i], nullptr);
+		}
 
 		std::cout << "Arret thread " << i << std::endl;
 		LogManager::GetInstance()->LogInfo(i, "Arret du thread");
+
 	}
+	FreeRessources();
 }
