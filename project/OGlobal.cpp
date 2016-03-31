@@ -67,7 +67,7 @@ std::string OGlobal::GetHash() const
 	return _hash;
 }
 
-CPasswordChunk OGlobal::GetNextChunk()
+CPasswordChunk OGlobal::GetNextChunk() const
 {
 	// celui stocké et le bon...
 	CPasswordChunk chunk = CPasswordChunk(_nextChunk);

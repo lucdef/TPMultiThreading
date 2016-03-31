@@ -26,7 +26,7 @@ public:
 	std::string GetAlphabet() const;
 	std::string GetAlgo() const;
 	std::string GetHash() const;
-	CPasswordChunk GetNextChunk();
+	CPasswordChunk GetNextChunk() const;
 	void AddGivenChunk(std::string startPass, CSocket *client);
 	void Run();
 

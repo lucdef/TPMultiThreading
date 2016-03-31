@@ -137,7 +137,6 @@ bool TcpServer::SendData(const std::string& data) const
 }
 
 
-
 void TcpServer::Run(unsigned short port)
 {
 	std::cout << std::endl;
@@ -180,7 +179,7 @@ void TcpServer::Run(unsigned short port)
 		catch (CException& e)
 		{
 			std::cerr << "ERREUR: " << e.GetErrorMessage() << std::endl;
-			_logger->LogError(1, "Communication error while handling client " + Utils::GetClientStr(_remoteClient) + " - " + e.GetErrorMessage());
+			_logger->LogError(1, "Communication error while handling client. (" + e.GetErrorMessage()) + ")";
 			_isRunning = false;
 		}
 
