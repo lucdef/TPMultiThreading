@@ -22,7 +22,7 @@ private:
 	CHashSha1 *_chashSha1;
 	CHashSha224 *_chashSha224;
 	CHashMd5 *_chashShaMD5;
-	static HashUtils* _instance;
+	static HashUtils *_instance;
 	HashUtils();
 	~HashUtils();
 };

@@ -6,7 +6,6 @@
 class OrdonnanceurLocal
 {
 public:
-
 	struct strCommandLine
 	{
 		std::string hash;
@@ -17,9 +16,9 @@ public:
 		std::string OrdoLocal;
 		std::string OrdoGlobal;
 	};
-
 	
 	OrdonnanceurLocal(std::string host);
+	~OrdonnanceurLocal();
 
 	std::string GetAlphabet();
 	void FoundPassword(std::string passwordFound);
@@ -38,9 +37,6 @@ public:
 	void SetPasswordFind(std::string password);
 	std::string getHost();
 
-	~OrdonnanceurLocal();
-	
-	
 	struct paramThread
 	{
 		OrdonnanceurLocal* instance;
@@ -60,6 +56,7 @@ private:
 	std::string _alphabet;
 
 	FIFO<CPasswordChunk> _fifo;
+
 	//passage d'argument 
 	paramThread* _args;
 	strCommandLine* _CommandLine;

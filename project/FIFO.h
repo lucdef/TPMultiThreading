@@ -8,14 +8,15 @@
 #include <pthread.h>
 template <typename T> class FIFO
 {
+
 public:
 	FIFO()
 	{
 		_mutex  = PTHREAD_MUTEX_INITIALIZER;
 	}
+
 	T Pop()
 	{
-
 		pthread_mutex_lock(&_mutex);
 		T firstElement = _list.at(0);
 		_list.pop_front();
@@ -31,6 +32,7 @@ public:
 
 		pthread_mutex_unlock(&_mutex);
 	}
+
 	void Clear()
 	{
 
@@ -46,9 +48,9 @@ public:
 		pthread_mutex_unlock(&_mutex);
 		return sizeOfFifo;
 	}
+
 	T GetLastChunk()
 	{
-		
 		pthread_mutex_lock(&_mutex);
 		T element =  _list.at(_list.size() - 1);
 		pthread_mutex_unlock(&_mutex);
@@ -59,9 +61,9 @@ public:
 	{
 		delete _mutex;
 	}
+
 private:
 	std::deque<T> _list;
 	pthread_mutex_t _mutex;
-
 };
 

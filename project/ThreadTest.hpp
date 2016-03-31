@@ -5,6 +5,6 @@ class ThreadTest
 public:
 	ThreadTest();
 	~ThreadTest();
-	int Start(const int nbThreads);
 
+	int Start(const int nbThreads);
 };

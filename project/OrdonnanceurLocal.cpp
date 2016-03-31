@@ -18,29 +18,27 @@ OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 	bThreadLocal = 1;
 	unsigned int sizeOfMemory = OrdonnanceurLocal::GetAvailableMemory();
 	_mutex.Init();
+
 	//Sécurité
 	if (sizeOfMemory > SIZE_OF_CHUNK)
 	{
-		_aIdThread = new pthread_t[bThreadLocal];
-		
+		_aIdThread = new pthread_t[bThreadLocal];	
 	}
+
 	this->_host = host;
 	TcpClient clientTcp;
 	clientTcp.ConnectToHost(this->getHost(),666);
 	clientTcp.SendHttpRequest(this->getHost(), this->_PROTOSTART);
-	//clientTcp.SendHttpRequest(this->getHost(), this->_NEEDCHUNK);
 	clientTcp.WaitForResponse();
 	clientTcp.ReceiveResponse(true);
 	std::string tmp = clientTcp.GetResponse();
 	clientTcp.CloseConnection();
 	this->_algo = Utils::GetPatternFromData(tmp, Utils::_patternAlgo);
 	this->_alphabet = Utils::GetPatternFromData(tmp, Utils::_patternAlphabet);	this->_passwordATrouver = Utils::GetPatternFromData(tmp, Utils::_patternHash);
-	
 }
 
 unsigned int OrdonnanceurLocal::GetNbThread()
 {
-
 	unsigned int nbThead = std::thread::hardware_concurrency();
 	return nbThead;
 }
@@ -48,6 +46,7 @@ unsigned int OrdonnanceurLocal::GetNbThread()
 CPasswordChunk OrdonnanceurLocal::GetChunk()
 {
 	int nbChunkInFifo = _fifo.Count();
+
 	if (nbChunkInFifo<(bThreadLocal*2))
 	{
 		CPasswordChunk lastChunk;
@@ -62,11 +61,8 @@ CPasswordChunk OrdonnanceurLocal::GetChunk()
 			chunkstringifier << "";
 		}
 		RequestChunk((bThreadLocal*2-nbChunkInFifo),chunkstringifier.str());
-
 	}
-	
-	return _fifo.Pop();
-	
+	return _fifo.Pop();	
 }
 
 unsigned int OrdonnanceurLocal::GetAvailableMemory()
@@ -156,7 +152,7 @@ void OrdonnanceurLocal::StopThread()
 	{
 		
 		_args->arret = true;
-		std::cout << "Arrêt en cours, merci de patientez" << std::endl;
+		std::cout << "Arrêt en cours, merci de patienter" << std::endl;
 		
 		FreeRessources();
 	}

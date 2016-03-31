@@ -4,17 +4,19 @@
 static class Agent
 {
 public:
-	//Méthode permettant de générer les password (point d'entrée des threads)
-	static void* GenerationPassword(void *p_arg);
-	//Méthode pour obtenir de getter le chunk de la fifo
-	//Comparaison password à découvrir et celui généré
-	static bool ComparerPassword(std::string passwordToTest, std::string passwordToDiscover);
-	 struct paramThread
+
+	struct paramThread
 	{
 		OrdonnanceurLocal* instance;
 		std::string passwordToFind;
 		bool arret;
 	};
-	
+
+	//Méthode permettant de générer les password (point d'entrée des threads)
+	static void* GenerationPassword(void *p_arg);
+
+	//Méthode pour obtenir de getter le chunk de la fifo
+	//Comparaison password à découvrir et celui généré
+	static bool ComparerPassword(std::string passwordToTest, std::string passwordToDiscover);
 };
 

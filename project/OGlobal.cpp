@@ -2,10 +2,8 @@
 #include "utils.h"
 #include "conio.h"
 #include "CSocket.h"
-
+#define PORT_TCP	666
 OGlobal* OGlobal::_instance = nullptr;
-
-
 
 OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
 	: _server(),
@@ -21,8 +19,6 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 	// init next chunk
 	initNextChunk();
 	
-	
-	
 	// init threadId and thread array
 	//for (int i = 0; i < 5; ++i)
 	//{
@@ -32,7 +28,6 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 
 	//createThreads();
 }
-
 
 OGlobal::~OGlobal()
 {
@@ -126,11 +121,9 @@ void* OGlobal::ThreadKeyboardFunc(void *p_arg)
 void * OGlobal::ThreadServerFunc(void * p_arg)
 {
 	TcpServer *pServer = reinterpret_cast<TcpServer*>(p_arg);
-	int port = 666;
-	
+	int port = PORT_TCP;
 	
 	pServer->Run(port);
-
 	std::cout << "ServerThread ending !" << std::endl;
 
 	return nullptr;
@@ -138,9 +131,8 @@ void * OGlobal::ThreadServerFunc(void * p_arg)
 
 void OGlobal::StartKeyboardThread(const bool isBlocking)
 {
-	//_keyboardArgs.appRunning = false;
-
 	std::cout << "** Creating keyboard thread..." << std::endl;
+
 	if (pthread_create(&_keyboardThread, nullptr, ThreadKeyboardFunc, reinterpret_cast<void*>(&_appRunning)) != 0) {
 		std::cerr << "** FAIL keyboard thread" << std::endl;
 		//return;// 1;
@@ -165,15 +157,15 @@ void OGlobal::StartKeyboardThread(const bool isBlocking)
 		pthread_join(_keyboardThread, &result);
 		/* end example1 */
 	}
-
-
 	//std::cout << std::endl << "KeyboardThread ended." << std::endl;
 }
 
 void OGlobal::StartServerThread()
 {
 	std::cout << "** Creating server thread..." << std::endl;
-	if (pthread_create(&_serverThread, nullptr, ThreadServerFunc, reinterpret_cast<TcpServer*>(&_server)) != 0) {
+
+	if (pthread_create(&_serverThread, nullptr, ThreadServerFunc, reinterpret_cast<TcpServer*>(&_server)) != 0)
+	{
 		std::cerr << "** FAIL server thread" << std::endl;
 		//return;// 1;
 		exit(1);
@@ -186,15 +178,6 @@ void OGlobal::Run()
 	Utils::mySleep(1000);
 	StartServerThread();
 
-	
-	/* example */
-	//while (this->_appRunning)
-	//{
-	//	std::cout << "RUNNING - ";
-	//	Utils::mySleep(1000);
-	//}
-	/* end example */
-
 	/* example1 */
 	void *result;
 	std::cout << "** Waiting for keyboard escape..." << std::endl;
@@ -202,7 +185,6 @@ void OGlobal::Run()
 	/* end example1 */
 
 	_server.StopServer();
-
 
 	std::cout << "Terminated." << std::endl;
 }
@@ -227,8 +209,7 @@ std::string OGlobal::generateChunk(const std::string begin)
 
 	std::string logMsg = "[OGlobal] Generated : " + begin + " --> " + end;
 	std::cout << logMsg << std::endl;
-	_logger->LogInfo(0, logMsg);
-	//_nextChunk = 
+	_logger->LogInfo(0, logMsg); 
 
 	_nextChunk.Reset();
 	_nextChunk.SetPasswordRange(begin, end);
@@ -248,7 +229,6 @@ std::string OGlobal::getBeginFromEnd(const std::string end)
 
 	lastIndex = endLength - 1;
 
-
 	int i = lastIndex;
 	while (begin[i] == lastInAlphabet)
 	{
@@ -261,9 +241,7 @@ std::string OGlobal::getBeginFromEnd(const std::string end)
 		}
 	}
 	begin.at(i) = _alphabet[IndexOf(begin[i]) + 1];
-
 	std::cout << "Begin after " << end << " is " << begin << std::endl;
-
 
 	return begin;
 }

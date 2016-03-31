@@ -9,7 +9,6 @@
 #include "singleton.h"
 class LogManager
 {
-	
 public:
 	static LogManager* GetInstance();
 	static void Kill();
@@ -19,7 +18,6 @@ public:
 
 
 private:
-
 	~LogManager();
 	LogManager();
 	static LogManager *_instance;
@@ -27,9 +25,5 @@ private:
 	static std::string DateToString(CDateTime date);
 	CFileText *_logFile;
 	TrueMutex *_mutex;
-
-	
-	//TODO : Ajouter mutex
-	
 };
 

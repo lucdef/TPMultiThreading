@@ -3,30 +3,23 @@
 #include "CException.h"
 #include "TrueMutex.hpp"
 
-
 LogManager* LogManager::_instance;
 
-
 LogManager::LogManager()
-{
-	
-		_logFile = new CFileText("..\\TPMultiThreading.log", EFileOpenMode::append);
-	
+{	
+	_logFile = new CFileText("..\\TPMultiThreading.log", EFileOpenMode::append);
 	_logFile->Open(EFileOpenMode::append);
 	_mutex = new TrueMutex();
 	_mutex->Init();
 }
-
 
 LogManager::~LogManager()
 {
 	_logFile->Flush();
 	_logFile->Close();
 	delete _logFile;
-		delete _mutex;
+	delete _mutex;
 }
-
-
 
 LogManager* LogManager::GetInstance()
 {
@@ -39,8 +32,8 @@ LogManager* LogManager::GetInstance()
 
 void LogManager::Kill()
 {
-	if(_instance!=nullptr)
-	_instance->~LogManager();
+	if (_instance != nullptr)
+		delete _instance;
 }
 
 bool LogManager::LogWarning(int idThread, std::string message)
@@ -74,24 +67,27 @@ bool LogManager::log(int idThread, std::string message, std::string criticite)
 	
 	dateString = LogManager::DateToString(date);
 	stream << criticite << " " << dateString << " Thread:" << idThread << " " << message << std::endl;
-	try{
-	_logFile->AppendLine(stream.str(), EFileEOL::Windows);
-	_logFile->Flush();
-	_mutex->Unlock();
-	return true;
-}
-catch (CException &e) {			// & is IMPORTANT
-	_mutex->Unlock();
-	std::cerr << "** --- EXCEPTION THROWN ---" << std::endl;
-	std::cerr << "** Type: " << e.GetType() << std::endl;
-	std::cerr << "** Message: " << e.GetErrorMessage() << std::endl;
-	std::cerr << "** Error code: " << e.GetErrorCode() << std::endl;
-	std::cerr << "** Fault location: " << e.GetFaultLocation() << std::endl;
-	return false;
+	
+	try
+	{
+		_logFile->AppendLine(stream.str(), EFileEOL::Windows);
+		_logFile->Flush();
+		_mutex->Unlock();
+		return true;
+	}
+
+	catch (CException &e)	// & is IMPORTANT
+	{			
+		_mutex->Unlock();
+		std::cerr << "** --- EXCEPTION THROWN ---" << std::endl;
+		std::cerr << "** Type: " << e.GetType() << std::endl;
+		std::cerr << "** Message: " << e.GetErrorMessage() << std::endl;
+		std::cerr << "** Error code: " << e.GetErrorCode() << std::endl;
+		std::cerr << "** Fault location: " << e.GetFaultLocation() << std::endl;
+		return false;
+	}	
 }
 
-	
-}
 std::string LogManager::DateToString(CDateTime d)
 {
 	std::string str;

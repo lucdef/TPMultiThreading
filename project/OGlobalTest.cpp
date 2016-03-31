@@ -1,11 +1,9 @@
 #include "OGlobalTest.hpp"
 #include "OGlobal.hpp"
 
-
 OGlobalTest::OGlobalTest()
 {
 }
-
 
 OGlobalTest::~OGlobalTest()
 {
@@ -38,7 +36,6 @@ int OGlobalTest::TestGetBeginFromEnd(std::string dico, int chunkSize, int passLe
 int OGlobalTest::TestKeyboardThread(std::string dico, int chunkSize, int passLetters)
 {
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
-
 	og->StartKeyboardThread(true);
 
 	return 0;
@@ -47,7 +44,6 @@ int OGlobalTest::TestKeyboardThread(std::string dico, int chunkSize, int passLet
 int OGlobalTest::TestServerThread(std::string dico, int chunkSize, int passLetters)
 {
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
-
 	og->StartServerThread();
 
 	return 0;
@@ -56,7 +52,6 @@ int OGlobalTest::TestServerThread(std::string dico, int chunkSize, int passLette
 int OGlobalTest::TestServerAndKeyboard(std::string dico, int chunkSize, int passLetters)
 {
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
-
 	og->Run();
 
 	return 0;
@@ -65,13 +60,8 @@ int OGlobalTest::TestServerAndKeyboard(std::string dico, int chunkSize, int pass
 int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLetters)
 {
 	TestGetBeginFromEnd(dico, chunkSize, passLetters);
-
-
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
-
 	std::string first = "";
-
-	//double maxPass = std::pow(passLetters - chunkSize, dico.length() ) - 50;
 
 	for (int i = 0; i < passLetters; ++i)
 	{
@@ -90,13 +80,11 @@ int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLett
 		if (first == "")
 			break;
 		last = og->generateChunk(first);
-		//std::cerr << "count: " << i << std::endl;
-
 		++i;
 	}
 	std::cout << "Finished." << std::endl;
-
 	OGlobal::Kill();
+
 	return 0;
 }
 

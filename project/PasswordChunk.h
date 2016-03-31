@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 
-class CPasswordChunk {
+class CPasswordChunk
+{
 private:
 	std::string m_begin;
 	std::string m_end;

@@ -2,7 +2,6 @@
 
 #include "CSocketIp4.h"
 
-
 class OGlobal;
 class LogManager;
 
@@ -11,7 +10,6 @@ class TcpServer
 	public:
 		TcpServer();
 		~TcpServer(){}
-		//int StartServer();
 		
 		/*
 		 * \brief Lance le server sur le port designe
@@ -25,15 +23,13 @@ class TcpServer
 		 * \param port Le port sur lequel lancer le serveur
 		 */
 		void Run(unsigned short port);
-
 		void StopServer();
-
-		
 
 		/* TESTS */
 		static std::string TestGetPassFromData();
 		static std::string TestGetFounderFromData();
 		/* ------*/
+
 	private:
 		static const short MAX_CONNECTION = 10;
 		static const std::string PASS_PATTERN;
