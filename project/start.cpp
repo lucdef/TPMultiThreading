@@ -105,6 +105,8 @@ int main( int argc, const char *argv[] ) {
 	{
 		OrdonnanceurLocal ordo(masterIpAddress);
 		ordo.Run();
+		
+		HashUtils::GetInstance()->Kill();
 	}
 	else
 	{
@@ -117,7 +119,6 @@ int main( int argc, const char *argv[] ) {
 	}
 
 	LogManager::GetInstance()->Kill();
-	HashUtils::GetInstance()->Kill();
 
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";

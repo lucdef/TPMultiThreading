@@ -86,10 +86,10 @@ HashUtils::~HashUtils()
 	pthread_mutex_destroy(&_mutex);
 
 	//TODO fix deletes
-	/*delete this->_chashCrc32;
+	delete this->_chashCrc32;
 	delete this->_chashShaMD5;
 	delete this->_chashSha256;
 	delete this->_chashSha224;
-	delete this->_chashSha1;*/
+	delete this->_chashSha1;
 	
 }
