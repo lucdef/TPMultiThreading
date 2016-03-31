@@ -3,8 +3,8 @@
 
 
 TcpClient::TcpClient() :
-	ITcpClient(),
 	_socket(),
+	_recvCount(0),
 	_isRunning(false),
 	_responses()
 {

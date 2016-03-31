@@ -6,7 +6,6 @@
 #include "LogManager.h"
 #include "PasswordChunk.h"
 #include "OrdonnanceurLocal.h"
-#include "HashUtils.h"
 #include <sstream>
 #include <cctype>
 

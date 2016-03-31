@@ -2,7 +2,7 @@
 #include "utils.h"
 #include "conio.h"
 #include "CSocket.h"
-#define PORT_TCP	666
+
 OGlobal* OGlobal::_instance = nullptr;
 
 OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
@@ -12,26 +12,19 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 	_hash(hash),
 	_alphabet(alphabet),
 	_chunkSize(chunkSize),
+	_totalChunkSize(-1),
 	_nextChunk()
 {
 	_logger = LogManager::GetInstance();
+	_totalChunkSize = pow(_alphabet.length(), _chunkSize);
+	_currentPassSize = 1;
 
 	// init next chunk
 	initNextChunk();
-	
-	// init threadId and thread array
-	//for (int i = 0; i < 5; ++i)
-	//{
-	//	_threadIds[i] = 0;
-	//	//_threads[i] = ;
-	//}
-
-	//createThreads();
 }
 
 OGlobal::~OGlobal()
 {
-	pthread_cancel(_serverThread);
 }
 
 OGlobal * OGlobal::GetInstance(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
@@ -59,22 +52,22 @@ void OGlobal::AddGivenChunk(std::string startPass, CSocket *client)
 	_givenChunks.push_back(given);
 }
 
-const std::string OGlobal::GetAlphabet() const
+std::string OGlobal::GetAlphabet() const
 {
 	return _alphabet;
 }
 
-const std::string OGlobal::GetAlgo() const
+std::string OGlobal::GetAlgo() const
 {
 	return _algo;
 }
 
-const std::string OGlobal::GetHash() const
+std::string OGlobal::GetHash() const
 {
 	return _hash;
 }
 
-const CPasswordChunk OGlobal::GetNextChunk()
+CPasswordChunk OGlobal::GetNextChunk()
 {
 	// celui stocké et le bon...
 	CPasswordChunk chunk = CPasswordChunk(_nextChunk);
@@ -89,11 +82,6 @@ const CPasswordChunk OGlobal::GetNextChunk()
 	return chunk;
 }
 
-
-const std::string OGlobal::CraftResponse(const std::string request)
-{
-	return "";
-}
 
 void OGlobal::StartServer(int port)
 {
@@ -144,21 +132,10 @@ void OGlobal::StartKeyboardThread(const bool isBlocking)
 
 	if (isBlocking)
 	{
-		/* example */
-		//while (this->_appRunning)
-		//{
-		//	std::cout << "RUNNING - ";
-		//	Utils::mySleep(500);
-		//}
-		/* end example */
-
-		/* example1 */
 		void *result;
 		std::cout << "** Waiting..." << std::endl;
 		pthread_join(_keyboardThread, &result);
-		/* end example1 */
 	}
-	//std::cout << std::endl << "KeyboardThread ended." << std::endl;
 }
 
 void OGlobal::StartServerThread()
@@ -168,7 +145,6 @@ void OGlobal::StartServerThread()
 	if (pthread_create(&_serverThread, nullptr, ThreadServerFunc, reinterpret_cast<TcpServer*>(&_server)) != 0)
 	{
 		std::cerr << "** FAIL server thread" << std::endl;
-		//return;// 1;
 		exit(1);
 	}
 }
@@ -190,83 +166,63 @@ void OGlobal::Run()
 	std::cout << "Terminated." << std::endl;
 }
 
-/*
- * @brief: Generates the next chunk, stores it and return its end
- */
-std::string OGlobal::generateChunk(const std::string begin)
+std::string OGlobal::generateChunk(const std::string begin) const
 {
-	static char lastInAlphabet = _alphabet[_alphabet.length() -1];
+	static char lastInAlphabet = _alphabet[_alphabet.length() - 1];
+	std::string end = "";
+	static const int dicoLength = _alphabet.length();
+	int i = 0;
+	int dicoCpt = i;
 
-	std::string end = begin;
-	int lastIndex;
-	int beginLength = begin.length();
-
-	if (beginLength == 0)
-		return "";
-
-	lastIndex = beginLength - 1;
-
-	for (int i = lastIndex; i > lastIndex - _chunkSize; --i)
+	end += _alphabet[0];
+	for (; i < _totalChunkSize; ++i, ++dicoCpt )
 	{
-		end[i] = lastInAlphabet;
+		if(dicoCpt == dicoLength)
+		{
+			int length = end.length();
+			if(length < _currentPassSize)
+			{
+				end = _alphabet[0] + end;
+			}
+
+			dicoCpt = 0;
+		}
+
+		end[end.length() - 1] = _alphabet[dicoCpt];
+
 	}
-
-	std::string logMsg = "[OGlobal] Generated : " + begin + " --> " + end;
-	std::cout << logMsg << std::endl;
-	_logger->LogInfo(0, logMsg); 
-
-	_nextChunk.Reset();
-	_nextChunk.SetPasswordRange(begin, end);
 
 
 	return end;
 }
 
-std::string OGlobal::getBeginFromEnd(std::string end)
+std::string OGlobal::getBeginFromEnd(const std::string end) const
 {
 	static char lastInAlphabet = _alphabet[_alphabet.length() - 1];
 	int lastIndex;
-	//std::string begin = end;
-	char cbegin[64];
-	int size = sizeof(cbegin);
+	std::string begin = end;
+	int endLength = end.length();
 
-	for (int i = 0; i < size; ++i)
+	if (endLength == 0)
+		return "";
+
+	lastIndex = endLength - 1;
+
+	int i = lastIndex;
+	while (begin[i] == lastInAlphabet)
 	{
-		if (i < end.length())
-			cbegin[i] = end[i];
-		else
-			cbegin[i] = '\0';
+		begin.at(i) = _alphabet[0];
+
+		if (--i == -1) // attention on decrement avant de tester
+		{
+			std::cout << "Nothing after " << end << std::endl;
+			return "";
+		}
 	}
-	
-	HashCrackerUtils::IncreasePassword(cbegin, sizeof(cbegin), _alphabet);
-	//int endLength = end.length();
+	begin.at(i) = _alphabet[IndexOf(begin[i]) + 1];
+	std::cout << "Begin after " << end << " is " << begin << std::endl;
 
-	//if (endLength == 0)
-	//	return "";
-
-	//lastIndex = endLength - 1;
-
-	//int i = lastIndex;
-	//while (begin[i] == lastInAlphabet)
-	//{
-	//	begin.at(i) = _alphabet[0];
-
-	//	if (--i == -1) // attention on decrement avant de tester
-	//	{
-	//		// ici use increasePass
-	//		std::cout << "Nothing after " << end << std::endl;
-	//		return "";
-	//	}
-	//}
-	//begin.at(i) = _alphabet[IndexOf(begin[i]) + 1];
-	//std::cout << "Begin after " << end << " is " << begin << std::endl;
-
-	// TEST
-
-
-	// END TEST
-
-	return cbegin;
+	return begin;
 }
 
 int OGlobal::IndexOf(const char letter) const
@@ -282,13 +238,13 @@ int OGlobal::IndexOf(const char letter) const
 	return -1;
 }
 
-void OGlobal::initNextChunk()
+void OGlobal::initNextChunk() const
 {
 	const int nbPassLetters = _hash.length();
-	std::string first = "";
+	std::string first = "" + _alphabet[0];
+	std::string end = "";
 
-	for (int i = 0; i < _chunkSize; ++i)
-		first += _alphabet[0];
+	std::cout << _totalChunkSize;
 
 	generateChunk(first);
 }

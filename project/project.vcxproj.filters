@@ -185,9 +185,6 @@
     <ClInclude Include="ProtocolParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Protocol.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ProtocolParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -204,9 +201,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Fifo.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ITcpClient.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TcpTest.h">
@@ -241,13 +235,7 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FIFO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Agent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ASingleton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrueMutex.cpp">
@@ -271,9 +259,6 @@
     <ClCompile Include="OGlobalTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProtocolParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FIFO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -284,6 +269,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TrueMutexTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtocolParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

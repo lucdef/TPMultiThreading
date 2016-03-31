@@ -1,9 +1,8 @@
 #pragma once
-#include "ITcpClient.hpp"
 #include "CSocketIp4.h"
 #include <deque>
 
-class TcpClient : public ITcpClient
+class TcpClient
 {
 	public:
 		TcpClient();

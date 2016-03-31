@@ -3,8 +3,6 @@
 #include "utils.h"
 #include "LogManager.h"
 
-#include <regex>
-
 const std::string TcpServer::PASS_PATTERN = ".*PASS=([^ ]+).*";
 const std::string TcpServer::LASTHANDLE_PATTERN = ".*LAST-HANDLED-CHUNK=([^ ]+).*";
 const std::string TcpServer::FOUNDER_PATTERN = ".*FOUND-BY=([^ ]+).*";

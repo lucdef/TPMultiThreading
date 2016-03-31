@@ -23,28 +23,21 @@ public:
 	static OGlobal* GetInstance(const int nbThread = -1, const int chunkSize = -1, const std::string algo = "", const std::string hash = "", const std::string alphabet = "");
 	static void Kill();
 
-	const std::string GetAlphabet() const;
-	const std::string GetAlgo() const;
-	const std::string GetHash() const;
-	const CPasswordChunk GetNextChunk();
-	const std::string CraftResponse(const std::string request);
-	void StartServer(int port);
-	void StartKeyboardThread(const bool isBlocking);
-	void StartServerThread();
+	std::string GetAlphabet() const;
+	std::string GetAlgo() const;
+	std::string GetHash() const;
+	CPasswordChunk GetNextChunk();
 	void AddGivenChunk(std::string startPass, CSocket *client);
 	void Run();
 
-	// TODO: make private
-	std::string generateChunk(const  std::string begin);
-	std::string getBeginFromEnd(std::string end);
-	int IndexOf(const char letter) const;
-
 private:
+	static const int PORT_TCP = 666;
 	static OGlobal *_instance;
 
 	const std::string _hash;
 	const std::string _alphabet;
 	const int _chunkSize;
+	double _totalChunkSize;
 	const std::string _algo;
 
 	bool _appRunning;
@@ -54,11 +47,18 @@ private:
 	pthread_t _keyboardThread;
 	pthread_t _serverThread;
 	LogManager *_logger;
+	int _currentPassSize;
 
 	OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
 	~OGlobal();
-	void initNextChunk();
+	void initNextChunk() const;
 	static void *ThreadKeyboardFunc(void *p_arg);
 	static void *ThreadServerFunc(void *p_arg);
+	void StartServer(int port);
+	void StartKeyboardThread(const bool isBlocking);
+	void StartServerThread();
+	std::string generateChunk(const  std::string begin) const;
+	std::string getBeginFromEnd(const  std::string end) const;
+	int IndexOf(const char letter) const;
 };
 

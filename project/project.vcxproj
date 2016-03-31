@@ -227,13 +227,11 @@
     <ClInclude Include="FIFO.h" />
     <ClInclude Include="Fifo.hpp" />
     <ClInclude Include="HashUtils.h" />
-    <ClInclude Include="ITcpClient.hpp" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="OGlobal.hpp" />
     <ClInclude Include="OGlobalTest.hpp" />
     <ClInclude Include="PasswordChunk.h" />
-    <ClInclude Include="Protocol.hpp" />
     <ClInclude Include="ProtocolParser.hpp" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="stdafx.h" />
@@ -250,8 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
-    <ClCompile Include="ASingleton.cpp" />
-    <ClCompile Include="FIFO.cpp" />
     <ClCompile Include="HashUtils.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="OrdonnanceurLocal.cpp" />

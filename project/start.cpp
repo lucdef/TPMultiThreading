@@ -1,19 +1,10 @@
 #include "stdafx.h"
 #include <iostream>
-#include <deque>
-#include "FIFO.h"
 #include "utils.h"
 #include "CException.h"
-#include "PasswordChunk.h"
 #include "OrdonnanceurLocal.h"
 #include "HashUtils.h"
-
-#include <pthread.h>
-#include <Windows.h>
 #include "LogManager.h"
-
-#include "TcpTest.hpp"
-#include "OGlobalTest.hpp"
 #include "OGlobal.hpp"
 
 int main( int argc, const char *argv[] )
