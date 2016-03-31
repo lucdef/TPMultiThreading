@@ -36,28 +36,28 @@ void LogManager::Kill()
 		delete _instance;
 }
 
-bool LogManager::LogWarning(int idThread, std::string message)
+bool LogManager::LogWarning(int idThread, const std::string &message) const
 {
 	std::string criticite = "[WARNING]";
 	bool result = log(idThread, message, criticite);
 	return result;
 }
 
-bool LogManager::LogError(int idThread, std::string message)
+bool LogManager::LogError(int idThread, const std::string &message) const
 {
 	std::string criticite = "[ERROR]";
 	bool result = log(idThread, message, criticite);
 	return result;
 }
 
-bool LogManager::LogInfo(int idThread, std::string message)
+bool LogManager::LogInfo(int idThread, const std::string &message) const
 {
 	std::string criticite = "[INFO]";
 	bool result = log(idThread, message, criticite);
 	return result;
 }
 
-bool LogManager::log(int idThread, std::string message, std::string criticite)
+bool LogManager::log(int idThread, const std::string &message, const std::string &criticite) const
 {
 	_mutex->Lock();
 	CDateTime date;
@@ -88,7 +88,7 @@ bool LogManager::log(int idThread, std::string message, std::string criticite)
 }
 }
 
-std::string LogManager::DateToString(CDateTime d)
+std::string LogManager::DateToString(const CDateTime &d)
 {
 	std::string str;
 	std::ostringstream stream;

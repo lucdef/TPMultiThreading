@@ -12,9 +12,12 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 	_hash(hash),
 	_alphabet(alphabet),
 	_chunkSize(chunkSize),
+	_totalChunkSize(-1),
 	_nextChunk()
 {
 	_logger = LogManager::GetInstance();
+	_totalChunkSize = pow(_alphabet.length(), _chunkSize);
+	_currentPassSize = 1;
 
 	// init next chunk
 	initNextChunk();
@@ -191,28 +194,53 @@ void OGlobal::Run()
 
 std::string OGlobal::generateChunk(const std::string begin)
 {
-	static char lastInAlphabet = _alphabet[_alphabet.length() -1];
+	//static char lastInAlphabet = _alphabet[_alphabet.length() -1];
 
-	std::string end = begin;
-	int lastIndex;
-	int beginLength = begin.length();
+	//std::string end = begin;
+	//int lastIndex;
+	//int beginLength = begin.length();
 
-	if (beginLength == 0)
-		return "";
+	//if (beginLength == 0)
+	//	return "";
 
-	lastIndex = beginLength - 1;
+	//lastIndex = beginLength - 1;
 
-	for (int i = lastIndex; i > lastIndex - _chunkSize; --i)
+	//for (int i = lastIndex; i > lastIndex - _chunkSize; --i)
+	//{
+	//	end[i] = lastInAlphabet;
+	//}
+
+	//std::string logMsg = "[OGlobal] Generated : " + begin + " --> " + end;
+	//std::cout << logMsg << std::endl;
+	//_logger->LogInfo(0, logMsg); 
+
+	//_nextChunk.Reset();
+	//_nextChunk.SetPasswordRange(begin, end);
+
+	static char lastInAlphabet = _alphabet[_alphabet.length() - 1];
+	std::string end = "";
+	static const int dicoLength = _alphabet.length(); // TODO put before
+	int i = 0;
+	int dicoCpt = i;
+
+	end += _alphabet[0];
+	for (; i < _totalChunkSize; ++i, ++dicoCpt )
 	{
-		end[i] = lastInAlphabet;
+		if(dicoCpt == dicoLength)
+		{
+			int length = end.length();
+			if(length < _currentPassSize)
+			{
+				end = _alphabet[0] + end;
+			}
+
+			dicoCpt = 0;
+		}
+
+		end[end.length() - 1] = _alphabet[dicoCpt];
+
 	}
 
-	std::string logMsg = "[OGlobal] Generated : " + begin + " --> " + end;
-	std::cout << logMsg << std::endl;
-	_logger->LogInfo(0, logMsg); 
-
-	_nextChunk.Reset();
-	_nextChunk.SetPasswordRange(begin, end);
 
 	return end;
 }
@@ -262,10 +290,16 @@ int OGlobal::IndexOf(const char letter) const
 void OGlobal::initNextChunk()
 {
 	const int nbPassLetters = _hash.length();
-	std::string first = "";
+	std::string first = "" + _alphabet[0];
+	std::string end = "";
 
-	for (int i = 0; i < nbPassLetters; ++i)
-		first += _alphabet[0];
+
+	//for (int i = 0; i < nbPassLetters; ++i)
+	//	first += _alphabet[0];
+
+	std::cout << _totalChunkSize;
+
+	
 
 	generateChunk(first);
 }

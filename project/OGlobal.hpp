@@ -45,6 +45,7 @@ private:
 	const std::string _hash;
 	const std::string _alphabet;
 	const int _chunkSize;
+	double _totalChunkSize;
 	const std::string _algo;
 
 	bool _appRunning;
@@ -54,6 +55,7 @@ private:
 	pthread_t _keyboardThread;
 	pthread_t _serverThread;
 	LogManager *_logger;
+	int _currentPassSize;
 
 	OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet);
 	~OGlobal();

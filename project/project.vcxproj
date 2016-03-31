@@ -244,6 +244,7 @@
     <ClInclude Include="TcpTest.hpp" />
     <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="TrueMutex.hpp" />
+    <ClInclude Include="TrueMutexTest.hpp" />
     <ClInclude Include="TtcpTest.hpp" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
@@ -265,6 +266,7 @@
     <ClCompile Include="TcpTest.cpp" />
     <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
+    <ClCompile Include="TrueMutexTest.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
