@@ -65,7 +65,7 @@ void HashUtils::Kil()
 {
 	if (HashUtils::_instance != nullptr)
 	{
-		delete _instance
+		delete _instance;
 	}
 }
 
