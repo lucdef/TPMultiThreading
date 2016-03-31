@@ -156,7 +156,7 @@ void OrdonnanceurLocal::StopThread()
 	{
 		
 		_args->arret = true;
-		std::cout << "Arrêt en cours, merci de patientez" << std::endl;
+		std::cout << "Arrêt en cours, merci de patienter" << std::endl;
 		
 		FreeRessources();
 	}
@@ -214,6 +214,7 @@ void OrdonnanceurLocal::FoundPassword(std::string passwordFound)
 	tcpClient.SendHttpRequest(this->_host, request.str());
 	tcpClient.WaitForResponse();
 	tcpClient.ReceiveResponse(true);
+	tcpClient.CloseConnection();
 	this->StopThread();
 
 

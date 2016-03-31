@@ -40,7 +40,7 @@ LogManager* LogManager::GetInstance()
 void LogManager::Kill()
 {
 	if(_instance!=nullptr)
-	_instance->~LogManager();
+	delete _instance;
 }
 
 bool LogManager::LogWarning(int idThread, std::string message)
