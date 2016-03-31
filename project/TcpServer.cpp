@@ -35,7 +35,7 @@ std::string TcpServer::ParseHttp(const std::string &data) const
 	if (tmp == "HELLO-HOW-SHOULD-I-WORK")
 	{
 		// TODO: stack the response in fifo resp
-		response = "WORKING-CONTEXT HASH=" + ordonnanceur->GetHash() + " ALGO=" + ordonnanceur->GetAlgo() + " ALPHABET=" + ordonnanceur->GetAlphabet();
+		response = "WORKING-CONTEXT HASH=" + ordonnanceur->GetHash() + " ALGO=" + ordonnanceur->GetAlgo() + " ALPHABET=" + ordonnanceur->GetAlphabet() + " CHUNKSIZE=" + std::to_string(ordonnanceur->GetChunkSize());
 	}
 	else if ( Utils::StringContains(tmp, "NEW-CHUNK-PLEASE" ))
 	{

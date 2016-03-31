@@ -53,7 +53,7 @@ int main( int argc, const char *argv[] )
 		og->Run();
 
 		// TODO: kill og...
-		og->Kill();
+		//og->Kill();
 	}
 
 	LogManager::GetInstance()->Kill();
