@@ -230,7 +230,6 @@
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="OrdonnanceurLocal.h" />
     <ClInclude Include="OGlobal.hpp" />
-    <ClInclude Include="OGlobalTest.hpp" />
     <ClInclude Include="PasswordChunk.h" />
     <ClInclude Include="ProtocolParser.hpp" />
     <ClInclude Include="singleton.h" />
@@ -238,12 +237,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TcpClient.hpp" />
     <ClInclude Include="TcpServer.hpp" />
-    <ClInclude Include="TcpTest.h" />
-    <ClInclude Include="TcpTest.hpp" />
-    <ClInclude Include="ThreadTest.hpp" />
     <ClInclude Include="TrueMutex.hpp" />
-    <ClInclude Include="TrueMutexTest.hpp" />
-    <ClInclude Include="TtcpTest.hpp" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -252,17 +246,13 @@
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="OrdonnanceurLocal.cpp" />
     <ClCompile Include="OGlobal.cpp" />
-    <ClCompile Include="OGlobalTest.cpp" />
     <ClCompile Include="PasswordChunk.cpp" />
     <ClCompile Include="ProtocolParser.cpp" />
     <ClCompile Include="start.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TcpClient.cpp" />
     <ClCompile Include="TcpServer.cpp" />
-    <ClCompile Include="TcpTest.cpp" />
-    <ClCompile Include="ThreadTest.cpp" />
     <ClCompile Include="TrueMutex.cpp" />
-    <ClCompile Include="TrueMutexTest.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

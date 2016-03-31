@@ -167,15 +167,6 @@
     <ClInclude Include="TcpClient.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TcpTest.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OGlobalTest.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ThreadTest.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TcpClient.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -203,16 +194,7 @@
     <ClInclude Include="Fifo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TcpTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TtcpTest.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HashUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TrueMutexTest.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -247,16 +229,7 @@
     <ClCompile Include="TcpServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ThreadTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TcpClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TcpTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OGlobalTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FIFO.cpp">
@@ -266,9 +239,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HashUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TrueMutexTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProtocolParser.cpp">

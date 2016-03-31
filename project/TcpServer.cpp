@@ -217,36 +217,3 @@ void TcpServer::StopServer()
 		_logger->LogInfo(1, "Server asked to stop");
 	}
 }
-
-
-std::string TcpServer::TestGetPassFromData()
-{
-	std::string value = "";
-	TcpServer server = TcpServer();
-
-
-	// Simple regular expression matching
-	std::string fnames[] = { "PASS=bon ", "PASS=bon vsrverv", "PASS=bonvfsdv rfedgd ", "PASS=bon'!:;vxf47 " };
-
-	for (const auto &fname : fnames) {
-		std::cout << "GOT: '" << Utils::GetPatternFromData(fname, PASS_PATTERN) << "'" << std::endl;
-	}
-
-	return value;
-}
-
-std::string TcpServer::TestGetFounderFromData()
-{
-	std::string value = "";
-	TcpServer server = TcpServer();
-
-
-	// Simple regular expression matching
-	std::string fnames[] = { "FOUND-BY=bon ", "FOUND-BY=bon vsrverv", "FOUND-BY=bonvfsdv rfedgd ", "FOUND-BY=bon'!:;vxf47 " };
-
-	for (const auto &fname : fnames) {
-		std::cout << "GOT: '" << Utils::GetPatternFromData(fname, FOUNDER_PATTERN) << "'" << std::endl;
-	}
-
-	return value;
-}

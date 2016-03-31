@@ -25,10 +25,6 @@ class TcpServer
 		void Run(unsigned short port);
 		void StopServer();
 
-		/* TESTS */
-		static std::string TestGetPassFromData();
-		static std::string TestGetFounderFromData();
-		/* ------*/
 
 	private:
 		static const short MAX_CONNECTION = 10;
