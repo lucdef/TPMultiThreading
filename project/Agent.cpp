@@ -26,10 +26,7 @@ void* Agent::GenerationPassword(void *p_arg)
 	{
 		if (!trouve) {
 			CPasswordChunk chunkToGenerate = instanceol->GetChunk();
-			if (chunkToGenerate.GetPasswordBegin() == "f*0")
-			{
-				std::cout << "test";
-}
+		
 			sizeOFChunk = chunkToGenerate.GetChunkSize();
 			char password[64] = "";
 
@@ -52,8 +49,7 @@ void* Agent::GenerationPassword(void *p_arg)
 					trouve = true;
 					instanceol->FoundPassword(password);
 					std::ostringstream message;
-					message << "Password found :" << password << " hashed password:" << passwordtofind;
-					LogManager::GetInstance()->LogInfo(0, message.str());
+					message << "Password found :" << password << " hashed password:" << passwordtofind;					LogManager::GetInstance()->LogInfo(0, message.str());
 				}
 
 				std::ostringstream message;

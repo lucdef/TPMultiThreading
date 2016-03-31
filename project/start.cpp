@@ -42,6 +42,7 @@ int main( int argc, const char *argv[] )
 	}
 	else
 	{
+		
 		if(alphabet.length() == 0)
 		{
 			std::cout << "Veuillez saisir un alphabet." << std::endl;
