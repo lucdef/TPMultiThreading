@@ -15,7 +15,7 @@ public:
 	std::string HashSha256(std::string password);
 	std::string HashSha1(std::string password);
 	std::string HashCrc32(std::string password);
-	static void Kil();
+	static void Kill();
 
 private:
 	pthread_mutex_t _mutex;

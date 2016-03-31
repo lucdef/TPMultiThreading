@@ -6,6 +6,7 @@
 #include "CException.h"
 #include "PasswordChunk.h"
 #include "OrdonnanceurLocal.h"
+#include "HashUtils.h"
 
 #include <pthread.h>
 #include <Windows.h>
@@ -101,10 +102,11 @@ int main( int argc, const char *argv[] ) {
 	
 	if (masterIpAddress.length() != 0)
 	{
+
 		OrdonnanceurLocal ordo(masterIpAddress);
 		ordo.StartThread();
 		ordo.WaitThreads();
-		// ici ca se detruit parce que StartThread n'est pas une boucle infini,
+		//// ici ca se detruit parce que StartThread n'est pas une boucle infini,
 		// donc des que ca retourne, on sort du if (ici) et du coup on détruit l'ordo
 		// fix: faire une methode run en boucle 'infinie' (sur un bool par exemple)
 	}
@@ -125,5 +127,7 @@ int main( int argc, const char *argv[] ) {
 
 	std::cout << "\nAppuyer sur <Enter> pour continuer";
 	std::cin.get();
+	LogManager::GetInstance()->Kill();
+	HashUtils::GetInstance()->Kill();
 	return EXIT_SUCCESS;
 }

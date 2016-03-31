@@ -61,7 +61,7 @@ std::string HashUtils::HashCrc32(std::string password)
 	return hash;
 }
 
-void HashUtils::Kil()
+void HashUtils::Kill()
 {
 	if (HashUtils::_instance != nullptr)
 	{
