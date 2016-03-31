@@ -7,6 +7,9 @@
 #include "TcpServer.hpp";
 #include "utils.h"
 #include "HashUtils.h"
+#include "LogManager.h"
+
+#include <sstream>
 
 OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 {
@@ -15,12 +18,13 @@ OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 	bThreadLocal = 1;
 	unsigned int sizeOfMemory = OrdonnanceurLocal::GetAvailableMemory();
 	_mutex.Init();
+
 	//Sécurité
 	if (sizeOfMemory > SIZE_OF_CHUNK)
 	{
-		_aIdThread = new pthread_t[bThreadLocal];
-		
+		_aIdThread = new pthread_t[bThreadLocal];	
 	}
+
 	this->_host = host;
 	TcpClient clientTcp;
 	clientTcp.ConnectToHost(this->getHost(),666);
@@ -30,30 +34,35 @@ OrdonnanceurLocal::OrdonnanceurLocal(std::string host)
 	std::string tmp = clientTcp.GetResponse();
 	clientTcp.CloseConnection();
 	this->_algo = Utils::GetPatternFromData(tmp, Utils::_patternAlgo);
-	this->_alphabet = Utils::GetPatternFromData(tmp, Utils::_patternAlphabet);
-	this->_passwordATrouver = Utils::GetPatternFromData(tmp, Utils::_patternHash);
-	
+	this->_alphabet = Utils::GetPatternFromData(tmp, Utils::_patternAlphabet);	this->_passwordATrouver = Utils::GetPatternFromData(tmp, Utils::_patternHash);
 }
 
 unsigned int OrdonnanceurLocal::GetNbThread()
 {
-
 	unsigned int nbThead = std::thread::hardware_concurrency();
 	return nbThead;
 }
 
 CPasswordChunk OrdonnanceurLocal::GetChunk()
 {
-	std::cout << "Je veut des chunk";
 	int nbChunkInFifo = _fifo.Count();
+
 	if (nbChunkInFifo<(bThreadLocal*2))
 	{
-		RequestChunk();
-
+		CPasswordChunk lastChunk;
+		std::ostringstream chunkstringifier;
+		if (nbChunkInFifo != 0)
+		{
+			lastChunk = this->_fifo.GetLastChunk();
+			chunkstringifier << lastChunk.GetPasswordBegin() << "|" << lastChunk.GetPasswordEnd();
+		}
+		else
+		{
+			chunkstringifier << "";
+		}
+		RequestChunk((bThreadLocal*2-nbChunkInFifo),chunkstringifier.str());
 	}
-	
-	return _fifo.Pop();
-	
+	return _fifo.Pop();	
 }
 
 unsigned int OrdonnanceurLocal::GetAvailableMemory()
@@ -64,17 +73,28 @@ unsigned int OrdonnanceurLocal::GetAvailableMemory()
 	return status.ullAvailPhys*0.9;
 }
 
-void OrdonnanceurLocal::RequestChunk()
+void OrdonnanceurLocal::RequestChunk(int nbRequest,std::string lastHandle)
 {
-	CPasswordChunk* test = new CPasswordChunk("00", "zz");
-	TcpClient tcpClient =  TcpClient();
-	tcpClient.ConnectToHost(this->getHost(),666);
-	tcpClient.SendHttpRequest(this->getHost(), Utils::_patternChunk);
-	tcpClient.WaitForResponse();
-	tcpClient.ReceiveResponse(true);
-	std::string chunktmp =  tcpClient.GetResponse();
-	tcpClient.CloseConnection();
-	_fifo.Push(*test);
+	LogManager::GetInstance()->LogInfo(1, "Need Some Chunk over here");
+	for (int i=0; i < nbRequest; i++) {
+		TcpClient tcpClient = TcpClient();
+		tcpClient.ConnectToHost(this->getHost(), 666);
+
+		 std::ostringstream needChunk;
+		needChunk<<"NEW-CHUNK-PLEASE LAST-HANDLED-CHUNK=" << lastHandle;
+
+		tcpClient.SendHttpRequest(this->getHost(), needChunk.str());
+		tcpClient.WaitForResponse();
+		tcpClient.ReceiveResponse(true);
+		std::string reponse = tcpClient.GetResponse();
+		std::string delimiter = "|";
+		std::string chunk = Utils::GetPatternFromData(reponse, Utils::_patternChunk);
+		std::string startpass = chunk.substr(0, chunk.find(delimiter));
+		std::string endpass = chunk.substr(1, chunk.find(delimiter));
+		CPasswordChunk giveMeSomeChunk(startpass, endpass);
+		tcpClient.CloseConnection();
+		_fifo.Push(giveMeSomeChunk);
+	}
 }
 
 void OrdonnanceurLocal::StartThread()
@@ -132,17 +152,8 @@ void OrdonnanceurLocal::StopThread()
 	{
 		
 		_args->arret = true;
-		std::cout << "Arrêt en cours, merci de patientez" << std::endl;
-		for (int i = 0; i < bThreadLocal; i++) {
-			std::cout << "Arret en cours du thread" << i << std::endl;
-			pthread_join(_aIdThread[i], nullptr);
-			
-			std::cout << "Arret thread " << i << std::endl;
-		}
-		if (_passwordFind != "")
-		{
-			std::cout << "Password trouvé: " << _passwordFind  << std::endl;
-		}
+		std::cout << "Arrêt en cours, merci de patienter" << std::endl;
+		
 		FreeRessources();
 	}
 }
@@ -173,7 +184,7 @@ std::string OrdonnanceurLocal::getHost()
 
 OrdonnanceurLocal::~OrdonnanceurLocal()
 {
-	
+	std::cout << "je me detrui" << std::endl;
 }
 
 OrdonnanceurLocal::strCommandLine* OrdonnanceurLocal::getCommandLine(void)
@@ -188,4 +199,29 @@ void OrdonnanceurLocal::setChunk(CPasswordChunk passwordChunk)
 std::string OrdonnanceurLocal::GetAlphabet()
 {
 	return this->_alphabet;
+}
+void OrdonnanceurLocal::FoundPassword(std::string passwordFound)
+{
+	TcpClient tcpClient;
+	tcpClient.ConnectToHost(this->_host, 666);
+	std::ostringstream request;
+		request << this->_FOUNDANDEXIT << passwordFound;
+	
+	tcpClient.SendHttpRequest(this->_host, request.str());
+	tcpClient.WaitForResponse();
+	tcpClient.ReceiveResponse(true);
+	tcpClient.CloseConnection();
+	this->StopThread();
+
+
+}
+void OrdonnanceurLocal::WaitThreads()
+{
+	for (int i = 0; i < bThreadLocal; i++) {
+		std::cout << "Arret en cours du thread" << i << std::endl;
+		pthread_join(_aIdThread[i], nullptr);
+
+		std::cout << "Arret thread " << i << std::endl;
+		LogManager::GetInstance()->LogInfo(i, "Arret du thread");
+	}
 }

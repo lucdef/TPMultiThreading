@@ -1,6 +1,5 @@
 #pragma once
 
-
  //Just use following macro in your class to enable singleton
 #define IMPLEMENT_SINGLETON(className)                                                                  \
 protected:                                                                                              \
@@ -8,13 +7,15 @@ protected:                                                                      
     className(className const&);                /* Don't implement */                                   \
     void operator = (className const&);         /* Don't implement */                                   \
                                                                                                         \
-    static className& getInstanceRef() {                                                                \
+    static className& getInstanceRef()																    \
+	{																									\
         static className clsSingleton;          /* The only one instance with lazy instantiation */     \
         return clsSingleton;                                                                            \
     }                                                                                                   \
                                                                                                         \
 public:                                                                                                 \
-    static className *getInstance() {                                                                   \
+    static className *getInstance()																		\
+	{																								    \
         className &clsSingleton = className::getInstanceRef();                                          \
         return &clsSingleton;                                                                           \
     }                                                                                                   \

@@ -8,6 +8,7 @@ class TcpClient : public ITcpClient
 	public:
 		TcpClient();
 		~TcpClient();
+
 		bool ConnectToHost(const std::string host, int port = 80);
 		void ShowEndpointInfos();
 		void SendHttpRequest(const std::string host, std::string response = "");

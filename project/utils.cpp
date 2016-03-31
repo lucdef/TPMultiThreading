@@ -32,9 +32,11 @@ bool Utils::StringContains(const std::string &source, const std::string &pattern
 	return false;
 }
 
-std::string Utils::GetClientStr(CSocket* const client)
+std::string Utils::GetClientStr(CSocket* client)
 {
-	return client->GetRemoteEndpointIp() + ":" + std::to_string(client->GetRemoteEndpointPort());
+	std::string ret = client->GetRemoteEndpointIp() + ":" + std::to_string(client->GetRemoteEndpointPort());
+	
+	return ret;
 }
 
 void Utils::ParseCommandLine(const int p_argc, 

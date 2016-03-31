@@ -5,50 +5,65 @@
 #include<queue>
 #include<deque>
 #include "TrueMutex.hpp"
+#include <pthread.h>
 template <typename T> class FIFO
 {
+
 public:
 	FIFO()
 	{
-		_mutex = new TrueMutex();
-		_mutex->Init();
+		_mutex  = PTHREAD_MUTEX_INITIALIZER;
 	}
+
 	T Pop()
 	{
-		_mutex->Lock();
+		pthread_mutex_lock(&_mutex);
 		T firstElement = _list.at(0);
 		_list.pop_front();
-		_mutex->Unlock();
+
+		pthread_mutex_unlock(&_mutex);
 		return firstElement;
 	}
 	
 	void Push(T endElement)
 	{
-		_mutex->Lock();
+		pthread_mutex_lock(&_mutex);
 		_list.push_back(endElement);
-		_mutex->Unlock();
+
+		pthread_mutex_unlock(&_mutex);
 	}
+
 	void Clear()
 	{
-		_mutex->Lock();
+
+		pthread_mutex_lock(&_mutex);
 		_list.clear();
-		_mutex->Unlock();
+
+		pthread_mutex_unlock(&_mutex);
 	}
 	int Count()
 	{
-		_mutex->Lock();
+		pthread_mutex_lock(&_mutex);
 		int sizeOfFifo = _list.size();
-		_mutex->Unlock();
+		pthread_mutex_unlock(&_mutex);
 		return sizeOfFifo;
+	}
+
+	T GetLastChunk()
+	{
+		pthread_mutex_lock(&_mutex);
+		T element =  _list.at(_list.size() - 1);
+		pthread_mutex_unlock(&_mutex);
+		return element;
 	}
 
 	~FIFO()
 	{
 		delete _mutex;
 	}
+
 private:
 	std::deque<T> _list;
-	TrueMutex* _mutex;
-
+	pthread_mutex_t _mutex;
 };
 

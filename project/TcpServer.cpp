@@ -5,8 +5,9 @@
 
 #include <regex>
 
-const std::string TcpServer::PASS_PATTERN = "PASS=([^ ]+) ";
-const std::string TcpServer::FOUNDER_PATTERN = "FOUND-BY=([^ ]+) ";
+const std::string TcpServer::PASS_PATTERN = ".*PASS=([^ ]+).*";
+const std::string TcpServer::LASTHANDLE_PATTERN = ".*LAST-HANDLED-CHUNK=([^ ]+).*";
+const std::string TcpServer::FOUNDER_PATTERN = ".*FOUND-BY=([^ ]+).*";
 
 TcpServer::TcpServer() :
 	_logger(LogManager::GetInstance()),
@@ -40,11 +41,16 @@ std::string TcpServer::ParseHttp(const std::string &data) const
 	}
 	else if ( Utils::StringContains(tmp, "NEW-CHUNK-PLEASE" ))
 	{
-		// TODO: get lastHandled from tmp
-		std::string startPass = ordonnanceur->GetNextChunkBegin();
+		// TODO: store and log lastHandled 
+		std::string lastHandled = Utils::GetPatternFromData(tmp, TcpServer::LASTHANDLE_PATTERN);
+
+		
+		const CPasswordChunk chunk = ordonnanceur->GetNextChunk();
+		std::string startPass = chunk.GetPasswordBegin(),
+			endPass = chunk.GetPasswordEnd();
 
 
-		response = "NEW-CHUNK-FOR-YOU=" + startPass;
+		response = "NEW-CHUNK-FOR-YOU=" + startPass + '|' + endPass;
 		
 		ordonnanceur->AddGivenChunk(startPass, _remoteClient);
 	}
@@ -92,7 +98,7 @@ std::string TcpServer::ReceiveData()
 
 	if(logMsg.length() == 0)
 	{
-		_logger->LogInfo(2, "Server received '<data>' from <from>");
+		_logger->LogInfo(2, "Server received '" + request + "' from '" + Utils::GetClientStr(_remoteClient) + "'");
 	}
 	else
 	{
@@ -110,7 +116,7 @@ bool TcpServer::SendData(const std::string& data) const
 
 	// Send him the same information everytime
 	// Oww! crap! No doctype ... and crappy headers too. But it is working, so enjoy.
-	std::cout << "[TcpServer] - sending fake page..." << std::endl;
+	std::cout << "[TcpServer] - sending page..." << std::endl;
 
 	if (data.length() == 0)
 	{
@@ -137,7 +143,7 @@ bool TcpServer::SendData(const std::string& data) const
 void TcpServer::Run(unsigned short port)
 {
 	std::cout << std::endl;
-	std::cout << "[TcpServer] Creating HTTP server on port" << port << "..." << std::endl;
+	std::cout << "[TcpServer] Creating HTTP server on port " << port << "..." << std::endl;
 
 	_socket.InitEngine();
 	_socket.CreateServer(port, MAX_CONNECTION);
@@ -160,6 +166,7 @@ void TcpServer::Run(unsigned short port)
 			// Receive whole response with 100ms timeout
 			// !! WARNING !! a nicer way to handle this request is to check for end-of-request instead of foolishly wait for 100ms
 			std::string request = ReceiveData();
+
 
 			// For pleasure, let's do a quick HTTP parsing
 			std::string response = ParseHttp(request);
@@ -186,15 +193,16 @@ void TcpServer::Run(unsigned short port)
 
 void TcpServer::DisconnectClient()
 {
+	_logger->LogInfo(1, "Server disconnected '" + Utils::GetClientStr(_remoteClient) + "'");
+
 	// Disconnect
 	if (_remoteClient == nullptr)
 		return;
 
 	_remoteClient->Shutdown();
 	delete(_remoteClient);
-	_remoteClient = nullptr;
 
-	_logger->LogInfo(1, "Server disconnected '<client>'");
+	_remoteClient = nullptr;
 }
 
 void TcpServer::StopServer()

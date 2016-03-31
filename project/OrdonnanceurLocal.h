@@ -6,7 +6,6 @@
 class OrdonnanceurLocal
 {
 public:
-
 	struct strCommandLine
 	{
 		std::string hash;
@@ -17,17 +16,18 @@ public:
 		std::string OrdoLocal;
 		std::string OrdoGlobal;
 	};
-
-	~OrdonnanceurLocal();
 	
 	OrdonnanceurLocal(std::string host);
+	~OrdonnanceurLocal();
 
 	std::string GetAlphabet();
+	void FoundPassword(std::string passwordFound);
+	void WaitThreads();
 	static unsigned int GetNbThread();
 	CPasswordChunk GetChunk();
 	static unsigned int GetAvailableMemory();
 	strCommandLine* getCommandLine(void);
-	void RequestChunk();
+	void RequestChunk(int nbRequest,std::string lastHandle);
 	void StartThread();
 	void CreateThread();
 	std::string HashPassword(std::string passwordToHash);
@@ -36,8 +36,7 @@ public:
 	void FreeRessources();
 	void SetPasswordFind(std::string password);
 	std::string getHost();
-	
-	
+
 	struct paramThread
 	{
 		OrdonnanceurLocal* instance;
@@ -46,10 +45,10 @@ public:
 	};
 
 private:
-	//FIFO de chunk
+	std::string lastHandle;
 	const std::string _PROTOSTART = "HELLO-HOW-SHOULD-I-WORK";
 	const std::string _NEEDCHUNK = "NEW-CHUNK-PLEASE LAST-HANDLED-CHUNK=";
-	const std::string _FOUNDANDEXIT = "FOUND-PLEASE-EXIT PASSWORD=x FOUND-BY=y";
+	const std::string _FOUNDANDEXIT = "FOUND-PLEASE-EXIT PASSWORD=x FOUND-BY={0}";
 	
 	std::string _host;
 	std::string _passwordATrouver;
@@ -57,6 +56,7 @@ private:
 	std::string _alphabet;
 
 	FIFO<CPasswordChunk> _fifo;
+
 	//passage d'argument 
 	paramThread* _args;
 	strCommandLine* _CommandLine;
@@ -66,6 +66,7 @@ private:
 	TrueMutex _mutex;
 	pthread_t* _aIdThread;
 	unsigned int const SIZE_OF_CHUNK = 128;
-
+	
+	pthread_t *_threads;
 };
 

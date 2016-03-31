@@ -2,10 +2,8 @@
 #include "utils.h"
 #include "conio.h"
 #include "CSocket.h"
-
+#define PORT_TCP	666
 OGlobal* OGlobal::_instance = nullptr;
-
-
 
 OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo, const std::string hash, const std::string alphabet)
 	: _server(),
@@ -13,8 +11,14 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 	_appRunning(true),
 	_hash(hash),
 	_alphabet(alphabet),
-	_chunkSize(chunkSize)
+	_chunkSize(chunkSize),
+	_nextChunk()
 {
+	_logger = LogManager::GetInstance();
+
+	// init next chunk
+	initNextChunk();
+	
 	// init threadId and thread array
 	//for (int i = 0; i < 5; ++i)
 	//{
@@ -24,7 +28,6 @@ OGlobal::OGlobal(const int nbThread, const int chunkSize, const std::string algo
 
 	//createThreads();
 }
-
 
 OGlobal::~OGlobal()
 {
@@ -70,10 +73,21 @@ const std::string OGlobal::GetHash() const
 	return _hash;
 }
 
-const std::string OGlobal::GetNextChunkBegin() const
+const CPasswordChunk OGlobal::GetNextChunk()
 {
-	return _nextChunk.GetPasswordBegin();
+	// celui stocké et le bon...
+	CPasswordChunk chunk = CPasswordChunk(_nextChunk);
+
+	std::string ret = chunk.GetPasswordBegin(),
+		currentEnd = _nextChunk.GetPasswordEnd(),
+		newBegin = getBeginFromEnd(currentEnd);
+
+	// ... puis on en genere un autre pour le suivant
+	generateChunk(newBegin);
+
+	return chunk;
 }
+
 
 const std::string OGlobal::CraftResponse(const std::string request)
 {
@@ -107,11 +121,9 @@ void* OGlobal::ThreadKeyboardFunc(void *p_arg)
 void * OGlobal::ThreadServerFunc(void * p_arg)
 {
 	TcpServer *pServer = reinterpret_cast<TcpServer*>(p_arg);
-	int port = 666;
-	
+	int port = PORT_TCP;
 	
 	pServer->Run(port);
-
 	std::cout << "ServerThread ending !" << std::endl;
 
 	return nullptr;
@@ -119,9 +131,8 @@ void * OGlobal::ThreadServerFunc(void * p_arg)
 
 void OGlobal::StartKeyboardThread(const bool isBlocking)
 {
-	//_keyboardArgs.appRunning = false;
-
 	std::cout << "** Creating keyboard thread..." << std::endl;
+
 	if (pthread_create(&_keyboardThread, nullptr, ThreadKeyboardFunc, reinterpret_cast<void*>(&_appRunning)) != 0) {
 		std::cerr << "** FAIL keyboard thread" << std::endl;
 		//return;// 1;
@@ -146,15 +157,15 @@ void OGlobal::StartKeyboardThread(const bool isBlocking)
 		pthread_join(_keyboardThread, &result);
 		/* end example1 */
 	}
-
-
 	//std::cout << std::endl << "KeyboardThread ended." << std::endl;
 }
 
 void OGlobal::StartServerThread()
 {
 	std::cout << "** Creating server thread..." << std::endl;
-	if (pthread_create(&_serverThread, nullptr, ThreadServerFunc, reinterpret_cast<TcpServer*>(&_server)) != 0) {
+
+	if (pthread_create(&_serverThread, nullptr, ThreadServerFunc, reinterpret_cast<TcpServer*>(&_server)) != 0)
+	{
 		std::cerr << "** FAIL server thread" << std::endl;
 		//return;// 1;
 		exit(1);
@@ -167,15 +178,6 @@ void OGlobal::Run()
 	Utils::mySleep(1000);
 	StartServerThread();
 
-	
-	/* example */
-	//while (this->_appRunning)
-	//{
-	//	std::cout << "RUNNING - ";
-	//	Utils::mySleep(1000);
-	//}
-	/* end example */
-
 	/* example1 */
 	void *result;
 	std::cout << "** Waiting for keyboard escape..." << std::endl;
@@ -183,7 +185,6 @@ void OGlobal::Run()
 	/* end example1 */
 
 	_server.StopServer();
-
 
 	std::cout << "Terminated." << std::endl;
 }
@@ -206,8 +207,9 @@ std::string OGlobal::generateChunk(const std::string begin)
 		end[i] = lastInAlphabet;
 	}
 
-	std::cout << "generated : " << begin << " --> " << end << std::endl ;
-	//_nextChunk = 
+	std::string logMsg = "[OGlobal] Generated : " + begin + " --> " + end;
+	std::cout << logMsg << std::endl;
+	_logger->LogInfo(0, logMsg); 
 
 	_nextChunk.Reset();
 	_nextChunk.SetPasswordRange(begin, end);
@@ -227,7 +229,6 @@ std::string OGlobal::getBeginFromEnd(const std::string end)
 
 	lastIndex = endLength - 1;
 
-
 	int i = lastIndex;
 	while (begin[i] == lastInAlphabet)
 	{
@@ -240,9 +241,7 @@ std::string OGlobal::getBeginFromEnd(const std::string end)
 		}
 	}
 	begin.at(i) = _alphabet[IndexOf(begin[i]) + 1];
-
 	std::cout << "Begin after " << end << " is " << begin << std::endl;
-
 
 	return begin;
 }
@@ -260,15 +259,13 @@ int OGlobal::IndexOf(const char letter) const
 	return -1;
 }
 
+void OGlobal::initNextChunk()
+{
+	const int nbPassLetters = _hash.length();
+	std::string first = "";
 
+	for (int i = 0; i < nbPassLetters; ++i)
+		first += _alphabet[0];
 
-//void OGlobal::replyChunk()
-//{
-//	std::string trame = "NEW-CHUNK-FOR-YOU=" + _nextChunk.GetPasswordBegin();
-//	_server.SendData(trame); // TODO: handle several clients
-//}
-
-//void OGlobal::createThreads()
-//{
-//
-//}
+	generateChunk(first);
+}

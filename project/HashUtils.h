@@ -5,6 +5,7 @@
 #include "CHashSha1.h"
 #include "CHashMd5.h"
 #include "CHashCrc32.h"
+#include <pthread.h>
 class HashUtils
 {
 public:
@@ -17,12 +18,13 @@ public:
 	static void Kil();
 
 private:
+	pthread_mutex_t _mutex;
 	CHashCrc32 *_chashCrc32;
 	CHashSha256 *_chashSha256;
 	CHashSha1 *_chashSha1;
 	CHashSha224 *_chashSha224;
 	CHashMd5 *_chashShaMD5;
-	static HashUtils* _instance;
+	static HashUtils *_instance;
 	HashUtils();
 	~HashUtils();
 };
