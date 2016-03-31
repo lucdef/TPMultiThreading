@@ -210,6 +210,7 @@ void OrdonnanceurLocal::FoundPassword(std::string passwordFound)
 	tcpClient.SendHttpRequest(this->_host, request.str());
 	tcpClient.WaitForResponse();
 	tcpClient.ReceiveResponse(true);
+	tcpClient.CloseConnection();
 	this->StopThread();
 
 

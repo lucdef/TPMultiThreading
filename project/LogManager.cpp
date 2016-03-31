@@ -6,8 +6,8 @@
 LogManager* LogManager::_instance;
 
 LogManager::LogManager()
-{	
-	_logFile = new CFileText("..\\TPMultiThreading.log", EFileOpenMode::append);
+{
+		_logFile = new CFileText("..\\TPMultiThreading.log", EFileOpenMode::append);
 	_logFile->Open(EFileOpenMode::append);
 	_mutex = new TrueMutex();
 	_mutex->Init();
@@ -18,7 +18,7 @@ LogManager::~LogManager()
 	_logFile->Flush();
 	_logFile->Close();
 	delete _logFile;
-	delete _mutex;
+		delete _mutex;
 }
 
 LogManager* LogManager::GetInstance()
@@ -70,22 +70,22 @@ bool LogManager::log(int idThread, std::string message, std::string criticite)
 	
 	try
 	{
-		_logFile->AppendLine(stream.str(), EFileEOL::Windows);
-		_logFile->Flush();
-		_mutex->Unlock();
-		return true;
-	}
+	_logFile->AppendLine(stream.str(), EFileEOL::Windows);
+	_logFile->Flush();
+	_mutex->Unlock();
+	return true;
+}
 
 	catch (CException &e)	// & is IMPORTANT
 	{			
-		_mutex->Unlock();
-		std::cerr << "** --- EXCEPTION THROWN ---" << std::endl;
-		std::cerr << "** Type: " << e.GetType() << std::endl;
-		std::cerr << "** Message: " << e.GetErrorMessage() << std::endl;
-		std::cerr << "** Error code: " << e.GetErrorCode() << std::endl;
-		std::cerr << "** Fault location: " << e.GetFaultLocation() << std::endl;
-		return false;
-	}	
+	_mutex->Unlock();
+	std::cerr << "** --- EXCEPTION THROWN ---" << std::endl;
+	std::cerr << "** Type: " << e.GetType() << std::endl;
+	std::cerr << "** Message: " << e.GetErrorMessage() << std::endl;
+	std::cerr << "** Error code: " << e.GetErrorCode() << std::endl;
+	std::cerr << "** Fault location: " << e.GetFaultLocation() << std::endl;
+	return false;
+}
 }
 
 std::string LogManager::DateToString(CDateTime d)

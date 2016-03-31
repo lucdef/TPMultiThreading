@@ -35,7 +35,8 @@ void* Agent::GenerationPassword(void *p_arg)
 			while (password <= chunkToGenerate.GetPasswordEnd() && trouve == false)
 			{
 				//Si on trouve le password on quitte les autres threads
-				if (passwordtofind == instanceol->HashPassword(password))
+				std::string passwordHash = instanceol->HashPassword(password);
+				if (passwordtofind == passwordHash)
 				{
 					strucarg->instance->SetPasswordFind(password);
 					trouve = true;
@@ -46,6 +47,9 @@ void* Agent::GenerationPassword(void *p_arg)
 				}
 
 				//std::this_thread::sleep_for(std::chrono::milliseconds(80));
+				std::ostringstream message;
+				message << "Password: " << password << " passwordHashed: " << passwordHash;
+				LogManager::GetInstance()->LogInfo(1, message.str());
 				HashCrackerUtils::IncreasePassword(password, sizeof(password), alphabet);
 			}
 		}
