@@ -36,7 +36,7 @@ public:
 
 	// TODO: make private
 	std::string generateChunk(const  std::string begin);
-	std::string getBeginFromEnd(const  std::string end);
+	std::string getBeginFromEnd(std::string end);
 	int IndexOf(const char letter) const;
 
 private:

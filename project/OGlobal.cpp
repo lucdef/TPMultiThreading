@@ -189,6 +189,9 @@ void OGlobal::Run()
 	std::cout << "Terminated." << std::endl;
 }
 
+/*
+ * @brief: Generates the next chunk, stores it and return its end
+ */
 std::string OGlobal::generateChunk(const std::string begin)
 {
 	static char lastInAlphabet = _alphabet[_alphabet.length() -1];
@@ -217,33 +220,51 @@ std::string OGlobal::generateChunk(const std::string begin)
 	return end;
 }
 
-std::string OGlobal::getBeginFromEnd(const std::string end)
+std::string OGlobal::getBeginFromEnd(std::string end)
 {
 	static char lastInAlphabet = _alphabet[_alphabet.length() - 1];
 	int lastIndex;
-	std::string begin = end;
-	int endLength = end.length();
+	//std::string begin = end;
+	char cbegin[64];
+	int size = sizeof(cbegin);
 
-	if (endLength == 0)
-		return "";
-
-	lastIndex = endLength - 1;
-
-	int i = lastIndex;
-	while (begin[i] == lastInAlphabet)
+	for (int i = 0; i < size; ++i)
 	{
-		begin.at(i) = _alphabet[0];
-
-		if (--i == -1) // attention on decrement avant de tester
-		{
-			std::cout << "Nothing after " << end << std::endl;
-			return "";
-		}
+		if (i < end.length())
+			cbegin[i] = end[i];
+		else
+			cbegin[i] = '\0';
 	}
-	begin.at(i) = _alphabet[IndexOf(begin[i]) + 1];
-	std::cout << "Begin after " << end << " is " << begin << std::endl;
+	
+	HashCrackerUtils::IncreasePassword(cbegin, sizeof(cbegin), _alphabet);
+	//int endLength = end.length();
 
-	return begin;
+	//if (endLength == 0)
+	//	return "";
+
+	//lastIndex = endLength - 1;
+
+	//int i = lastIndex;
+	//while (begin[i] == lastInAlphabet)
+	//{
+	//	begin.at(i) = _alphabet[0];
+
+	//	if (--i == -1) // attention on decrement avant de tester
+	//	{
+	//		// ici use increasePass
+	//		std::cout << "Nothing after " << end << std::endl;
+	//		return "";
+	//	}
+	//}
+	//begin.at(i) = _alphabet[IndexOf(begin[i]) + 1];
+	//std::cout << "Begin after " << end << " is " << begin << std::endl;
+
+	// TEST
+
+
+	// END TEST
+
+	return cbegin;
 }
 
 int OGlobal::IndexOf(const char letter) const
@@ -264,7 +285,7 @@ void OGlobal::initNextChunk()
 	const int nbPassLetters = _hash.length();
 	std::string first = "";
 
-	for (int i = 0; i < nbPassLetters; ++i)
+	for (int i = 0; i < _chunkSize; ++i)
 		first += _alphabet[0];
 
 	generateChunk(first);

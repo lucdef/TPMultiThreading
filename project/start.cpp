@@ -113,8 +113,8 @@ int main( int argc, const char *argv[] ) {
 		/* GO GLOBAL HERE */
 
 	//int res = TcpTest::TestMain();
-	int res = OGlobalTest::TestServerAndKeyboard();
-	//int res = OGlobalTest::TestGenerateChunk();
+	//int res = OGlobalTest::TestServerAndKeyboard();
+	int res = OGlobalTest::TestGenerateChunk();
 	//int res = OGlobalTest::TestKeyboardThread();
 	//int res = OGlobalTest::TestServerThread();
 	}

@@ -1,5 +1,6 @@
 #include "OGlobalTest.hpp"
 #include "OGlobal.hpp"
+#include "utils.h"
 
 OGlobalTest::OGlobalTest()
 {
@@ -59,16 +60,18 @@ int OGlobalTest::TestServerAndKeyboard(std::string dico, int chunkSize, int pass
 
 int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLetters)
 {
-	TestGetBeginFromEnd(dico, chunkSize, passLetters);
+	//TestGetBeginFromEnd(dico, chunkSize, passLetters);
+	chunkSize = 3;
 	OGlobal *og = OGlobal::GetInstance(1, chunkSize, "sha256", "XXXXXXXXXX", dico);
 	std::string first = "";
 
-	for (int i = 0; i < passLetters; ++i)
+	//for (int i = 0; i < passLetters; ++i)
+	for (int i = 0; i < chunkSize; ++i)
 	{
 		first += dico[0];
 	}
 
-	std::string last = og->generateChunk(first);
+	/*std::string last = og->GetNextChunk().GetPasswordEnd();
 
 	int i = 0;
 	while (last.length() != 0)
@@ -83,7 +86,22 @@ int OGlobalTest::TestGenerateChunk(std::string dico, int chunkSize, int passLett
 		++i;
 	}
 	std::cout << "Finished." << std::endl;
-	OGlobal::Kill();
+	OGlobal::Kill();*/
+
+	// TEST
+	//char pass[64] = "ddd";
+	//const std::string alph = "abcd";
+	//HashCrackerUtils::IncreasePassword(pass, sizeof(pass), alph);
+
+
+	//std::cout << pass << std::endl;
+	std::string last;
+	for (int i = 0; i < 10; ++i)
+	{
+		last = og->GetNextChunk().GetPasswordEnd();
+	}
+	// END TEST
+
 
 	return 0;
 }
