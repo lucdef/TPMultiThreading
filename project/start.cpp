@@ -51,6 +51,12 @@ int main( int argc, const char *argv[] )
 	}
 	else
 	{
+		if(alphabet.length() == 0)
+		{
+			std::cout << "Veuillez saisir un alphabet." << std::endl;
+			return EXIT_SUCCESS;
+		}
+
 		OGlobal *og = OGlobal::GetInstance(1, chunkSize, algo, "f284bdc3c1c9e24a494e285cb387c69510f28de51c15bb93179d9c7f28705398", alphabet);
 		//OGlobal *og = OGlobal::GetInstance(1, chunkSize, algo, hash, alphabet);
 		og->Run();
